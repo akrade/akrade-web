@@ -1,0 +1,59 @@
+---
+---
+
+<header>
+  <nav>
+    <a href="/" class="logo">Akradé</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+
+   header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.5rem 2rem;
+    /*background: rgba(10, 10, 10, 0.8) url('https://www.akrade.com/images/crow-feathers@2x.png') center / cover no-repeat;*/
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color-muted);
+    transition: color 0.2s;
+  }
+
+  a:hover {
+    color: var(--color-text);
+  }
+</style>

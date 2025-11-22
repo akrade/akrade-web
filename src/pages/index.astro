@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Akradé</h1>
+      <p class="tagline">AI-Driven Product Strategy. Human-Centered Design.</p>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <h2>Who We Are</h2>
+      <p>
+        Akradé is an AI-forward product strategy and human-centered design practice 
+        focused on helping organizations define clear vision, shape smart products, 
+        and deliver meaningful outcomes. Our focus is building a modern, design-led 
+        practice that blends AI, systems thinking, and product leadership to help 
+        teams build with confidence and clarity.
+      </p>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+      <h2>What We Offer</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>AI Product Strategy</h3>
+          <p>Strategic roadmap development powered by AI insights and market intelligence.</p>
+        </div>
+        <div class="service-card">
+          <h3>Experience Design</h3>
+          <p>User flow refinement and experience design that puts humans first.</p>
+        </div>
+        <div class="service-card">
+          <h3>Product Definition</h3>
+          <p>Clear requirements development and product scoping for confident execution.</p>
+        </div>
+        <div class="service-card">
+          <h3>Execution Guidance</h3>
+          <p>Hands-on support for cross-functional teams shipping meaningful products.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <h2>Stay Connected</h2>
+      <div class="contact-info">
+        <p><a href="mailto:contact@akrade.com">contact@akrade.com</a></p>
+        <p>Atlanta, Georgia</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  main {
+    padding-top: 80px;
+  }
+
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .tagline {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+    color: var(--color-muted);
+  }
+
+  /* About */
+  .about {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .about p {
+    font-size: 1.25rem;
+    color: var(--color-muted);
+    max-width: 800px;
+    line-height: 1.8;
+  }
+
+  /* Services */
+  .services {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .service-card:hover {
+    border-color: var(--color-accent);
+  }
+
+  .service-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card p {
+    color: var(--color-muted);
+  }
+
+  /* Contact */
+  .contact {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .contact-info {
+    font-size: 1.125rem;
+  }
+
+  .contact-info p {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-info a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+</style>

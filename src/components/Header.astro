@@ -61,11 +61,13 @@
   function openMenu() {
     mobileMenu.classList.add('open');
     document.body.style.overflow = 'hidden';
+    closeMenu.focus();
   }
 
   function closeMenuFn() {
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
+    hamburger.focus();
   }
 
   hamburger.addEventListener('click', openMenu);
@@ -77,6 +79,13 @@
 
   window.addEventListener('scroll', setActiveLink);
   window.addEventListener('load', setActiveLink);
+  
+  // ESC key to close menu
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMenuFn();
+    }
+  });
 </script>
 
 <style>

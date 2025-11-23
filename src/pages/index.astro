@@ -166,12 +166,25 @@ import Footer from '../components/Footer.astro';
   .contact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 12rem;
+    gap: 6rem;
     margin-top: 3rem;
   }
 
   .contact-item {
     text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .contact-item:not(:last-child) {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 2rem;
+    }
   }
 
   .contact-label {

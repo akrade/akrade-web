@@ -4,21 +4,42 @@
 <header>
   <nav>
     <a href="/" class="logo">Akradé</a>
-    <ul>
+    <ul class="desktop-nav">
       <li><a href="#about" data-section="about">About</a></li>
       <li><a href="#services" data-section="services">Services</a></li>
       <li><a href="#contact" data-section="contact">Contact</a></li>
     </ul>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 </header>
 
+<div class="mobile-menu">
+  <button class="close-menu" aria-label="Close menu">
+    <span></span>
+    <span></span>
+  </button>
+  <ul>
+    <li><a href="#about" data-section="about">About</a></li>
+    <li><a href="#services" data-section="services">Services</a></li>
+    <li><a href="#contact" data-section="contact">Contact</a></li>
+  </ul>
+</div>
+
 <script>
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a[data-section]');
+  const navLinks = document.querySelectorAll('nav a[data-section], .mobile-menu a[data-section]');
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const closeMenu = document.querySelector('.close-menu');
+  const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
 
   function setActiveLink() {
     let current = '';
-    const offset = window.innerHeight * 0.5;
+    const offset = window.innerHeight * 0.4;
     
     sections.forEach((section) => {
       const sectionTop = section.offsetTop - offset;
@@ -37,6 +58,23 @@
     });
   }
 
+  function openMenu() {
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenuFn() {
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', openMenu);
+  closeMenu.addEventListener('click', closeMenuFn);
+  
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', closeMenuFn);
+  });
+
   window.addEventListener('scroll', setActiveLink);
   window.addEventListener('load', setActiveLink);
 </script>
@@ -49,9 +87,9 @@
     right: 0;
     z-index: 100;
     padding: 1.5rem 2rem;
+    background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.471);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
   nav {
@@ -67,26 +105,134 @@
     font-weight: 600;
     text-decoration: none;
     color: var(--color-text);
+    z-index: 101;
   }
 
-  ul {
+  .desktop-nav {
     display: flex;
     gap: 2rem;
     list-style: none;
   }
 
-  a {
+  .desktop-nav a {
     text-decoration: none;
     color: var(--color-muted);
     transition: color 0.2s, font-weight 0.2s;
   }
 
-  a:hover {
+  .desktop-nav a:hover {
     color: var(--color-text);
   }
 
-  a.active {
+  .desktop-nav a.active {
     color: var(--color-text);
     font-weight: 700;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    transition: all 0.3s;
+  }
+
+  .hamburger span:nth-child(3) {
+    display: none;
+  }
+
+  /* Mobile menu overlay */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--color-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .mobile-menu ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+  }
+
+  .mobile-menu li {
+    margin: 2rem 0;
+  }
+
+  .mobile-menu a {
+    font-size: 2rem;
+    text-decoration: none;
+    color: var(--color-muted);
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu a.active {
+    color: var(--color-text);
+  }
+
+  /* Close button (X) */
+  .close-menu {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .close-menu span {
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background: var(--color-text);
+    top: 50%;
+    left: 50%;
+  }
+
+  .close-menu span:first-child {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .close-menu span:last-child {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none;
+    }
+    
+    .hamburger {
+      display: flex;
+    }
   }
 </style>

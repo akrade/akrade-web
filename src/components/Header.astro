@@ -5,25 +5,53 @@
   <nav>
     <a href="/" class="logo">Akradé</a>
     <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about" data-section="about">About</a></li>
+      <li><a href="#services" data-section="services">Services</a></li>
+      <li><a href="#contact" data-section="contact">Contact</a></li>
     </ul>
   </nav>
 </header>
 
-<style>
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a[data-section]');
 
-   header {
+  function setActiveLink() {
+    let current = '';
+    const offset = window.innerHeight * 0.5;
+    
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - offset;
+      const sectionHeight = section.offsetHeight;
+      
+      if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove('active');
+      if (link.dataset.section === current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', setActiveLink);
+  window.addEventListener('load', setActiveLink);
+</script>
+
+<style>
+  header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
     padding: 1.5rem 2rem;
-    /*background: rgba(10, 10, 10, 0.8) url('https://www.akrade.com/images/crow-feathers@2x.png') center / cover no-repeat;*/
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.471);
   }
 
   nav {
@@ -50,10 +78,15 @@
   a {
     text-decoration: none;
     color: var(--color-muted);
-    transition: color 0.2s;
+    transition: color 0.2s, font-weight 0.2s;
   }
 
   a:hover {
     color: var(--color-text);
+  }
+
+  a.active {
+    color: var(--color-text);
+    font-weight: 700;
   }
 </style>

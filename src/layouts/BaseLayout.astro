@@ -4,6 +4,7 @@ interface Props {
 }
 
 const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
+const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <!doctype html>
@@ -14,11 +15,25 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     <meta name="description" content="Akradé is an AI-forward product strategy and human-centered design practice." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    
+    <!-- Google Analytics -->
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <slot />
   </body>
 </html>
+
 
 <style is:global>
   * {

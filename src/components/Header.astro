@@ -36,6 +36,76 @@
   const mobileMenu = document.querySelector('.mobile-menu');
   const closeMenu = document.querySelector('.close-menu');
   const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+  const smmoothScroll = document.querySelectorAll('a[href^="#"]');
+
+  // Smooth scroll on click + update URL
+smmoothScroll.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    
+    if (target) {
+      const offset = 200; // Header height
+      const targetPosition = target.offsetTop - offset;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Update URL with hash
+      history.pushState(null, null, `#${targetId}`);
+    }
+  });
+});
+
+// Update URL hash as user scrolls
+function updateURLOnScroll() {
+  const scrollPosition = window.scrollY + 200;
+  
+  let currentSection = ''; // ← Added this to track active section
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute('id');
+    
+    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      currentSection = sectionId; // ← Store it instead of updating immediately
+    }
+  });
+  
+  // ← Update URL only once per scroll event
+  if (currentSection) {
+    history.replaceState(null, null, `#${currentSection}`);
+  } else if (window.scrollY < 100) {
+    history.replaceState(null, null, window.location.pathname);
+  }
+}
+
+// Throttle scroll events for performance
+// Fire on scroll (no throttling for more responsive updates)
+window.addEventListener('scroll', updateURLOnScroll);
+
+// Handle direct URLs with hash on page load
+window.addEventListener('load', () => {
+  if (window.location.hash) {
+    const targetId = window.location.hash.slice(1);
+    const target = document.getElementById(targetId);
+    
+    if (target) {
+      setTimeout(() => {
+        const offset = 80;
+        const targetPosition = target.offsetTop - offset;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }, 0);
+    }
+  }
+});
 
   function setActiveLink() {
     let current = '';

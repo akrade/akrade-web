@@ -37,6 +37,27 @@
   const closeMenu = document.querySelector('.close-menu');
   const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
 
+  // Add to your existing <script> tag
+  const smmoothScroll = document.querySelectorAll('a[href^="#"]');
+
+  smmoothScroll.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      
+      if (target) {
+        const offset = 200; // Header height
+        const targetPosition = target.offsetTop - offset;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
   function setActiveLink() {
     let current = '';
     const offset = window.innerHeight * 0.4;

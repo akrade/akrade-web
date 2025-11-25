@@ -1,4 +1,6 @@
 ---
+import Analytics from '@vercel/analytics/astro'
+
 interface Props {
   title?: string;
 }
@@ -29,19 +31,6 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <meta property="twitter:image" content="https://www.akrade.com/og-image.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-        
-    <!-- Google Analytics -->
-    {gaId && (
-      <>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-        <script define:vars={{ gaId }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', gaId);
-        </script>
-      </>
-    )}
 
   </head>
   <body>
@@ -189,6 +178,22 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       }
     }
     </script>
+
+    <!-- Add Analytics component before closing body tag -->
+    <Analytics />
+
+    <!-- Google Analytics -->
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
      
   </body>
 </html>

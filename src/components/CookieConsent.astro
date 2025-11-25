@@ -1,0 +1,221 @@
+---
+// src/components/CookieConsent.astro
+// Cookie consent component for GDPR/CCPA compliance
+---
+
+<script>
+  // Import and initialize cookie consent
+  import 'vanilla-cookieconsent/dist/cookieconsent.css';
+  import * as CookieConsent from 'vanilla-cookieconsent';
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    CookieConsent.run({
+      // Automatically show the consent modal on first visit
+      autoShow: true,
+      
+      // Disable page interaction until user makes a choice
+      disablePageInteraction: false,
+      
+      // Hide the consent modal after user accepts/rejects
+      hideFromBots: true,
+      
+      // Cookie options
+      cookie: {
+        name: 'akrade_cookie_consent',
+        domain: location.hostname,
+        path: '/',
+        sameSite: 'Lax',
+        expiresAfterDays: 365
+      },
+
+      // GUI options
+      guiOptions: {
+        consentModal: {
+          layout: 'box',
+          position: 'bottom right',
+          equalWeightButtons: false,
+          flipButtons: false
+        },
+        preferencesModal: {
+          layout: 'box',
+          position: 'right',
+          equalWeightButtons: false,
+          flipButtons: false
+        }
+      },
+
+      // Cookie categories
+      categories: {
+        necessary: {
+          enabled: true,
+          readOnly: true // Cannot be disabled
+        },
+        analytics: {
+          enabled: false,
+          readOnly: false,
+          autoClear: {
+            cookies: [
+              { name: /^_ga/ }, // Google Analytics
+              { name: '_gid' },
+              { name: '_gat' }
+            ]
+          },
+          services: {
+            ga: {
+              label: 'Google Analytics',
+              onAccept: () => {
+                // Enable Google Analytics
+                if (window.gtag) {
+                  window.gtag('consent', 'update', {
+                    analytics_storage: 'granted'
+                  });
+                }
+              },
+              onReject: () => {
+                // Disable Google Analytics
+                if (window.gtag) {
+                  window.gtag('consent', 'update', {
+                    analytics_storage: 'denied'
+                  });
+                }
+              }
+            }
+          }
+        }
+      },
+
+      // Language and text
+      language: {
+        default: 'en',
+        translations: {
+          en: {
+            consentModal: {
+              title: 'We value your privacy',
+              description: 'Akrade uses cookies to enhance your experience and understand how you use our site. We use essential cookies for core functionality and optional analytics cookies to improve our services.',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Reject all',
+              showPreferencesBtn: 'Manage preferences',
+              footer: `
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+              `
+            },
+            preferencesModal: {
+              title: 'Cookie Preferences Center',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Reject all',
+              savePreferencesBtn: 'Save preferences',
+              closeIconLabel: 'Close',
+              serviceCounterLabel: 'Service|Services',
+              sections: [
+                {
+                  title: 'Cookie Usage',
+                  description: 'We use cookies to ensure the basic functionality of our website and to enhance your online experience. You can choose to opt in or out of each category at any time.'
+                },
+                {
+                  title: 'Strictly Necessary Cookies <span class="pm__badge">Always Enabled</span>',
+                  description: 'These cookies are essential for the proper functioning of the website. They enable core functionality such as security, network management, and accessibility. You cannot disable these cookies.',
+                  linkedCategory: 'necessary'
+                },
+                {
+                  title: 'Analytics Cookies',
+                  description: 'These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously. This helps us improve our services and user experience.',
+                  linkedCategory: 'analytics',
+                  cookieTable: {
+                    headers: {
+                      name: 'Cookie',
+                      domain: 'Domain',
+                      desc: 'Description',
+                      exp: 'Expiration'
+                    },
+                    body: [
+                      {
+                        name: '_ga',
+                        domain: 'akrade.com',
+                        desc: 'Google Analytics - Used to distinguish users',
+                        exp: '2 years'
+                      },
+                      {
+                        name: '_gid',
+                        domain: 'akrade.com',
+                        desc: 'Google Analytics - Used to distinguish users',
+                        exp: '24 hours'
+                      }
+                    ]
+                  }
+                },
+                {
+                  title: 'More Information',
+                  description: 'For any queries regarding our cookie policy and your choices, please <a href="mailto:hello@akrade.com">contact us</a>.'
+                }
+              ]
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  /* Custom styling for Akrade brand */
+  :root {
+    --cc-bg: #1a1a1a;
+    --cc-text: #ffffff;
+    --cc-btn-primary-bg: #3b82f6;
+    --cc-btn-primary-text: #ffffff;
+    --cc-btn-primary-hover-bg: #2563eb;
+    --cc-btn-secondary-bg: #374151;
+    --cc-btn-secondary-text: #ffffff;
+    --cc-btn-secondary-hover-bg: #4b5563;
+    --cc-toggle-bg-off: #6b7280;
+    --cc-toggle-bg-on: #3b82f6;
+    --cc-toggle-bg-readonly: #9ca3af;
+    --cc-toggle-knob-bg: #ffffff;
+    --cc-separator-border-color: #374151;
+    --cc-cookie-category-block-bg: #111827;
+    --cc-cookie-category-block-bg-hover: #1f2937;
+    --cc-overlay-bg: rgba(0, 0, 0, 0.75);
+    --cc-webkit-scrollbar-bg: #1f2937;
+    --cc-webkit-scrollbar-bg-hover: #374151;
+  }
+
+  /* Adjust modal positioning for mobile */
+  @media (max-width: 640px) {
+    #cc-main .cm {
+      max-width: 90vw !important;
+      margin: 1rem !important;
+    }
+  }
+
+  /* Custom button styling */
+  #cc-main .cm__btn,
+  #cc-main .pm__btn {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  /* Links styling */
+  #cc-main a {
+    color: #60a5fa;
+    text-decoration: underline;
+  }
+
+  #cc-main a:hover {
+    color: #93c5fd;
+  }
+
+  /* Badge styling */
+  .pm__badge {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #10b981;
+    background-color: #065f46;
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+  }
+</style>

@@ -68,10 +68,18 @@ import Footer from '../components/Footer.astro';
     <div class="contact-grid">
       <div class="contact-item">
         <p class="contact-label">Email</p>
-        <a href="mailto:contact@akrade.com">contact@akrade.com</a>
+        <a href="mailto:contact@akrade.com">hello@akrade.com</a>
       </div>
       <div class="contact-item">
-        <p class="contact-label">Phone</p>
+        <p class="contact-label">Meet</p>
+        <a href="https://cal.com/akrade" 
+          data-cal-link="akrade"
+          id="cal-link">
+          Schedule a Meeting
+        </a>
+      </div>
+      <div class="contact-item">
+        <p class="contact-label">Call</p>
         <a href="tel:+14047819552">404-781-9552</a>
       </div>
       <div class="contact-item">
@@ -181,7 +189,7 @@ import Footer from '../components/Footer.astro';
   .contact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 5rem;
+    gap: 1rem;
     margin-top: 3rem;
   }
 

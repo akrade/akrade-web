@@ -42,6 +42,21 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
         </script>
       </>
     )}
+
+    <script>
+      (function() {
+        const script = document.createElement('script');
+        script.src = 'https://app.cal.com/embed/embed.js';
+        script.onload = function() {
+          // Force Cal.com to reinitialize after script loads
+          if (window.Cal) {
+            window.Cal('init');
+          }
+        };
+        document.head.appendChild(script);
+      })();
+    </script>
+
   </head>
   <body>
     <!-- Grainy film effect -->
@@ -52,6 +67,8 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <div class="scanlines"></div>
 
     <slot />
+
+    
 
     <script>
       // Enhanced grain effect with canvas

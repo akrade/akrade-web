@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   integrations: [
@@ -10,5 +11,10 @@ export default defineConfig({
         'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.cal.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com;"
       }
     }
-  }
+  },
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true
+    }
+  })
 });

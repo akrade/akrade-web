@@ -19,14 +19,14 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <meta property="og:url" content="https://www.akrade.com/" />
     <meta property="og:title" content="Akradé | Smart AI Product Strategy & Design" />
     <meta property="og:description" content="Data-driven clarity. Human-centered design. Measurable results." />
-    <meta property="og:image" content="https://www.akrade.com/og-image.jpg" />
+    <meta property="og:image" content="https://www.akrade.com/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://www.akrade.com/" />
     <meta property="twitter:title" content="Akradé | Smart AI Product Strategy & Design" />
     <meta property="twitter:description" content="Data-driven clarity. Human-centered design. Measurable results." />
-    <meta property="twitter:image" content="https://www.akrade.com/og-image.jpg" />
+    <meta property="twitter:image" content="https://www.akrade.com/og-image.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
         
@@ -92,6 +92,111 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       
       animate();
     </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Akrade",
+      "description": "Akradé is an AI-forward product strategy and human-centered design practice that helps organizations clarify vision, shape intelligent digital products, and deliver meaningful business outcomes.",
+      "url": "https://akrade.com",
+      "logo": "https://akrade.com/logo.png",
+      "image": "https://akrade.com/og-image.png",
+      "telephone": "+1-404-781-9552",
+      "email": "hello@akrade.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Atlanta",
+        "addressRegion": "GA",
+        "addressCountry": "US"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Dante Taylor",
+        "jobTitle": "Founder & Design Leader",
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Product Management",
+          "User Experience Design",
+          "Full-Stack Development",
+          "Digital Transformation",
+          "Generative AI"
+        ]
+      },
+      "sameAs": [
+        "https://linkedin.com/company/akrade",
+        "https://twitter.com/akradeco",
+        "https://github.com/akrade"
+      ],
+      "serviceType": [
+        "AI Product Strategy",
+        "Product Management",
+        "Experience Design",
+        "Design Systems",
+        "User Research"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Product Strategy",
+              "description": "Strategic roadmap development powered by AI insights and market intelligence"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Product Management",
+              "description": "End-to-end product leadership from strategy through delivery and iteration"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Experience Design",
+              "description": "User flow refinement and experience design that puts humans first"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Product Definition",
+              "description": "Clear requirements development and product scoping for confident execution"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Discovery & Research",
+              "description": "User interviews, competitive analysis, and market validation to inform product direction"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Design Systems",
+              "description": "Scalable component libraries and design standards for consistent product experiences"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+     
   </body>
 </html>
 

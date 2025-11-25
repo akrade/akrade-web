@@ -1,0 +1,20 @@
+---
+// src/components/Schema.astro
+export interface Props {
+  type: 'organization' | 'person' | 'service' | 'article' | 'faq';
+  data: any;
+}
+
+const { type, data } = Astro.props;
+
+const schemas = {
+  organization: {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    ...data
+  },
+  // Add other types as needed
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemas[type])} />

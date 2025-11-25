@@ -32,19 +32,6 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
-  </head>
-  <body>
-    <!-- Grainy film effect -->
-    <div class="grain-container">
-      <canvas id="grainCanvas" class="grain"></canvas>
-    </div>
-    <div class="vignette"></div>
-    <div class="scanlines"></div>
-
-    <slot />
-
-    
-
     <script>
       // Enhanced grain effect with canvas
       const canvas = document.getElementById('grainCanvas');
@@ -178,6 +165,17 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       }
     }
     </script>
+
+  </head>
+  <body>
+    <!-- Grainy film effect -->
+    <div class="grain-container">
+      <canvas id="grainCanvas" class="grain"></canvas>
+    </div>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+
+    <slot />
 
     <!-- Add Analytics component before closing body tag -->
     <Analytics />

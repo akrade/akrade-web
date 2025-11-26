@@ -240,10 +240,16 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     position: relative;
   }
 
+
   .page-wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding: 6rem 0;
+  }
+
+  .page-wrapper #homepage {
+    padding: 0;
   }
 
 
@@ -252,7 +258,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     flex: 1;
   }
 
-  section {
+  #homepage section {
     max-width: 1200px;
     margin: 0 auto;
     padding: 8rem 2rem;

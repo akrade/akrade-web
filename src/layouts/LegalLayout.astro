@@ -11,20 +11,20 @@ const { title, description, lastUpdated } = Astro.props;
 ---
 
 <BaseLayout title={`${title} | Akradé`} description={description}>
+  <header class="legal-header">
+    <h1>{title}</h1>
+  </header>
   <main class="legal-container">
     <article>
-      <header class="legal-header">
-        <h1>{title}</h1>
-        {lastUpdated && (
-          <p class="last-updated">Last Updated: {lastUpdated}</p>
-        )}
-      </header>
       
+      {lastUpdated && (
+        <p class="last-updated">Last Updated: {lastUpdated}</p>
+      )}
       <div class="legal-container">
         <div class="legal-content">
           <slot />
         </div>
-      </div>
+      </div>git
     </article>
   </main>
 </BaseLayout>
@@ -50,7 +50,9 @@ const { title, description, lastUpdated } = Astro.props;
     font-size: 8.5rem;
     line-height: .90;
     margin-bottom: 1rem;
-    margin: 0 0 6rem -13rem;
+    margin: 6rem auto 0;
+    max-width: 1600px;
+    text-align: center;
   }
 
   .last-updated {

@@ -1,13 +1,15 @@
 ---
 import Analytics from '@vercel/analytics/astro'
 import CookieConsent from '../components/CookieConsent.astro';
+import Clarity from '../components/Clarity.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+
 
 interface Props {
   title?: string;
 }
 
 const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
-const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <!doctype html>
@@ -166,7 +168,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
       }
     }
     </script>
-
+    <Clarity />
   </head>
   <body>
     <!-- Grainy film effect -->
@@ -178,25 +180,12 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
 
     <slot />
 
-    <!-- Add Analytics component before closing body tag -->
-    <Analytics />
-
+  
     <!-- Google Analytics with Consent Mode -->
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-    <script define:vars={{ gaId }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      
-      // Set default consent to denied
-      gtag('consent', 'default', {
-        'analytics_storage': 'denied'
-      });
-      
-      gtag('config', gaId, {
-        'anonymize_ip': true
-      });
-    </script>
+    <GoogleAnalytics />
+
+     <!-- Add Analytics component before closing body tag -->
+    <Analytics />
     
     <!-- Cookie Consent (must be last) -->
     <CookieConsent />

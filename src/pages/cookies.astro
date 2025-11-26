@@ -1,14 +1,61 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import LegalLayout from '../layouts/LegalLayout.astro';
 ---
 
-<BaseLayout>
-  <Header />
+<LegalLayout 
+  title="Cookie & Tracking Policy" 
+  description="Learn how we use cookies"
+  lastUpdated="November 26, 2025"
+>
   
-  <main>
-  </main>
+  <section aria-labelledby="purpose">
+    <h2 id="purpose">1. Purpose of This Policy</h2>
+    <p>This Cookie &amp; Tracking Policy ("Policy") explains how Akradé ("we," "us," or "our") uses cookies and tracking technologies on akrade.com ("the Site"). It describes what cookies are, how they function, what technologies we use, why we use them, and how you can manage your preferences.</p>
+  </section>
 
-  <Footer />
-</BaseLayout>
+  <section aria-labelledby="what-are-cookies">
+    <h2 id="what-are-cookies">2. What Are Cookies</h2>
+    <p>Cookies are small data files stored on your device that enable websites to operate correctly, remember your preferences, enhance browsing performance, and analyze how users interact with the Site. Some cookies are essential for the Site to function securely, while others support analytics, behavior tracking, optimization, and marketing activities.</p>
+  </section>
+
+  <section aria-labelledby="types-of-cookies">
+    <h2 id="types-of-cookies">3. Types of Cookies We Use</h2>
+    <p>We use two general categories of cookies: essential cookies and non-essential cookies. Essential cookies are required for the Site to operate safely and efficiently, supporting basic functions such as page rendering, navigation, and fraud prevention. Non-essential cookies include analytics and behavioral tracking tools, which help us understand user interactions, measure engagement, improve user experience, and optimize content and design.</p>
+  </section>
+
+  <section aria-labelledby="tracking-technologies">
+    <h2 id="tracking-technologies">4. Tracking Technologies We Use</h2>
+    <p>We use Google Analytics 4 ("GA4"), which relies on cookies and device signals to collect information such as page views, engagement metrics, device details, browser type, traffic sources, and broad geographic region. We also use Microsoft Clarity and Microsoft Advertising, which record click behavior, scroll depth, interaction patterns, heatmaps, and anonymized session replays. Clarity automatically masks sensitive fields and does not capture personally identifiable information unless you intentionally submit it through a form. These technologies help us analyze site performance, identify usability friction, maintain stability, strengthen security, and evaluate the effectiveness of our design and content.</p>
+  </section>
+
+  <section aria-labelledby="third-party-data">
+    <h2 id="third-party-data">5. Third-Party Data Processing</h2>
+    <p>Cookies and tracking technologies used on the Site may be set and processed by third-party providers, including Google (GA4) and Microsoft (Clarity and Microsoft Advertising). These third parties may process data on their own servers in accordance with their respective privacy policies, which operate independently of Akradé. Their systems may collect, store, or transfer data to jurisdictions that may not have the same data-protection laws as your country.</p>
+  </section>
+
+  <section aria-labelledby="international-transfers">
+    <h2 id="international-transfers">6. International Data Transfers</h2>
+    <p>Use of GA4 and Microsoft Clarity may result in the transfer of your information to the United States or other countries where data protection laws may differ. By using the Site, you acknowledge and agree that such transfers may occur as part of our analytics and optimization processes.</p>
+  </section>
+
+  <section aria-labelledby="control-cookies">
+    <h2 id="control-cookies">7. How You Can Control Cookies</h2>
+    <p>You may manage or disable cookies through your web browser settings, including blocking all cookies or deleting existing ones. You may also use Google's Analytics opt-out browser add-on or rely on privacy features and tracking-prevention tools offered by your browser. If you choose to disable certain cookies, portions of the Site may not function properly or certain features may become unavailable.</p>
+  </section>
+
+  <section aria-labelledby="legal-basis">
+    <h2 id="legal-basis">8. Legal Basis</h2>
+    <p>Where required by law, we rely on your browser-level consent or legitimate interest to support the operation of essential site features and analytics. Your continued use of the Site serves as acknowledgment of your understanding of this Policy.</p>
+  </section>
+
+  <section aria-labelledby="updates">
+    <h2 id="updates">9. Updates to This Policy</h2>
+    <p>We may update this Policy periodically to reflect operational changes, legal requirements, or improvements to our technology stack. Updates will be posted on this page along with a revised "Last Updated" date. Continued use of the Site after updates indicates your acceptance of the revised Policy.</p>
+  </section>
+
+  <section aria-labelledby="contact">
+    <h2 id="contact">10. Contact Information</h2>
+    <p>For cookie-related inquiries, concerns, or questions regarding this Policy, you may contact us at <strong><a href="mailto:legal@akrade.com">legal@akrade.com</a></strong>.</p>
+  </section>
+
+</LegalLayout>

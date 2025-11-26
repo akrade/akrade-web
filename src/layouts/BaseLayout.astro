@@ -1,4 +1,9 @@
 ---
+// Global Page Components
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Thrid-party Anlytics
 import Analytics from '@vercel/analytics/astro'
 import CookieConsent from '../components/CookieConsent.astro';
 import Clarity from '../components/Clarity.astro';
@@ -172,6 +177,9 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
   </head>
   <body>
     <div class="page-wrapper">
+
+      <Header />
+
       <!-- Grainy film effect -->
       <div class="grain-container">
         <canvas id="grainCanvas" class="grain"></canvas>
@@ -191,6 +199,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
       <!-- Cookie Consent (must be last) -->
       <CookieConsent />
     </div>
+    <Footer />
   </body>
 </html>
 

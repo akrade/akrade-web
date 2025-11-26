@@ -5,9 +5,9 @@
   <nav>
     <a href="/" class="logo">Akradé</a>
     <ul class="desktop-nav">
-      <li><a href="#about" data-section="about">About</a></li>
-      <li><a href="#services" data-section="services">Services</a></li>
-      <li><a href="#contact" data-section="contact">Contact</a></li>
+      <li><a href="/#about" data-section="about">About</a></li>
+      <li><a href="/#services" data-section="services">Services</a></li>
+      <li><a href="/#contact" data-section="contact">Contact</a></li>
     </ul>
     <button class="hamburger" aria-label="Toggle menu">
       <span></span>
@@ -36,26 +36,40 @@
   const mobileMenu = document.querySelector('.mobile-menu');
   const closeMenu = document.querySelector('.close-menu');
   const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
-  const smmoothScroll = document.querySelectorAll('a[href^="#"]');
+  const smoothScrollLinks = Array.from(document.querySelectorAll('a[href*="#"]')).filter((link) => {
+    const url = new URL(link.href, window.location.href);
+    return url.origin === window.location.origin &&
+      url.pathname === window.location.pathname &&
+      url.hash;
+  });
+  const headerHeight = document.querySelector('header')?.offsetHeight || 0;
 
-  // Smooth scroll on click + update URL
-smmoothScroll.forEach(link => {
+  // Center a section in the viewport and optionally update the hash
+  function scrollSectionIntoView(target, shouldUpdateHash = true) {
+    const viewportHeight = window.innerHeight;
+    const targetHeight = target.offsetHeight;
+    const centerPosition = target.offsetTop + targetHeight / 2 - viewportHeight / 2;
+    const clampedPosition = Math.max(0, centerPosition - headerHeight / 2);
+
+    window.scrollTo({
+      top: clampedPosition,
+      behavior: 'smooth'
+    });
+
+    if (shouldUpdateHash) {
+      history.pushState(null, null, `#${target.id}`);
+    }
+  }
+
+// Smooth scroll on click + update URL
+smoothScrollLinks.forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const targetId = link.getAttribute('href').slice(1);
-    const target = document.getElementById(targetId);
+    const targetId = new URL(link.href, window.location.href).hash.slice(1);
+    const target = targetId ? document.getElementById(targetId) : null;
     
     if (target) {
-      const offset = 200; // Header height
-      const targetPosition = target.offsetTop - offset;
-      
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-      
-      // Update URL with hash
-      history.pushState(null, null, `#${targetId}`);
+      scrollSectionIntoView(target);
     }
   });
 });
@@ -96,12 +110,7 @@ window.addEventListener('load', () => {
     
     if (target) {
       setTimeout(() => {
-        const offset = 80;
-        const targetPosition = target.offsetTop - offset;
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
+        scrollSectionIntoView(target, false);
       }, 0);
     }
   }

@@ -4,7 +4,27 @@ const year = new Date().getFullYear();
 
 <footer>
   <div class="footer-content">
-    <p class="copyright">© {year} Akradé. All rights reserved.</p>
+    <div class="footer-col">
+      <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        LinkedIn
+      </a>
+      <a href="https://x.com/akradeco" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        X
+      </a>
+      <a href="https://github.com/akrade" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        GitHub
+      </a>
+    </div>
+    
+    <div class="footer-col">
+      <p class="copyright">© {year} Akradé. All rights reserved.</p>
+    </div>
+    
+    <div class="footer-col">
+      <a href="/terms" rel="noopener noreferrer" aria-label="Terms of Service">Terms</a>
+      <a href="/privacy-policy" rel="noopener noreferrer" aria-label="Privacy Policy">Privacy</a>
+      <a href="/cookies" rel="noopener noreferrer" aria-label="Cookie Policy">Cookies</a>
+    </div>
   </div>
 </footer>
 
@@ -17,11 +37,61 @@ const year = new Date().getFullYear();
   .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .footer-col:first-child {
+    align-items: flex-start;
+  }
+
+  .footer-col:nth-child(2) {
+    align-items: center;
+  }
+
+  .footer-col:last-child {
+    align-items: flex-end;
+  }
+
+  .footer-col a {
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover {
+    color: var(--color-white);
   }
 
   .copyright {
     color: var(--color-muted);
     font-size: 0.875rem;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .footer-col {
+      justify-content: center;
+    }
+
+    .footer-col:first-child,
+    .footer-col:last-child {
+      align-items: center;
+    }
   }
 </style>

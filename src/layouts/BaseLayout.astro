@@ -171,24 +171,26 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     <Clarity />
   </head>
   <body>
-    <!-- Grainy film effect -->
-    <div class="grain-container">
-      <canvas id="grainCanvas" class="grain"></canvas>
-    </div>
-    <div class="vignette"></div>
-    <div class="scanlines"></div>
+    <div class="page-wrapper">
+      <!-- Grainy film effect -->
+      <div class="grain-container">
+        <canvas id="grainCanvas" class="grain"></canvas>
+      </div>
+      <div class="vignette"></div>
+      <div class="scanlines"></div>
 
-    <slot />
+      <slot />
 
-  
-    <!-- Google Analytics with Consent Mode -->
-    <GoogleAnalytics />
-
-     <!-- Add Analytics component before closing body tag -->
-    <Analytics />
     
-    <!-- Cookie Consent (must be last) -->
-    <CookieConsent />
+      <!-- Google Analytics with Consent Mode -->
+      <GoogleAnalytics />
+
+      <!-- Add Analytics component before closing body tag -->
+      <Analytics />
+      
+      <!-- Cookie Consent (must be last) -->
+      <CookieConsent />
+    </div>
   </body>
 </html>
 
@@ -214,17 +216,38 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     --font-serif: Georgia, 'Times New Roman', Times, serif;
   }
 
-  html {
+  html, body {
     font-family: var(--font-sans);
     background: var(--color-bg-primary);
     color: var(--color-text-primary);
     scroll-behavior: smooth;
+    height: 100%;
+    margin: 0;
   }
 
   body {
     min-height: 100vh;
     line-height: 1.6;
     position: relative;
+  }
+
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  main {
+    padding-top: 80px;
+    flex: 1;
+  }
+
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 2rem;
+    min-height: 90vh;
   }
 
   /* Grainy film effect */

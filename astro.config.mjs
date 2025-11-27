@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   site: 'https://akrade.com',
@@ -11,6 +12,11 @@ export default defineConfig({
       priority: 0.7,
       lastmod: new Date(),
       filter: (page) => !page.includes('/admin/') && !page.includes('/draft/')
+    }),
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
     })
   ],
   vite: {

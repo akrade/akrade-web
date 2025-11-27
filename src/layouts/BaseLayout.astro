@@ -171,7 +171,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
 
           // Optimize: reduce grain density and use bitwise operations
           for (let i = 0; i < len; i++) {
-            if (Math.random() < 0.03) { // Reduced from 0.05 to 0.03
+            if (Math.random() < 0.001) { // Reduced from 0.05 to 0.03
               const gray = (Math.random() * 255) | 0;
               buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
             }

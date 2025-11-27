@@ -1,22 +1,35 @@
 ---
-// Microsoft Clarity Integration for Astro
-// Add your Clarity Project ID here
 const gaId = import.meta.env.PUBLIC_GA_ID;
---- 
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+---
 
 
-<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-<script define:vars={{ gaId }}>
+<script define:vars={{ gaId, gtmId }}>
+  if (gtmId) {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    
+
     // Set default consent to denied
     gtag('consent', 'default', {
-    'analytics_storage': 'denied'
+      'analytics_storage': 'denied'
     });
-    
-    gtag('config', gaId, {
-    'anonymize_ip': true
-    });
+
+    if (gaId) {
+      gtag('config', gaId, {
+        'anonymize_ip': true
+      });
+    }
+
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),
+          dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',gtmId);
+  }
 </script>

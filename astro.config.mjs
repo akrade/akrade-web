@@ -20,6 +20,8 @@ export default defineConfig({
       }
     },
     server: {
+      host: true,
+      allowedHosts: ['akrade.local'],
       headers: {
         'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.cal.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com;"
       }

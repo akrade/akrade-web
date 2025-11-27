@@ -83,7 +83,7 @@ import Footer from '@/components/Footer.astro';
         <a href="tel:+14047819552">404-781-9552</a>
       </div>
       <div class="contact-item">
-        <p class="contact-label">Location</p>
+        <p class="contact-label">Find Us</p>
         <p>Atlanta, Georgia</p>
       </div>
     </div>
@@ -187,6 +187,9 @@ import Footer from '@/components/Footer.astro';
 
   .contact-item {
     text-align: left;
+  }
+  .contact-item > p:nth-of-type(2) {
+    margin: 0;
   }
 
   @media (max-width: 1000px) {

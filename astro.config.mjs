@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   site: 'https://akrade.com',
@@ -11,6 +12,11 @@ export default defineConfig({
       priority: 0.7,
       lastmod: new Date(),
       filter: (page) => !page.includes('/admin/') && !page.includes('/draft/')
+    }),
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
     })
   ],
   vite: {
@@ -18,6 +24,25 @@ export default defineConfig({
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
+    },
+    build: {
+      // Optimize JavaScript output with esbuild (faster than terser, built-in)
+      minify: 'esbuild',
+      // Chunk splitting for better caching
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Separate vendor chunks for better caching
+            vendor: ['astro']
+          }
+        }
+      },
+      // Asset optimization
+      assetsInlineLimit: 4096, // Inline assets smaller than 4KB
+      cssCodeSplit: true, // Enable CSS code splitting
+      cssMinify: true, // Minify CSS
+      reportCompressedSize: true, // Report compressed size
+      sourcemap: false // Disable sourcemaps in production for smaller files
     },
     server: {
       host: true,

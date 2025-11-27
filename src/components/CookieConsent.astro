@@ -3,7 +3,9 @@
 // Cookie consent component for GDPR/CCPA compliance
 ---
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
+<!-- Load CookieConsent CSS asynchronously to prevent render blocking -->
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css"></noscript>
 
 <script is:inline>
   // Load the CookieConsent library dynamically

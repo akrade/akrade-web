@@ -8,16 +8,19 @@
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css"></noscript>
 
 <script is:inline>
-  // Load the CookieConsent library dynamically
-  (function() {
+  // Lazy load CookieConsent after page is fully loaded
+  function loadCookieConsent() {
+    // Check if already loaded
+    if (window.cookieConsentLoaded) return;
+    window.cookieConsentLoaded = true;
+
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js';
     script.onload = function() {
-      // Initialize after library is loaded
       initCookieConsent();
     };
     document.head.appendChild(script);
-  })();
+  }
 
   function initCookieConsent() {
     if (!window.CookieConsent) {
@@ -197,5 +200,16 @@
       }
     }
   });
+  }
+
+  // Load cookie consent when page is idle (after initial load)
+  if ('requestIdleCallback' in window) {
+    // Use requestIdleCallback for better performance
+    requestIdleCallback(loadCookieConsent, { timeout: 2000 });
+  } else {
+    // Fallback for browsers without requestIdleCallback
+    window.addEventListener('load', function() {
+      setTimeout(loadCookieConsent, 1000);
+    });
   }
 </script>

@@ -138,41 +138,53 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
       }
     </style>
 
-    <script>
-      // Enhanced grain effect with canvas
-      const canvas = document.getElementById('grainCanvas');
-      const ctx = canvas.getContext('2d');
-      
-      function resizeCanvas() {
-        canvas.width = window.innerWidth * 2;
-        canvas.height = window.innerHeight * 2;
-      }
-      
-      function drawGrain() {
-        const imageData = ctx.createImageData(canvas.width, canvas.height);
-        const buffer = new Uint32Array(imageData.data.buffer);
-        
-        const len = buffer.length;
-        for (let i = 0; i < len; i++) {
-          if (Math.random() < 0.05) {
-            const gray = Math.random() * 255;
-            buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
-          }
+    <script is:inline>
+      // Lazy initialize grain effect for better performance
+      function initGrainEffect() {
+        const canvas = document.getElementById('grainCanvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth * 2;
+          canvas.height = window.innerHeight * 2;
         }
-        
-        ctx.putImageData(imageData, 0, 0);
+
+        function drawGrain() {
+          const imageData = ctx.createImageData(canvas.width, canvas.height);
+          const buffer = new Uint32Array(imageData.data.buffer);
+
+          const len = buffer.length;
+          for (let i = 0; i < len; i++) {
+            if (Math.random() < 0.05) {
+              const gray = Math.random() * 255;
+              buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
+            }
+          }
+
+          ctx.putImageData(imageData, 0, 0);
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Animate grain
+        function animate() {
+          drawGrain();
+          requestAnimationFrame(animate);
+        }
+
+        animate();
       }
-      
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-      
-      // Animate grain
-      function animate() {
-        drawGrain();
-        requestAnimationFrame(animate);
+
+      // Initialize grain effect when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGrainEffect);
+      } else {
+        // DOM already loaded, run immediately
+        requestAnimationFrame(initGrainEffect);
       }
-      
-      animate();
     </script>
 
     <!-- Organization Schema -->

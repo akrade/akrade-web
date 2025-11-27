@@ -3,8 +3,12 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
 ---
 
 
-<script define:vars={{ gtmId }}>
-  if (gtmId) {
+<script define:vars={{ gtmId }} is:inline>
+  // Lazy load Google Analytics when page is idle
+  function loadGoogleAnalytics() {
+    if (!gtmId || window.gtmLoaded) return;
+    window.gtmLoaded = true;
+
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -24,5 +28,14 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
       j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
       f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer',gtmId);
+  }
+
+  // Load when browser is idle
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(loadGoogleAnalytics, { timeout: 3000 });
+  } else {
+    window.addEventListener('load', function() {
+      setTimeout(loadGoogleAnalytics, 1500);
+    });
   }
 </script>

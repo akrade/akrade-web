@@ -1,0 +1,25 @@
+{
+  "name": "Akradé",
+  "short_name": "Akradé",
+  "description": "Akradé is a design practice uniting experience design and product strategy to create modern, human-centered products.",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#705dcf",
+  "background_color": "#2a2a2a",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/"
+}

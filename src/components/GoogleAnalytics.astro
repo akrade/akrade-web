@@ -1,10 +1,9 @@
 ---
-const gaId = import.meta.env.PUBLIC_GA_ID;
 const gtmId = import.meta.env.PUBLIC_GTM_ID;
 ---
 
 
-<script define:vars={{ gaId, gtmId }}>
+<script define:vars={{ gtmId }}>
   if (gtmId) {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -14,12 +13,6 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
     gtag('consent', 'default', {
       'analytics_storage': 'denied'
     });
-
-    if (gaId) {
-      gtag('config', gaId, {
-        'anonymize_ip': true
-      });
-    }
 
     (function(w,d,s,l,i){
       w[l]=w[l]||[];

@@ -4,6 +4,10 @@
 const clarityId = import.meta.env.PUBLIC_CLARITY_ID;
 ---
 
+<!-- Resource hints for Clarity CDN to improve caching -->
+<link rel="dns-prefetch" href="https://www.clarity.ms" />
+<link rel="preconnect" href="https://www.clarity.ms" crossorigin />
+
 <script define:vars={{ clarityId }} is:inline>
   // Lazy load Clarity when page is idle
   function loadClarity() {

@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
+    "build:analyze": "astro build && npm run analyze:bundle",
+    "analyze:bundle": "find dist -name '*.js' -type f -exec ls -lh {} \\; | sort -k5 -hr",
     "preview": "astro preview",
     "astro": "astro"
   },

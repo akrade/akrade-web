@@ -114,7 +114,7 @@ import Footer from '@/components/Footer.astro';
 
   .tagline {
     font-size: clamp(1.125rem, 3vw, 1.5rem);
-    color: var(--color-text-muted);
+    color: var(--color-accent-secondary);
   }
 
   /* About */
@@ -128,7 +128,7 @@ import Footer from '@/components/Footer.astro';
 
   .about p {
     font-size: 1.25rem;
-    color: var(--color-text-muted);
+    color: var(--color-accent-secondary);
     max-width: 800px;
     line-height: 1.8;
   }
@@ -158,10 +158,12 @@ import Footer from '@/components/Footer.astro';
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     transition: border-color 0.2s;
+    background-color: rgba(255, 255, 255, 0.02);;
   }
 
   .service-card:hover {
-    border-color: var(--color-accent);
+    border-color: var(--color-accent-secondary);
+    background-color: rgba(255, 255, 255, 0.035);;
   }
 
   .service-card h3 {
@@ -170,7 +172,7 @@ import Footer from '@/components/Footer.astro';
   }
 
   .service-card p {
-    color: var(--color-text-muted);
+    color: var(--color-accent-secondary);
   }
 
   /* Contact */

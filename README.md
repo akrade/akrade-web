@@ -48,6 +48,6 @@ Recommended hosts: Vercel, Netlify, Cloudflare Pages
 
 ## Contact
 
-**Email:** info@akrade.com  
+**Email:** hello@akrade.com  
 **Location:** Atlanta, Georgia  
 **Website:** [akrade.com](https://www.akrade.com)

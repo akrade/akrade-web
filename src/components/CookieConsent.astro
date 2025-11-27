@@ -3,158 +3,197 @@
 // Cookie consent component for GDPR/CCPA compliance
 ---
 
-<script>
-  // Import and initialize cookie consent
-  import 'vanilla-cookieconsent/dist/cookieconsent.css';
-  import * as CookieConsent from 'vanilla-cookieconsent';
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 
-  // Wait for DOM to be ready
-  document.addEventListener('DOMContentLoaded', () => {
-    CookieConsent.run({
-      // Automatically show the consent modal on first visit
-      autoShow: true,
-      
-      // Disable page interaction until user makes a choice
-      disablePageInteraction: false,
-      
-      // Hide the consent modal after user accepts/rejects
-      hideFromBots: true,
-      
-      // Cookie options
-      cookie: {
-        name: 'akrade_cookie_consent',
-        domain: location.hostname,
-        path: '/',
-        sameSite: 'Lax',
-        expiresAfterDays: 365
+<script is:inline>
+  // Load the CookieConsent library dynamically
+  (function() {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js';
+    script.onload = function() {
+      // Initialize after library is loaded
+      initCookieConsent();
+    };
+    document.head.appendChild(script);
+  })();
+
+  function initCookieConsent() {
+    if (!window.CookieConsent) {
+      console.error('CookieConsent library not loaded');
+      return;
+    }
+
+    window.CookieConsent.run({
+    guiOptions: {
+      consentModal: {
+        layout: 'box',
+        position: 'bottom right'
       },
-
-      // GUI options
-      guiOptions: {
-        consentModal: {
-          layout: 'box',
-          position: 'bottom right',
-          equalWeightButtons: false,
-          flipButtons: false
-        },
-        preferencesModal: {
-          layout: 'box',
-          position: 'right',
-          equalWeightButtons: false,
-          flipButtons: false
-        }
+      preferencesModal: {
+        layout: 'box'
+      }
+    },
+    
+    categories: {
+      necessary: {
+        enabled: true,
+        readOnly: true
       },
-
-      // Cookie categories
-      categories: {
-        necessary: {
-          enabled: true,
-          readOnly: true // Cannot be disabled
-        },
-        analytics: {
-          enabled: false,
-          readOnly: false,
-          autoClear: {
+      
+      analytics: {
+        enabled: false,
+        readOnly: false,
+        
+        services: {
+          ga4: {
+            label: 'Google Analytics 4',
             cookies: [
-              { name: /^_ga/ }, // Google Analytics
-              { name: '_gid' },
-              { name: '_gat' }
+              {
+                name: '_ga',
+                domain: 'akrade.com',
+                description: 'Used to distinguish users',
+                expiration: '2 years'
+              },
+              {
+                name: '_gid',
+                domain: 'akrade.com',
+                description: 'Used to distinguish users',
+                expiration: '24 hours'
+              },
+              {
+                name: '_gat',
+                domain: 'akrade.com',
+                description: 'Used to throttle request rate',
+                expiration: '1 minute'
+              },
+              {
+                name: '_ga_<container-id>',
+                domain: 'akrade.com',
+                description: 'Used to persist session state',
+                expiration: '2 years'
+              },
+              {
+                name: '__utma',
+                domain: 'akrade.com',
+                description: 'Used to distinguish users and sessions',
+                expiration: '2 years'
+              },
+              {
+                name: '__utmb',
+                domain: 'akrade.com',
+                description: 'Used to determine new sessions/visits',
+                expiration: '30 minutes'
+              },
+              {
+                name: '__utmc',
+                domain: 'akrade.com',
+                description: 'Used to determine new sessions/visits',
+                expiration: 'Session'
+              },
+              {
+                name: '__utmz',
+                domain: 'akrade.com',
+                description: 'Stores traffic source or campaign',
+                expiration: '6 months'
+              }
             ]
           },
-          services: {
-            ga: {
-              label: 'Google Analytics',
-              onAccept: () => {
-                // Enable Google Analytics
-                if (window.gtag) {
-                  window.gtag('consent', 'update', {
-                    analytics_storage: 'granted'
-                  });
-                }
+          
+          clarity: {
+            label: 'Microsoft Clarity',
+            cookies: [
+              {
+                name: '_clck',
+                domain: 'akrade.com',
+                description: 'Persists Clarity User ID and preferences',
+                expiration: '1 year'
               },
-              onReject: () => {
-                // Disable Google Analytics
-                if (window.gtag) {
-                  window.gtag('consent', 'update', {
-                    analytics_storage: 'denied'
-                  });
-                }
+              {
+                name: '_clsk',
+                domain: 'akrade.com',
+                description: 'Connects multiple page views in a session',
+                expiration: '1 day'
+              },
+              {
+                name: 'CLID',
+                domain: 'akrade.com',
+                description: 'Identifies first-time visitors',
+                expiration: '1 year'
+              },
+              {
+                name: 'ANONCHK',
+                domain: '.clarity.ms',
+                description: 'Indicates whether user is new or returning',
+                expiration: '10 minutes'
+              },
+              {
+                name: 'MR',
+                domain: '.clarity.ms',
+                description: 'Indicates whether to refresh MUID',
+                expiration: '7 days'
+              },
+              {
+                name: 'MUID',
+                domain: '.clarity.ms',
+                description: 'Identifies unique web browsers',
+                expiration: '1 year'
+              },
+              {
+                name: 'SM',
+                domain: '.clarity.ms',
+                description: 'Synchronizes MUID across domains',
+                expiration: 'Session'
               }
-            }
-          }
-        }
-      },
-
-      // Language and text
-      language: {
-        default: 'en',
-        translations: {
-          en: {
-            consentModal: {
-              title: 'We value your privacy',
-              description: 'Akrade uses cookies to enhance your experience and understand how you use our site. We use essential cookies for core functionality and optional analytics cookies to improve our services.',
-              acceptAllBtn: 'Accept all',
-              acceptNecessaryBtn: 'Reject all',
-              showPreferencesBtn: 'Manage preferences',
-              footer: `
-                <a href="/legal/privacy-policy">Privacy Policy</a>
-                <a href="/legal/terms">Terms of Service</a>
-              `
-            },
-            preferencesModal: {
-              title: 'Cookie Preferences Center',
-              acceptAllBtn: 'Accept all',
-              acceptNecessaryBtn: 'Reject all',
-              savePreferencesBtn: 'Save preferences',
-              closeIconLabel: 'Close',
-              serviceCounterLabel: 'Service|Services',
-              sections: [
-                {
-                  title: 'Cookie Usage',
-                  description: 'We use cookies to ensure the basic functionality of our website and to enhance your online experience. You can choose to opt in or out of each category at any time.'
-                },
-                {
-                  title: 'Strictly Necessary Cookies <span class="pm__badge">Always Enabled</span>',
-                  description: 'These cookies are essential for the proper functioning of the website. They enable core functionality such as security, network management, and accessibility. You cannot disable these cookies.',
-                  linkedCategory: 'necessary'
-                },
-                {
-                  title: 'Analytics Cookies',
-                  description: 'These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously. This helps us improve our services and user experience.',
-                  linkedCategory: 'analytics',
-                  cookieTable: {
-                    headers: {
-                      name: 'Cookie',
-                      domain: 'Domain',
-                      desc: 'Description',
-                      exp: 'Expiration'
-                    },
-                    body: [
-                      {
-                        name: '_ga',
-                        domain: 'akrade.com',
-                        desc: 'Google Analytics - Used to distinguish users',
-                        exp: '2 years'
-                      },
-                      {
-                        name: '_gid',
-                        domain: 'akrade.com',
-                        desc: 'Google Analytics - Used to distinguish users',
-                        exp: '24 hours'
-                      }
-                    ]
-                  }
-                },
-                {
-                  title: 'More Information',
-                  description: 'For any queries regarding our cookie policy and your choices, please <a href="mailto:hello@akrade.com">contact us</a>.'
-                }
-              ]
-            }
+            ]
+          },
+          
+          gtm: {
+            label: 'Google Tag Manager',
+            cookies: [
+              {
+                name: '_gcl_au',
+                domain: 'akrade.com',
+                description: 'Used by Google AdSense for experiments',
+                expiration: '3 months'
+              }
+            ]
           }
         }
       }
-    });
+    },
+    
+    language: {
+      default: 'en',
+      translations: {
+        en: {
+          consentModal: {
+            title: 'We use cookies',
+            description: 'We use cookies to improve your experience. You can choose to opt in or out of each category at any time.',
+            acceptAllBtn: 'Accept all',
+            acceptNecessaryBtn: 'Reject all',
+            showPreferencesBtn: 'Manage preferences'
+          },
+          preferencesModal: {
+            title: 'Cookie Preferences Center',
+            acceptAllBtn: 'Accept all',
+            acceptNecessaryBtn: 'Reject all',
+            savePreferencesBtn: 'Save preferences',
+            sections: [
+              {
+                title: 'Strictly Necessary Cookies',
+                description: 'These cookies are essential for the website to function and cannot be disabled.',
+                linkedCategory: 'necessary'
+              },
+              {
+                title: 'Analytics Cookies',
+                description: 'These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.',
+                linkedCategory: 'analytics'
+              }
+            ]
+          }
+        }
+      }
+    }
   });
+  }
 </script>
-

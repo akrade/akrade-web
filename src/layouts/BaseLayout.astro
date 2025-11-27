@@ -1,13 +1,13 @@
 ---
 // Global Page Components
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
 
 // Thrid-party Anlytics
 import Analytics from '@vercel/analytics/astro'
-import CookieConsent from '../components/CookieConsent.astro';
-import Clarity from '../components/Clarity.astro';
-import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import CookieConsent from '@/components/CookieConsent.astro';
+import Clarity from '@/components/Clarity.astro';
+import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 
 
 interface Props {
@@ -250,6 +250,16 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     min-height: 100vh;
     line-height: 1.6;
     position: relative;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-white);
+  }
+
+  .about-lede {
+    color: var(--color-white);
   }
 
 

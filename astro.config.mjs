@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
 import vercel from '@astrojs/vercel';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  site: 'https://akrade.com',
   integrations: [
-    // your integrations here
+    sitemap()
   ],
   vite: {
     resolve: {

@@ -8,6 +8,7 @@ import Analytics from '@vercel/analytics/astro'
 import CookieConsent from '@/components/CookieConsent.astro';
 import Clarity from '@/components/Clarity.astro';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
+import SpeedInsights  from "@vercel/speed-insights/astro"
 
 
 interface Props {
@@ -332,6 +333,9 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
       
       <!-- Cookie Consent (must be last) -->
       <CookieConsent />
+
+      <!--Vercel Speed Insights -->
+      <SpeedInsights />
     </div>
     <Footer />
   </body>

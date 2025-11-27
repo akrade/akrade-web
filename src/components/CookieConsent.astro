@@ -1,29 +1,20 @@
 ---
 // src/components/CookieConsent.astro
 // Cookie consent component for GDPR/CCPA compliance
+// Using vanilla-cookieconsent v3.x
 ---
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
+<!-- Resource hints for CookieConsent CDN -->
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-<script is:inline>
-  // Load the CookieConsent library dynamically
-  (function() {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js';
-    script.onload = function() {
-      // Initialize after library is loaded
-      initCookieConsent();
-    };
-    document.head.appendChild(script);
-  })();
+<!-- Load CookieConsent CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3.1.0/dist/cookieconsent.css">
 
-  function initCookieConsent() {
-    if (!window.CookieConsent) {
-      console.error('CookieConsent library not loaded');
-      return;
-    }
+<script type="module">
+  import * as CookieConsent from 'https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3.1.0/+esm';
 
-    window.CookieConsent.run({
+  CookieConsent.run({
     guiOptions: {
       consentModal: {
         layout: 'box',
@@ -195,5 +186,4 @@
       }
     }
   });
-  }
 </script>

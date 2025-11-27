@@ -2,9 +2,15 @@
 const gtmId = import.meta.env.PUBLIC_GTM_ID;
 ---
 
+<!-- Resource hints for GTM to improve caching and connection speed -->
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+<link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
-<script define:vars={{ gtmId }}>
+<!-- Google Tag Manager - Running in Web Worker via Partytown -->
+<script type="text/partytown" define:vars={{ gtmId }} is:inline>
   if (gtmId) {
+    // Initialize dataLayer
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -14,6 +20,7 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
       'analytics_storage': 'denied'
     });
 
+    // Load Google Tag Manager
     (function(w,d,s,l,i){
       w[l]=w[l]||[];
       w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});

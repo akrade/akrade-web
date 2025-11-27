@@ -30,140 +30,112 @@
 </div>
 
 <script>
+  // Cache DOM queries
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav a[data-section], .mobile-menu a[data-section]');
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
   const closeMenu = document.querySelector('.close-menu');
   const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
-  const smoothScrollLinks = Array.from(document.querySelectorAll('a[href*="#"]')).filter((link) => {
+  const smoothScrollLinks = Array.from(document.querySelectorAll('a[href*="#"]')).filter(link => {
     const url = new URL(link.href, window.location.href);
-    return url.origin === window.location.origin &&
-      url.pathname === window.location.pathname &&
-      url.hash;
+    return url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash;
   });
   const headerHeight = document.querySelector('header')?.offsetHeight || 0;
 
-  // Center a section in the viewport and optionally update the hash
-  function scrollSectionIntoView(target, shouldUpdateHash = true) {
-    const viewportHeight = window.innerHeight;
-    const targetHeight = target.offsetHeight;
-    const centerPosition = target.offsetTop + targetHeight / 2 - viewportHeight / 2;
+  // Scroll section into view
+  const scrollSectionIntoView = (target, shouldUpdateHash = true) => {
+    const centerPosition = target.offsetTop + target.offsetHeight / 2 - window.innerHeight / 2;
     const clampedPosition = Math.max(0, centerPosition - headerHeight / 2);
 
-    window.scrollTo({
-      top: clampedPosition,
-      behavior: 'smooth'
+    window.scrollTo({ top: clampedPosition, behavior: 'smooth' });
+    if (shouldUpdateHash) history.pushState(null, null, `#${target.id}`);
+  };
+
+  // Smooth scroll click handler
+  smoothScrollLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(new URL(link.href, window.location.href).hash.slice(1));
+      if (target) scrollSectionIntoView(target);
     });
-
-    if (shouldUpdateHash) {
-      history.pushState(null, null, `#${target.id}`);
-    }
-  }
-
-// Smooth scroll on click + update URL
-smoothScrollLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetId = new URL(link.href, window.location.href).hash.slice(1);
-    const target = targetId ? document.getElementById(targetId) : null;
-    
-    if (target) {
-      scrollSectionIntoView(target);
-    }
   });
-});
 
-// Update URL hash as user scrolls
-function updateURLOnScroll() {
-  const scrollPosition = window.scrollY + 200;
-  
-  let currentSection = ''; // ← Added this to track active section
-  
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-    const sectionId = section.getAttribute('id');
-    
-    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      currentSection = sectionId; // ← Store it instead of updating immediately
-    }
-  });
-  
-  // ← Update URL only once per scroll event
-  if (currentSection) {
-    history.replaceState(null, null, `#${currentSection}`);
-  } else if (window.scrollY < 100) {
-    history.replaceState(null, null, window.location.pathname);
-  }
-}
+  // Throttle helper
+  const throttle = (fn, delay) => {
+    let lastCall = 0;
+    return (...args) => {
+      const now = Date.now();
+      if (now - lastCall >= delay) {
+        lastCall = now;
+        fn(...args);
+      }
+    };
+  };
 
-// Throttle scroll events for performance
-// Fire on scroll (no throttling for more responsive updates)
-window.addEventListener('scroll', updateURLOnScroll);
-
-// Handle direct URLs with hash on page load
-window.addEventListener('load', () => {
-  if (window.location.hash) {
-    const targetId = window.location.hash.slice(1);
-    const target = document.getElementById(targetId);
-    
-    if (target) {
-      setTimeout(() => {
-        scrollSectionIntoView(target, false);
-      }, 0);
-    }
-  }
-});
-
-  function setActiveLink() {
-    let current = '';
+  // Combined scroll handler for URL and active link updates
+  const handleScroll = throttle(() => {
+    const scrollY = window.scrollY;
+    const scrollPosition = scrollY + 200;
     const offset = window.innerHeight * 0.4;
-    
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop - offset;
+    let currentSection = '';
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
-      
-      if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-        current = section.getAttribute('id');
+      const sectionId = section.getAttribute('id');
+
+      // Update URL hash
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        currentSection = sectionId;
+      }
+
+      // Update active link
+      if (scrollY >= sectionTop - offset && scrollY < sectionTop + sectionHeight - offset) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.dataset.section === sectionId);
+        });
       }
     });
 
-    navLinks.forEach((link) => {
-      link.classList.remove('active');
-      if (link.dataset.section === current) {
-        link.classList.add('active');
-      }
-    });
-  }
+    // Update URL
+    if (currentSection) {
+      history.replaceState(null, null, `#${currentSection}`);
+    } else if (scrollY < 100) {
+      history.replaceState(null, null, window.location.pathname);
+    }
+  }, 100); // Throttle to 100ms
 
-  function openMenu() {
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Handle direct hash URLs on load
+  window.addEventListener('load', () => {
+    const targetId = window.location.hash.slice(1);
+    const target = targetId ? document.getElementById(targetId) : null;
+    if (target) setTimeout(() => scrollSectionIntoView(target, false), 0);
+    handleScroll(); // Set initial active link
+  });
+
+  // Mobile menu handlers
+  const openMenu = () => {
     mobileMenu.classList.add('open');
     document.body.style.overflow = 'hidden';
     closeMenu.focus();
-  }
+  };
 
-  function closeMenuFn() {
+  const closeMenuFn = () => {
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
     hamburger.focus();
-  }
+  };
 
   hamburger.addEventListener('click', openMenu);
   closeMenu.addEventListener('click', closeMenuFn);
-  
-  mobileMenuLinks.forEach(link => {
-    link.addEventListener('click', closeMenuFn);
-  });
+  mobileMenuLinks.forEach(link => link.addEventListener('click', closeMenuFn));
 
-  window.addEventListener('scroll', setActiveLink);
-  window.addEventListener('load', setActiveLink);
-  
   // ESC key to close menu
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
-      closeMenuFn();
-    }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenuFn();
   });
 </script>
 
@@ -174,7 +146,7 @@ window.addEventListener('load', () => {
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 1.5rem 2rem;
+    padding: 0.5rem 2rem;
     background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);

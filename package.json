@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
+    "build:analyze": "astro build && npm run analyze:bundle",
+    "analyze:bundle": "find dist -name '*.js' -type f -exec ls -lh {} \\; | sort -k5 -hr",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.1.4",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vercel": "^9.0.1",
     "@microsoft/clarity": "^1.0.0",

@@ -54,41 +54,162 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
 
     <title>{title}</title>
 
-    <script>
-      // Enhanced grain effect with canvas
-      const canvas = document.getElementById('grainCanvas');
-      const ctx = canvas.getContext('2d');
-      
-      function resizeCanvas() {
-        canvas.width = window.innerWidth * 2;
-        canvas.height = window.innerHeight * 2;
+    <!-- Critical CSS: Inline for immediate render -->
+    <style>
+      /* Critical above-the-fold styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      
-      function drawGrain() {
-        const imageData = ctx.createImageData(canvas.width, canvas.height);
-        const buffer = new Uint32Array(imageData.data.buffer);
-        
-        const len = buffer.length;
-        for (let i = 0; i < len; i++) {
-          if (Math.random() < 0.05) {
-            const gray = Math.random() * 255;
-            buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
-          }
+
+      :root {
+        --color-white: #ffffff;
+        --color-text: #fafafa;
+        --color-muted: #f0ede3;
+        --color-accent: #ae8d40;
+        --color-accent-secondary: #b7b698;
+        --color-bg-primary: #1a1a1a;
+        --color-bg-elevated: #2a2a2a;
+        --color-bg-hover: #3a3a3a;
+        --color-text-primary: #fafafa;
+        --color-text-muted: #f0ede3;
+        --color-border: rgba(255, 255, 255, 0.1);
+        --font-sans: system-ui, -apple-system, sans-serif;
+        --font-serif: Georgia, 'Times New Roman', Times, serif;
+      }
+
+      html, body {
+        font-family: var(--font-sans);
+        background: var(--color-bg-primary);
+        color: var(--color-text-primary);
+        scroll-behavior: smooth;
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        line-height: 1.6;
+        position: relative;
+      }
+
+      h1, h2, h3 {
+        color: var(--color-white);
+      }
+
+      .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 6rem 0;
+      }
+
+      /* Critical grain container setup */
+      .grain-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .grain {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        opacity: 0.5;
+      }
+
+      /* Vignette overlay */
+      .vignette {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0) 100%);
+        pointer-events: none;
+        z-index: 2;
+      }
+    </style>
+
+    <script is:inline>
+      // Optimized grain effect - reduced frame rate for better performance
+      function initGrainEffect() {
+        const canvas = document.getElementById('grainCanvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d', { alpha: false, willReadFrequently: false });
+        let animationId;
+        let lastFrame = 0;
+        const fps = 15; // Reduced from 60fps to 15fps for performance
+        const frameInterval = 1000 / fps;
+
+        function resizeCanvas() {
+          // Reduce canvas resolution for better performance
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
         }
-        
-        ctx.putImageData(imageData, 0, 0);
+
+        function drawGrain(timestamp) {
+          if (timestamp - lastFrame < frameInterval) {
+            animationId = requestAnimationFrame(drawGrain);
+            return;
+          }
+
+          lastFrame = timestamp;
+
+          const imageData = ctx.createImageData(canvas.width, canvas.height);
+          const buffer = new Uint32Array(imageData.data.buffer);
+          const len = buffer.length;
+
+          // Optimize: reduce grain density and use bitwise operations
+          for (let i = 0; i < len; i++) {
+            if (Math.random() < 0.03) { // Reduced from 0.05 to 0.03
+              const gray = (Math.random() * 255) | 0;
+              buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
+            }
+          }
+
+          ctx.putImageData(imageData, 0, 0);
+          animationId = requestAnimationFrame(drawGrain);
+        }
+
+        resizeCanvas();
+
+        // Debounce resize for performance
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(resizeCanvas, 250);
+        });
+
+        // Start animation
+        animationId = requestAnimationFrame(drawGrain);
+
+        // Pause animation when tab is hidden to save resources
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            cancelAnimationFrame(animationId);
+          } else {
+            animationId = requestAnimationFrame(drawGrain);
+          }
+        });
       }
-      
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-      
-      // Animate grain
-      function animate() {
-        drawGrain();
-        requestAnimationFrame(animate);
+
+      // Initialize grain effect when idle for better initial page load
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(initGrainEffect, { timeout: 2000 });
+      } else if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGrainEffect);
+      } else {
+        requestAnimationFrame(initGrainEffect);
       }
-      
-      animate();
     </script>
 
     <!-- Organization Schema -->
@@ -218,65 +339,18 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
 </html>
 
 <style is:global>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    --color-white: #ffffff;
-    --color-text: #fafafa;
-    --color-muted: #f0ede3;
-    --color-accent: #ae8d40;
-    --color-accent-secondary: #b7b698;
-    --color-bg-primary: #1a1a1a;
-    --color-bg-elevated: #2a2a2a;
-    --color-bg-hover: #3a3a3a;
-    --color-text-primary: #fafafa;
-    --color-text-muted: #f0ede3;
-    --color-border: rgba(255, 255, 255, 0.1);
-    --font-sans: system-ui, -apple-system, sans-serif;
-    --font-serif: Georgia, 'Times New Roman', Times, serif;
-  }
-
-  html, body {
-    font-family: var(--font-sans);
-    background: var(--color-bg-primary);
-    color: var(--color-text-primary);
-    scroll-behavior: smooth;
-    height: 100%;
-    margin: 0;
-  }
-
-  body {
-    min-height: 100vh;
-    line-height: 1.6;
-    position: relative;
-  }
-
-  h1,
-  h2,
-  h3 {
-    color: var(--color-white);
-  }
-
+  /* Non-critical styles loaded after critical CSS */
   .about-lede {
     color: var(--color-white);
-  }
-
-
-  .page-wrapper {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 6rem 0;
   }
 
   .page-wrapper #homepage {
     padding: 0;
   }
 
+  #homepage .hero {
+    padding-top: 0;
+  }
 
   main {
     padding-top: 80px;
@@ -290,26 +364,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     min-height: 90vh;
   }
 
-  /* Grainy film effect */
-  .grain-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .grain {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    opacity: 0.5;
-  }
-
+  /* Non-critical grain effects */
   .grain::after {
     content: '';
     position: fixed;
@@ -347,18 +402,6 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
 
   .grain {
     animation: grain 8s steps(10) infinite, flicker 0.15s infinite;
-  }
-
-  /* Vignette overlay */
-  .vignette {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
-    pointer-events: none;
-    z-index: 2;
   }
 
   /* Subtle scan lines */

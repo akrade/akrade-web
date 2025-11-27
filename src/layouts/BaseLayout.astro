@@ -202,13 +202,12 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
         });
       }
 
-      // Initialize grain effect when idle for better initial page load
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(initGrainEffect, { timeout: 2000 });
-      } else if (document.readyState === 'loading') {
+      // Initialize grain effect immediately for visual feedback
+      // The effect is already optimized (15fps, low density) so it won't block rendering
+      if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initGrainEffect);
       } else {
-        requestAnimationFrame(initGrainEffect);
+        initGrainEffect();
       }
     </script>
 

@@ -6,7 +6,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://akrade.com',
   integrations: [
-    sitemap()
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+      filter: (page) => !page.includes('/admin/') && !page.includes('/draft/')
+    })
   ],
   vite: {
     resolve: {

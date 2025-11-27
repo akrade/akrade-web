@@ -3,9 +3,13 @@
 // Cookie consent component for GDPR/CCPA compliance
 ---
 
+<!-- Resource hints for CookieConsent CDN -->
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
 <!-- Load CookieConsent CSS asynchronously to prevent render blocking -->
-<link rel="preload" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css"></noscript>
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3.1.0/dist/cookieconsent.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3.1.0/dist/cookieconsent.css"></noscript>
 
 <script is:inline>
   // Lazy load CookieConsent after page is fully loaded
@@ -15,9 +19,13 @@
     window.cookieConsentLoaded = true;
 
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3.1.0/dist/cookieconsent.umd.js';
     script.onload = function() {
       initCookieConsent();
+    };
+    script.onerror = function() {
+      console.error('Failed to load CookieConsent library');
+      window.cookieConsentLoaded = false;
     };
     document.head.appendChild(script);
   }
@@ -28,7 +36,8 @@
       return;
     }
 
-    window.CookieConsent.run({
+    try {
+      window.CookieConsent.run({
     guiOptions: {
       consentModal: {
         layout: 'box',
@@ -199,7 +208,10 @@
         }
       }
     }
-  });
+    });
+    } catch (error) {
+      console.error('Error initializing CookieConsent:', error);
+    }
   }
 
   // Load cookie consent when page is idle (after initial load)

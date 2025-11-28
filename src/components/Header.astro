@@ -335,13 +335,25 @@
       display: none;
     }
 
+    header {
+      padding: 1rem;
+    }
+
     nav {
-      grid-template-columns: auto 1fr;
-      gap: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 0;
+    }
+
+    .hamburger {
+      position: absolute;
+      left: 0;
     }
 
     .logo {
-      justify-self: center;
+      position: static;
     }
 
     .mega-menu-links a {

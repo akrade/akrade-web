@@ -2,6 +2,7 @@
 // Global Page Components
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import ScheduleCallPanel from '@/components/ScheduleCallPanel.astro';
 
 // Thrid-party Anlytics
 import Analytics from '@vercel/analytics/astro'
@@ -338,6 +339,9 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
       <SpeedInsights />
     </div>
     <Footer />
+
+    <!-- Schedule Call Panel -->
+    <ScheduleCallPanel />
   </body>
 </html>
 
@@ -427,7 +431,8 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
   }
 
   /* Ensure content is above all effects */
-  body > :not(.grain-container):not(.vignette):not(.scanlines) {
+  body > :not(.grain-container):not(.vignette):not(.scanlines):not(.panel-backdrop):not(.schedule-call-panel) {
+    position: relative;
     z-index: 10;
   }
 </style>

@@ -217,11 +217,14 @@ import Footer from '@/components/Footer.astro';
   .contact-item a,
   .contact-item p:not(.contact-label) {
     font-size: 1.5rem;
-    color: var(--color-text);
+    color: var(--color-teal);
     text-decoration: none;
   }
-
+  .contact-item p:not(.contact-label) {
+    color: var(--color-text);
+  }
+  
   .contact-item a:hover {
-    color: var(--color-accent);
+    color: var(--color-accent-secondary);
   }
 </style>

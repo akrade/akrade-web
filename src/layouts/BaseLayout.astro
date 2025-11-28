@@ -67,21 +67,22 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
 
       :root {
         /* Primative colors styles */
-        --color-bronze:   #AE8D40;   
-        --color-sage:     #B7B698;  
-        --color-charcoal: #2A2A2A;   
-        --color-teal:     #9DF5E5;   
-        --color-silver:   #F0F0F0;   
+        --color-bronze:   #ae8d40;
+        --color-sage:     #b7b698;
+        --color-charcoal: #2a2a2a;
+        --color-teal:     #9df5e5;
+        --color-silver:   #f0f0f0;
         --color-white:    #ffffff;
+
 
 
         /* Critical above-the-fold styles */
         --color-text: #fafafa;
         --color-muted: #f0ede3;
-        --color-accent: #ae8d40;
-        --color-accent-secondary: #b7b698;
+        --color-accent: var( --color-bronze);
+        --color-accent-secondary: var(--color-sage);
         --color-bg-primary: #1a1a1a;
-        --color-bg-elevated: #2a2a2a;
+        --color-bg-elevated: var(--color-charcoal);
         --color-bg-hover: #3a3a3a;
         --color-text-primary: #fafafa;
         --color-text-muted: #f0ede3;

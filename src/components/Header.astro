@@ -7,10 +7,10 @@
       <span></span>
       <span></span>
     </button>
-    <div class="logo-container">
-      <a href="/" class="logo">Akradé</a>
-      <span class="tagline">The Right Story. Perfect Timing.</span>
-    </div>
+    <a href="/" class="logo-container">
+      <span class="logo">Akradé</span>
+      <span class="tagline">Right Story. Perfect Strategy.</span>
+    </a>
   </nav>
 </header>
 
@@ -169,11 +169,13 @@
     left: 0;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.75rem;
     z-index: 251;
   }
 
@@ -183,6 +185,10 @@
     background: var(--color-text);
     transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
     transform-origin: center;
+  }
+
+  .hamburger:hover span {
+    background: var(--color-accent-secondary);
   }
 
   /* Hamburger to X animation */
@@ -210,6 +216,7 @@
     align-items: center;
     gap: 0.125rem;
     z-index: 251;
+    text-decoration: none;
   }
 
   /* Logo centered */

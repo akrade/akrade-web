@@ -8,6 +8,7 @@
       <li><a href="/#about" data-section="about">About</a></li>
       <li><a href="/#services" data-section="services">Services</a></li>
       <li><a href="/#contact" data-section="contact">Contact</a></li>
+      <li><button class="schedule-call-btn" id="headerScheduleBtn">Schedule a Call</button></li>
     </ul>
     <button class="hamburger" aria-label="Toggle menu">
       <span></span>
@@ -26,6 +27,7 @@
     <li><a href="#about" data-section="about">About</a></li>
     <li><a href="#services" data-section="services">Services</a></li>
     <li><a href="#contact" data-section="contact">Contact</a></li>
+    <li><button class="schedule-call-btn mobile" id="mobileScheduleBtn">Schedule a Call</button></li>
   </ul>
 </div>
 
@@ -137,6 +139,23 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenuFn();
   });
+
+  // Schedule call panel integration
+  const headerScheduleBtn = document.getElementById('headerScheduleBtn');
+  const mobileScheduleBtn = document.getElementById('mobileScheduleBtn');
+
+  const openSchedulePanel = () => {
+    if (typeof (window as any).openSchedulePanel === 'function') {
+      (window as any).openSchedulePanel();
+      // Close mobile menu if open
+      if (mobileMenu.classList.contains('open')) {
+        closeMenuFn();
+      }
+    }
+  };
+
+  headerScheduleBtn?.addEventListener('click', openSchedulePanel);
+  mobileScheduleBtn?.addEventListener('click', openSchedulePanel);
 </script>
 
 <style>
@@ -186,6 +205,24 @@
   .desktop-nav a.active {
     color: var(--color-text);
     font-weight: 700;
+  }
+
+  /* Schedule Call Button */
+  .schedule-call-btn {
+    background: var(--color-teal);
+    color: var(--color-bg-primary);
+    border: none;
+    padding: 0.3rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .schedule-call-btn:hover {
+    background: var(--color-accent-secondary);
   }
 
   /* Hamburger */
@@ -253,6 +290,12 @@
   .mobile-menu a:hover,
   .mobile-menu a.active {
     color: var(--color-text);
+  }
+
+  .mobile-menu .schedule-call-btn.mobile {
+    font-size: 1.5rem;
+    padding: 0.75rem 2rem;
+    margin-top: 1rem;
   }
 
   /* Close button (X) */

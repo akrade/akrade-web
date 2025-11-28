@@ -3,42 +3,35 @@
 
 <header>
   <nav>
-    <a href="/" class="logo">Akradé</a>
-    <ul class="desktop-nav">
-      <li><a href="/#about" data-section="about">About</a></li>
-      <li><a href="/#services" data-section="services">Services</a></li>
-      <li><a href="/#contact" data-section="contact">Contact</a></li>
-      <li><button class="schedule-call-btn" id="headerScheduleBtn">Schedule a Call</button></li>
-    </ul>
     <button class="hamburger" aria-label="Toggle menu">
       <span></span>
       <span></span>
-      <span></span>
     </button>
+    <a href="/" class="logo">Akradé</a>
+    <ul class="desktop-nav">
+      <li><button class="schedule-call-btn" id="headerScheduleBtn">Schedule a Call</button></li>
+    </ul>
   </nav>
 </header>
 
-<div class="mobile-menu">
-  <button class="close-menu" aria-label="Close menu">
-    <span></span>
-    <span></span>
-  </button>
-  <ul>
-    <li><a href="#about" data-section="about">About</a></li>
-    <li><a href="#services" data-section="services">Services</a></li>
-    <li><a href="#contact" data-section="contact">Contact</a></li>
-    <li><button class="schedule-call-btn mobile" id="mobileScheduleBtn">Schedule a Call</button></li>
-  </ul>
+<!-- Mega Menu -->
+<div class="mega-menu">
+  <nav class="mega-menu-nav">
+    <ul class="mega-menu-links">
+      <li><a href="/#about" data-section="about">About</a></li>
+      <li><a href="/#services" data-section="services">Services</a></li>
+      <li><a href="/#contact" data-section="contact">Contact</a></li>
+    </ul>
+  </nav>
 </div>
 
 <script>
   // Cache DOM queries
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a[data-section], .mobile-menu a[data-section]');
+  const navLinks = document.querySelectorAll('nav a[data-section], .mega-menu a[data-section]');
   const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const closeMenu = document.querySelector('.close-menu');
-  const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+  const megaMenu = document.querySelector('.mega-menu');
+  const megaMenuLinks = document.querySelectorAll('.mega-menu a');
   const smoothScrollLinks = Array.from(document.querySelectorAll('a[href*="#"]')).filter(link => {
     const url = new URL(link.href, window.location.href);
     return url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash;
@@ -118,44 +111,49 @@
     handleScroll(); // Set initial active link
   });
 
-  // Mobile menu handlers
-  const openMenu = () => {
-    mobileMenu.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    closeMenu.focus();
+  // Mega menu handlers - toggle with hamburger
+  const toggleMenu = () => {
+    const isOpen = megaMenu.classList.contains('open');
+
+    if (isOpen) {
+      megaMenu.classList.remove('open');
+      hamburger.classList.remove('active');
+      document.body.style.overflow = '';
+    } else {
+      megaMenu.classList.add('open');
+      hamburger.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
   };
 
   const closeMenuFn = () => {
-    mobileMenu.classList.remove('open');
+    megaMenu.classList.remove('open');
+    hamburger.classList.remove('active');
     document.body.style.overflow = '';
-    hamburger.focus();
   };
 
-  hamburger.addEventListener('click', openMenu);
-  closeMenu.addEventListener('click', closeMenuFn);
-  mobileMenuLinks.forEach(link => link.addEventListener('click', closeMenuFn));
+  hamburger.addEventListener('click', toggleMenu);
+  megaMenuLinks.forEach(link => link.addEventListener('click', closeMenuFn));
 
   // ESC key to close menu
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenuFn();
+    if (e.key === 'Escape' && megaMenu.classList.contains('open')) closeMenuFn();
   });
 
   // Schedule call panel integration
   const headerScheduleBtn = document.getElementById('headerScheduleBtn');
-  const mobileScheduleBtn = document.getElementById('mobileScheduleBtn');
 
   const openSchedulePanel = () => {
     if (typeof (window as any).openSchedulePanel === 'function') {
       (window as any).openSchedulePanel();
-      // Close mobile menu if open
-      if (mobileMenu.classList.contains('open')) {
+      // Close mega menu if open
+      if (megaMenu.classList.contains('open')) {
         closeMenuFn();
       }
     }
   };
 
   headerScheduleBtn?.addEventListener('click', openSchedulePanel);
-  mobileScheduleBtn?.addEventListener('click', openSchedulePanel);
 </script>
 
 <style>
@@ -164,8 +162,8 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
-    padding: 0.2rem 2rem;
+    z-index: 250;
+    padding: 0.8rem 2rem;
     background: rgba(10, 10, 10, 0.3);
     backdrop-filter: blur(10px);
   }
@@ -173,38 +171,78 @@
   nav {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    gap: 2rem;
   }
 
+  /* Hamburger on the left */
+  .hamburger {
+    justify-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 251;
+    position: relative;
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+    transform-origin: center;
+  }
+
+  .hamburger span:nth-child(2) {
+    width: 18px;
+    transition: width 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+  }
+
+  /* Hamburger to X animation */
+  .hamburger.active span {
+    width: 30px;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  /* X hover state */
+  .hamburger.active:hover span {
+    background: var(--color-accent-secondary);
+  }
+
+  /* Logo centered */
   .logo {
+    justify-self: center;
     font-size: 1.5rem;
     font-weight: 600;
     text-decoration: none;
     color: var(--color-text);
-    z-index: 101;
+    z-index: 251;
+    position: relative;
   }
 
+  /* Desktop nav on the right */
   .desktop-nav {
+    justify-self: end;
     display: flex;
     gap: 2rem;
     list-style: none;
-  }
-
-  .desktop-nav a {
-    text-decoration: none;
-    color: var(--color-muted);
-    transition: color 0.2s, font-weight 0.2s;
-  }
-
-  .desktop-nav a:hover {
-    color: var(--color-text);
-  }
-
-  .desktop-nav a.active {
-    color: var(--color-text);
-    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    z-index: 251;
+    position: relative;
   }
 
   /* Schedule Call Button */
@@ -225,116 +263,104 @@
     background: var(--color-accent-secondary);
   }
 
-  /* Hamburger */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    z-index: 101;
-  }
-
-  .hamburger span {
-    width: 24px;
-    height: 2px;
-    background: var(--color-text);
-    transition: all 0.3s;
-  }
-
-  .hamburger span:nth-child(3) {
-    display: none;
-  }
-
-  /* Mobile menu overlay */
-  .mobile-menu {
+  /* Mega Menu - Apple Style */
+  .mega-menu {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: var(--color-bg-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(26, 26, 26, 0.98);
+    backdrop-filter: blur(40px);
     z-index: 200;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s cubic-bezier(0.28, 0.11, 0.32, 1);
   }
 
-  .mobile-menu.open {
+  .mega-menu.open {
     opacity: 1;
     pointer-events: all;
   }
 
-  .mobile-menu ul {
+  .mega-menu-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-top: 25vh;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .mega-menu-links {
     list-style: none;
-    text-align: center;
     padding: 0;
+    margin: 0;
+    width: 100%;
   }
 
-  .mobile-menu li {
-    margin: 2rem 0;
+  .mega-menu-links li {
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .mobile-menu a {
-    font-size: 2rem;
+  .mega-menu-links a {
+    display: block;
+    font-size: 3rem;
+    font-weight: 600;
     text-decoration: none;
     color: var(--color-muted);
-    transition: color 0.2s;
+    padding: 1.5rem 0;
+    transition: color 0.3s ease, padding-left 0.3s ease;
   }
 
-  .mobile-menu a:hover,
-  .mobile-menu a.active {
-    color: var(--color-text);
+  .mega-menu-links a:hover {
+    color: var(--color-accent-secondary);
+    padding-left: 2rem;
   }
 
-  .mobile-menu .schedule-call-btn.mobile {
-    font-size: 1.5rem;
-    padding: 0.75rem 2rem;
-    margin-top: 1rem;
+  .mega-menu-links a.active {
+    color: var(--color-accent-secondary);
+    padding-left: 0;
   }
 
-  /* Close button (X) */
-  .close-menu {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    width: 40px;
-    height: 40px;
-  }
-
-  .close-menu span {
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    background: var(--color-text);
-    top: 50%;
-    left: 50%;
-  }
-
-  .close-menu span:first-child {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-
-  .close-menu span:last-child {
-    transform: translate(-50%, -50%) rotate(-45deg);
+  .mega-menu-links a.active:hover {
+    padding-left: 2rem;
   }
 
   @media (max-width: 768px) {
     .desktop-nav {
       display: none;
     }
-    
-    .hamburger {
-      display: flex;
+
+    nav {
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+    }
+
+    .logo {
+      justify-self: center;
+    }
+
+    .mega-menu-links a {
+      font-size: 2rem;
+      padding: 1rem 0;
+    }
+
+    .mega-menu-links a:hover {
+      color: var(--color-accent-secondary);
+      padding-left: 1rem;
+    }
+
+    .mega-menu-links a.active {
+      color: var(--color-accent-secondary);
+      padding-left: 0;
+    }
+
+    .mega-menu-links a.active:hover {
+      padding-left: 1rem;
     }
   }
 </style>

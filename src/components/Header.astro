@@ -7,7 +7,10 @@
       <span></span>
       <span></span>
     </button>
-    <a href="/" class="logo">Akradé</a>
+    <div class="logo-container">
+      <a href="/" class="logo">Akradé</a>
+      <span class="tagline">The Right Story. Perfect Timing.</span>
+    </div>
   </nav>
 </header>
 
@@ -200,13 +203,33 @@
     background: var(--color-accent-secondary);
   }
 
+  /* Logo container */
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem;
+    z-index: 251;
+  }
+
   /* Logo centered */
   .logo {
     font-size: 1.5rem;
     font-weight: 600;
     text-decoration: none;
     color: var(--color-text);
-    z-index: 251;
+    line-height: 1;
+  }
+
+  /* Tagline */
+  .tagline {
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    color: var(--color-accent-secondary);
+    letter-spacing: 0.05em;
+    line-height: 1;
   }
 
   /* Mega Menu - Apple Style */

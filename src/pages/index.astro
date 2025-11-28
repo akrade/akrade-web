@@ -166,7 +166,7 @@ import Footer from '@/components/Footer.astro';
   }
 
   .service-card {
-    padding: 2rem;
+    padding: 0.5rem 2rem 2rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     transition: border-color 0.2s;
@@ -185,6 +185,84 @@ import Footer from '@/components/Footer.astro';
 
   .service-card p {
     color: var(--color-accent-secondary);
+  }
+
+  /* Tablet: Reduce link sizes */
+  @media (min-width: 481px) and (max-width: 1000px) {
+    .contact-item a,
+    .contact-item p:not(.contact-label) {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Mobile: Reduce font sizes and simplify layout */
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .about .about-lede {
+      font-size: 1.25rem;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    .services-grid {
+      display: block;
+      gap: 0;
+      margin-top: 2rem;
+    }
+
+    .service-card {
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background-color: transparent;
+      margin-bottom: 2rem;
+    }
+
+    .service-card:hover {
+      border-color: transparent;
+      background-color: transparent;
+    }
+
+    .service-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .service-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+    }
+
+    .contact-grid {
+      gap: 0;
+      margin-top: 2rem;
+    }
+
+    .contact-item:not(:last-child) {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 1.5rem;
+    }
+
+    .contact-grid .contact-item a {
+      font-size: 1rem;
+    }
+
+    .contact-grid .contact-item p:not(.contact-label) {
+      font-size: 1rem;
+    }
   }
 
   /* Contact */

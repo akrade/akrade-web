@@ -79,7 +79,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
         /* Critical above-the-fold styles */
         --color-text: #fafafa;
         --color-muted: #f0ede3;
-        --color-accent: var( --color-bronze);
+        --color-accent: var(--color-teal);
         --color-accent-secondary: var(--color-sage);
         --color-bg-primary: #1a1a1a;
         --color-bg-elevated: var(--color-charcoal);
@@ -106,9 +106,36 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
         position: relative;
       }
 
+      /* Default link styles */
+      a {
+        color: var(--color-accent);
+        text-decoration: none;
+        transition: color 0.2s ease, text-decoration-color 0.2s ease;
+      }
+
+      /* Hover state */
+      a:hover,
+      a:focus {
+        color: var(--color-sage);
+        text-decoration: underline;
+        text-decoration-color: var(--color-accent-secondary);
+      }
+
+      /* Active / pressed */
+      a:active {
+        color: var(--color-bronze);
+      }
+
+      /* Visited (optional but recommended for clarity) */
+      a:visited {
+        color: var(--color-accent-secondary);
+      }
+
+
       h1, h2, h3 {
         color: var(--color-white);
       }
+
 
       .page-wrapper {
         min-height: 100vh;

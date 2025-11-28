@@ -71,10 +71,9 @@ import Footer from '@/components/Footer.astro';
       </div>
       <div class="contact-item">
         <p class="contact-label">Meet</p>
-        <a href="https://cal.com/akrade" 
-          target="_blank"
-          data-cal-link="akrade"
-          id="cal-link">
+        <a href="#"
+          id="contact-schedule-link"
+          data-trigger="schedule-panel">
           Schedule a Meeting
         </a>
       </div>
@@ -91,6 +90,19 @@ import Footer from '@/components/Footer.astro';
   </main>
 
 </BaseLayout>
+
+<script>
+  // Handle Schedule a Meeting link in contact section
+  const contactScheduleLink = document.getElementById('contact-schedule-link');
+
+  contactScheduleLink?.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Call the global function exposed by ScheduleCallPanel
+    if (typeof (window as any).openSchedulePanel === 'function') {
+      (window as any).openSchedulePanel();
+    }
+  });
+</script>
 
 <style>
 

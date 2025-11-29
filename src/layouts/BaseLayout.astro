@@ -4,6 +4,9 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import ScheduleCallPanel from '@/components/ScheduleCallPanel.astro';
 
+// Design System
+import '../styles/colors.css';
+
 // Thrid-party Anlytics
 import Analytics from '@vercel/analytics/astro'
 import CookieConsent from '@/components/CookieConsent.astro';
@@ -66,27 +69,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
       }
 
       :root {
-        /* Primative colors styles */
-        --color-bronze:   #ae8d40;
-        --color-sage:     #b7b698;
-        --color-charcoal: #2a2a2a;
-        --color-teal:     #9df5e5;
-        --color-silver:   #f0f0f0;
-        --color-white:    #ffffff;
-
-
-
-        /* Critical above-the-fold styles */
-        --color-text: #fafafa;
-        --color-muted: #f0ede3;
-        --color-accent: var(--color-teal);
-        --color-accent-secondary: var(--color-sage);
-        --color-bg-primary: #1a1a1a;
-        --color-bg-elevated: var(--color-charcoal);
-        --color-bg-hover: #3a3a3a;
-        --color-text-primary: #fafafa;
-        --color-text-muted: #f0ede3;
-        --color-border: rgba(255, 255, 255, 0.1);
+        /* Font tokens */
         --font-sans: system-ui, -apple-system, sans-serif;
         --font-serif: Georgia, 'Times New Roman', Times, serif;
       }

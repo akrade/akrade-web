@@ -102,6 +102,47 @@ import Footer from '@/components/Footer.astro';
       (window as any).openSchedulePanel();
     }
   });
+
+  // Scroll-based background color change effect
+  const aboutSection = document.getElementById('about');
+  const contactSection = document.getElementById('contact');
+  const body = document.body;
+
+  // Define colors
+  const defaultBgColor = '#111113'; // --color-bg-primary (slate1)
+  const goldBgColor = '#cbb99f';    // gold11 from Radix
+
+  function handleScrollColorChange() {
+    if (!aboutSection || !contactSection) return;
+
+    const scrollPosition = window.scrollY + window.innerHeight / 2;
+    const aboutStart = aboutSection.offsetTop;
+    const aboutEnd = aboutSection.offsetTop + aboutSection.offsetHeight;
+    const contactStart = contactSection.offsetTop;
+
+    // When in about section, use gold background
+    if (scrollPosition >= aboutStart && scrollPosition < contactStart) {
+      body.style.transition = 'background-color 0.8s ease';
+      body.style.backgroundColor = goldBgColor;
+    }
+    // Otherwise, use default background
+    else {
+      body.style.transition = 'background-color 0.8s ease';
+      body.style.backgroundColor = defaultBgColor;
+    }
+  }
+
+  // Listen to scroll events with throttle for performance
+  let scrollTimeout: number;
+  window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout);
+    }
+    scrollTimeout = window.requestAnimationFrame(handleScrollColorChange);
+  }, { passive: true });
+
+  // Run once on load
+  handleScrollColorChange();
 </script>
 
 <style>

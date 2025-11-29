@@ -106,35 +106,36 @@ import Footer from '@/components/Footer.astro';
   // Scroll-based background color change effect
   const aboutSection = document.getElementById('about');
   const contactSection = document.getElementById('contact');
-  const body = document.body;
+  const servicesSection = document.getElementById('services');
 
   // Define colors
   const defaultBgColor = '#111113'; // --color-bg-primary (slate1)
   const goldBgColor = '#cbb99f';    // gold11 from Radix
 
   function handleScrollColorChange() {
-    if (!aboutSection || !contactSection) return;
+    if (!aboutSection || !servicesSection) return;
 
-    // Get section boundaries
+    // Get section positions
     const aboutRect = aboutSection.getBoundingClientRect();
-    const contactRect = contactSection.getBoundingClientRect();
+    const servicesRect = servicesSection.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
+    const viewportMid = viewportHeight / 2;
 
-    // Check if about section is in view (at least 30% visible)
-    const aboutInView = aboutRect.top < viewportHeight * 0.7 && aboutRect.bottom > viewportHeight * 0.3;
+    // About section is active when it's in the middle of viewport
+    const aboutIsActive = aboutRect.top < viewportMid && aboutRect.bottom > viewportMid;
 
-    // Check if contact section is in view
-    const contactInView = contactRect.top < viewportHeight * 0.5;
+    // Services section starts when its top is above middle of viewport
+    const servicesStarted = servicesRect.top < viewportMid;
 
-    // When about section is in view and contact hasn't started, use gold background
-    if (aboutInView && !contactInView) {
-      body.style.transition = 'background-color 0.8s ease';
-      body.style.backgroundColor = goldBgColor;
+    // Apply gold background when viewing about section, before services starts
+    if (aboutIsActive && !servicesStarted) {
+      document.body.style.transition = 'background-color 0.8s ease';
+      document.body.style.backgroundColor = goldBgColor;
     }
-    // Otherwise, use default background
+    // Otherwise use default
     else {
-      body.style.transition = 'background-color 0.8s ease';
-      body.style.backgroundColor = defaultBgColor;
+      document.body.style.transition = 'background-color 0.8s ease';
+      document.body.style.backgroundColor = defaultBgColor;
     }
   }
 
@@ -147,7 +148,8 @@ import Footer from '@/components/Footer.astro';
     scrollTimeout = window.requestAnimationFrame(handleScrollColorChange);
   }, { passive: true });
 
-  // Run once on load
+  // Run once on load and after a slight delay to ensure layout is ready
+  window.addEventListener('load', handleScrollColorChange);
   handleScrollColorChange();
 </script>
 

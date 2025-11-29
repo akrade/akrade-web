@@ -2,7 +2,6 @@
 // Global Page Components
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import ScheduleCallPanel from '@/components/ScheduleCallPanel.astro';
 
 // Design System
 import '../styles/colors.css';
@@ -18,9 +17,13 @@ import SpeedInsights  from "@vercel/speed-insights/astro"
 
 interface Props {
   title?: string;
+  showSchedulePanel?: boolean;
 }
 
-const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
+const {
+  title = "Akradé | AI-Driven Product Strategy",
+  showSchedulePanel = false
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -262,6 +265,6 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
     <Footer />
 
     <!-- Schedule Call Panel -->
-    <ScheduleCallPanel />
+    {showSchedulePanel && <ScheduleCallPanel />}
   </body>
 </html>

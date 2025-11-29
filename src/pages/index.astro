@@ -2,12 +2,13 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import ScheduleCallPanel from '@/components/ScheduleCallPanel.astro';
 
 // Design System
 import '../styles/homepage.css';
 ---
 
-<BaseLayout>
+<BaseLayout showSchedulePanel={true}>
   
   <main id="homepage">
     <!-- Hero Section -->
@@ -90,6 +91,8 @@ import '../styles/homepage.css';
       </div>
     </div>
     </section>
+
+    <ScheduleCallPanel />
   </main>
 
 </BaseLayout>

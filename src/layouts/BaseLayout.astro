@@ -186,7 +186,7 @@ const { title = "Akradé | AI-Driven Product Strategy" } = Astro.props;
         const ctx = canvas.getContext('2d', { alpha: false, willReadFrequently: false });
         let animationId;
         let lastFrame = 0;
-        const fps = 15; // Reduced from 60fps to 15fps for performance
+        const fps = 1; // Reduced from 60fps to 15fps for performance
         const frameInterval = 1000 / fps;
 
         function resizeCanvas() {

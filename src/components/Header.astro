@@ -3,8 +3,8 @@
 import '../styles/header.css';
 ---
 
-<header>
-  <nav>
+<header id="site-header" class="site-header">
+  <nav class="site-nav">
     <button class="hamburger" aria-label="Toggle menu">
       <span></span>
       <span></span>
@@ -38,7 +38,7 @@ import '../styles/header.css';
     const url = new URL(link.href, window.location.href);
     return url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash;
   });
-  const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+  const headerHeight = document.querySelector('#site-header')?.offsetHeight || 0;
 
   // Scroll section into view
   const scrollSectionIntoView = (target, shouldUpdateHash = true) => {

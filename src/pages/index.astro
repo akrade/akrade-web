@@ -103,54 +103,6 @@ import Footer from '@/components/Footer.astro';
     }
   });
 
-  // Scroll-based background color change effect
-  const aboutSection = document.getElementById('about');
-  const contactSection = document.getElementById('contact');
-  const servicesSection = document.getElementById('services');
-
-  // Define colors
-  const defaultBgColor = '#111113'; // --color-bg-primary (slate1)
-  const goldBgColor = '#cbb99f';    // gold11 from Radix
-
-  function handleScrollColorChange() {
-    if (!aboutSection || !servicesSection) return;
-
-    // Get section positions
-    const aboutRect = aboutSection.getBoundingClientRect();
-    const servicesRect = servicesSection.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const viewportMid = viewportHeight / 2;
-
-    // About section is active when it's in the middle of viewport
-    const aboutIsActive = aboutRect.top < viewportMid && aboutRect.bottom > viewportMid;
-
-    // Services section starts when its top is above middle of viewport
-    const servicesStarted = servicesRect.top < viewportMid;
-
-    // Apply gold background when viewing about section, before services starts
-    if (aboutIsActive && !servicesStarted) {
-      document.body.style.transition = 'background-color 0.8s ease';
-      document.body.style.backgroundColor = goldBgColor;
-    }
-    // Otherwise use default
-    else {
-      document.body.style.transition = 'background-color 0.8s ease';
-      document.body.style.backgroundColor = defaultBgColor;
-    }
-  }
-
-  // Listen to scroll events with throttle for performance
-  let scrollTimeout: number;
-  window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-      window.cancelAnimationFrame(scrollTimeout);
-    }
-    scrollTimeout = window.requestAnimationFrame(handleScrollColorChange);
-  }, { passive: true });
-
-  // Run once on load and after a slight delay to ensure layout is ready
-  window.addEventListener('load', handleScrollColorChange);
-  handleScrollColorChange();
 </script>
 
 <style>

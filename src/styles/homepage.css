@@ -52,7 +52,7 @@ h2 {
 }
 
 .service-card {
-  padding: 0.5rem 2rem 2rem;
+  padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   transition: border-color 0.2s;
@@ -72,6 +72,8 @@ h2 {
 .service-card p {
   color: var(--color-accent-secondary);
 }
+
+
 
 /* Contact */
 .contact-grid {
@@ -94,14 +96,14 @@ h2 {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--color-muted);
+  color: var(--color-white);
   margin-bottom: 0.5rem;
 }
 
 .contact-item a,
 .contact-item p:not(.contact-label) {
   font-size: 1.5rem;
-  color: var(--color-teal);
+  color: var(--color-white);
   text-decoration: none;
 }
 

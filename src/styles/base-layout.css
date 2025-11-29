@@ -37,7 +37,7 @@ a {
 a:hover,
 a:focus {
   color: var(--color-sage);
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration-color: var(--color-accent-secondary);
 }
 

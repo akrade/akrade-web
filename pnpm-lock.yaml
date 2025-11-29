@@ -20,6 +20,9 @@ importers:
       '@microsoft/clarity':
         specifier: ^1.0.0
         version: 1.0.0
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0
@@ -410,6 +413,9 @@ packages:
     resolution: {integrity: sha512-795y49CqBiKiwKAD+QBZlzlqEK275hVcazZ7wBPSfgC23L+vWuA7PJmMpgxojOucZHzYi5rAAQ+IP1I3BKVZxw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  '@radix-ui/colors@3.0.0':
+    resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
 
   '@rollup/pluginutils@5.3.0':
     resolution: {integrity: sha512-5EdhGZtnu3V88ces7s53hhfK5KSASnJZv8Lulpc04cWO3REESroJXg73DFsOmgbU2BhwV0E20bu2IDZb3VKW4Q==}
@@ -2166,6 +2172,8 @@ snapshots:
   '@qwik.dev/partytown@0.11.2':
     dependencies:
       dotenv: 16.6.1
+
+  '@radix-ui/colors@3.0.0': {}
 
   '@rollup/pluginutils@5.3.0(rollup@4.53.3)':
     dependencies:

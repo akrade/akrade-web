@@ -115,13 +115,19 @@ import Footer from '@/components/Footer.astro';
   function handleScrollColorChange() {
     if (!aboutSection || !contactSection) return;
 
-    const scrollPosition = window.scrollY + window.innerHeight / 2;
-    const aboutStart = aboutSection.offsetTop;
-    const aboutEnd = aboutSection.offsetTop + aboutSection.offsetHeight;
-    const contactStart = contactSection.offsetTop;
+    // Get section boundaries
+    const aboutRect = aboutSection.getBoundingClientRect();
+    const contactRect = contactSection.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
 
-    // When in about section, use gold background
-    if (scrollPosition >= aboutStart && scrollPosition < contactStart) {
+    // Check if about section is in view (at least 30% visible)
+    const aboutInView = aboutRect.top < viewportHeight * 0.7 && aboutRect.bottom > viewportHeight * 0.3;
+
+    // Check if contact section is in view
+    const contactInView = contactRect.top < viewportHeight * 0.5;
+
+    // When about section is in view and contact hasn't started, use gold background
+    if (aboutInView && !contactInView) {
       body.style.transition = 'background-color 0.8s ease';
       body.style.backgroundColor = goldBgColor;
     }

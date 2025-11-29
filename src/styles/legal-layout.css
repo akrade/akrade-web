@@ -57,17 +57,7 @@
   margin-bottom: 0.5rem;
 }
 
-.legal-content a {
-  color: var(--color-accent);
-  text-decoration: underline;
-  transition: color 0.2s ease;
-}
-
-.legal-content a:hover,
-.legal-content a:focus {
-  color: var(--color-accent-hover);
-}
-
+/* Links inherit global styles from base-layout.css */
 .legal-content a:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
@@ -101,9 +91,5 @@
 @media print {
   .legal-container {
     padding: 0;
-  }
-
-  .legal-content a {
-    text-decoration: none;
   }
 }

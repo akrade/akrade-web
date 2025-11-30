@@ -99,7 +99,7 @@ footer {
 .newsletter-form {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-muted);
+  border-bottom: 0.3rem solid var(--color-muted);
   margin-bottom: 1.5rem;
   margin-top: -0.625rem;
 }

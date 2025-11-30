@@ -29,8 +29,8 @@ footer {
 }
 
 .footer-link {
-  font-size: 2.5rem;
-  font-weight: 300;
+  font-size: 3.5rem;
+  font-weight: 100;
   color: var(--color-text);
   text-decoration: none;
   transition: color 0.2s;

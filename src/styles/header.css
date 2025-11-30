@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 250;
+  z-index: 10000;
   padding: 0.8rem 2rem;
   background: rgba(10, 10, 10, 0.3);
   backdrop-filter: blur(10px);
@@ -33,7 +33,7 @@
   border: none;
   cursor: pointer;
   padding: 0.75rem;
-  z-index: 251;
+  z-index: 350;
 }
 
 .hamburger span {
@@ -72,7 +72,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.125rem;
-  z-index: 251;
+  z-index: 350;
   text-decoration: none;
 }
 
@@ -105,7 +105,7 @@
   height: 100vh;
   background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(40px);
-  z-index: 200;
+  z-index: 9999;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s cubic-bezier(0.28, 0.11, 0.32, 1);
@@ -142,7 +142,6 @@
 .mega-menu-links a {
   display: block;
   font-size: 3rem;
-  font-weight: 600;
   text-decoration: none;
   color: var(--color-muted);
   padding: 1.5rem 0;

@@ -12,7 +12,7 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 4rem;
   align-items: start;
 }
@@ -29,8 +29,8 @@ footer {
 }
 
 .footer-link {
-  font-size: 2.5rem;
-  font-weight: 300;
+  font-size: 3.5rem;
+  font-weight: 200;
   color: var(--color-text);
   text-decoration: none;
   transition: color 0.2s;
@@ -42,6 +42,16 @@ footer {
 }
 
 /* Contact Sections */
+.footer-contact {}
+
+.footer-contact p {
+  margin-bottom: 0.5rem;
+}
+.footer-contact a {
+  font-size: 1.5rem;
+}
+
+
 .footer-contact-section {
   display: flex;
   flex-direction: column;
@@ -127,12 +137,13 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  align-items: flex-start;
 }
 
 .footer-social-link {
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: var(--color-text);
-  text-decoration: underline;
+  text-decoration: none;
   transition: color 0.2s;
 }
 

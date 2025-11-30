@@ -1,0 +1,240 @@
+/* Contact Page Styles */
+
+.contact-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Contact Hero */
+.contact-hero {
+  padding: 4rem 0 3rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-hero h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.contact-hero p {
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  color: var(--color-accent-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Contact Information */
+.contact-info {
+  padding: 4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-info h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Contact Grid - reuses homepage.css styles */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Schedule Section */
+.contact-schedule {
+  padding: 4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-schedule h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.contact-schedule > p {
+  text-align: center;
+  font-size: 1.125rem;
+  color: var(--color-accent-secondary);
+  margin-bottom: 2rem;
+}
+
+.cal-embed-container {
+  margin-top: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cal-embed-container iframe {
+  display: block;
+  width: 100%;
+  min-height: 700px;
+}
+
+/* Newsletter Section */
+.contact-newsletter {
+  padding: 4rem 0;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-newsletter h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.contact-newsletter > p {
+  font-size: 1.125rem;
+  color: var(--color-accent-secondary);
+  margin-bottom: 2rem;
+}
+
+.contact-newsletter .newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.contact-newsletter .newsletter-input {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: var(--color-white);
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.contact-newsletter .newsletter-input::placeholder {
+  color: var(--color-accent-secondary);
+}
+
+.contact-newsletter .newsletter-input:focus {
+  outline: none;
+  border-color: var(--color-accent-secondary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.contact-newsletter .newsletter-submit {
+  padding: 0.875rem 1.5rem;
+  background: var(--color-white);
+  color: var(--color-black);
+  border: none;
+  border-radius: 4px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.contact-newsletter .newsletter-submit:hover {
+  background: var(--color-accent-secondary);
+  transform: translateX(2px);
+}
+
+/* Tablet: Adjust spacing and layout */
+@media (min-width: 481px) and (max-width: 1023px) {
+  .contact-page {
+    padding: 1.5rem;
+  }
+
+  .contact-hero {
+    padding: 3rem 0 2rem;
+  }
+
+  .contact-info,
+  .contact-schedule,
+  .contact-newsletter {
+    padding: 3rem 0;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-item:not(:last-child) {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Mobile: Simplify layout and reduce sizes */
+@media (max-width: 480px) {
+  .contact-page {
+    padding: 1rem;
+  }
+
+  .contact-hero {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .contact-hero h1 {
+    font-size: 2rem;
+  }
+
+  .contact-hero p {
+    font-size: 1rem;
+  }
+
+  .contact-info,
+  .contact-schedule,
+  .contact-newsletter {
+    padding: 2rem 0;
+  }
+
+  .contact-info h2,
+  .contact-schedule h2,
+  .contact-newsletter h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-grid {
+    gap: 0;
+    margin-top: 1.5rem;
+  }
+
+  .contact-item:not(:last-child) {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1.5rem;
+  }
+
+  .contact-item a {
+    font-size: 1.125rem;
+  }
+
+  .cal-embed-container iframe {
+    min-height: 600px;
+  }
+
+  .contact-newsletter .newsletter-form {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-newsletter .newsletter-input,
+  .contact-newsletter .newsletter-submit {
+    width: 100%;
+  }
+}

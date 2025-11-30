@@ -20,125 +20,55 @@ import '../styles/header.css';
 <div class="mega-menu">
   <nav class="mega-menu-nav">
     <ul class="mega-menu-links">
-      <li><a href="/#about" data-section="about">About</a></li>
-      <li><a href="/#services" data-section="services">Services</a></li>
-      <li><a href="/#contact" data-section="contact">Contact</a></li>
+      <li><a href="/about" class={Astro.url.pathname === '/about' ? 'active' : ''}>About</a></li>
+      <li><a href="/services" class={Astro.url.pathname === '/services' ? 'active' : ''}>Services</a></li>
+      <li><a href="/contact" class={Astro.url.pathname === '/contact' ? 'active' : ''}>Contact</a></li>
     </ul>
   </nav>
 </div>
 
 <script>
   // Cache DOM queries
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a[data-section], .mega-menu a[data-section]');
   const hamburger = document.querySelector('.hamburger');
   const megaMenu = document.querySelector('.mega-menu');
   const megaMenuLinks = document.querySelectorAll('.mega-menu a');
-  const smoothScrollLinks = Array.from(document.querySelectorAll('a[href*="#"]')).filter(link => {
-    const url = new URL(link.href, window.location.href);
-    return url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash;
-  });
-  const headerHeight = document.querySelector('#site-header')?.offsetHeight || 0;
+  const footer = document.querySelector('footer');
 
-  // Scroll section into view
-  const scrollSectionIntoView = (target, shouldUpdateHash = true) => {
-    const centerPosition = target.offsetTop + target.offsetHeight / 2 - window.innerHeight / 2;
-    const clampedPosition = Math.max(0, centerPosition - headerHeight / 2);
+  // Only initialize if elements exist
+  if (hamburger && megaMenu) {
+    // Mega menu handlers - toggle with hamburger
+    const toggleMenu = () => {
+      const isOpen = megaMenu.classList.contains('open');
 
-    window.scrollTo({ top: clampedPosition, behavior: 'smooth' });
-    if (shouldUpdateHash) history.pushState(null, null, `#${target.id}`);
-  };
-
-  // Smooth scroll click handler
-  smoothScrollLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.getElementById(new URL(link.href, window.location.href).hash.slice(1));
-      if (target) scrollSectionIntoView(target);
-    });
-  });
-
-  // Throttle helper
-  const throttle = (fn, delay) => {
-    let lastCall = 0;
-    return (...args) => {
-      const now = Date.now();
-      if (now - lastCall >= delay) {
-        lastCall = now;
-        fn(...args);
+      if (isOpen) {
+        megaMenu.classList.remove('open');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+        // Restore footer z-index when menu closes
+        if (footer) footer.style.zIndex = '';
+      } else {
+        megaMenu.classList.add('open');
+        hamburger.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Force footer behind menu overlay when menu opens
+        if (footer) footer.style.zIndex = '0';
       }
     };
-  };
 
-  // Combined scroll handler for URL and active link updates
-  const handleScroll = throttle(() => {
-    const scrollY = window.scrollY;
-    const scrollPosition = scrollY + 200;
-    const offset = window.innerHeight * 0.4;
-    let currentSection = '';
-
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const sectionId = section.getAttribute('id');
-
-      // Update URL hash
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        currentSection = sectionId;
-      }
-
-      // Update active link
-      if (scrollY >= sectionTop - offset && scrollY < sectionTop + sectionHeight - offset) {
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.dataset.section === sectionId);
-        });
-      }
-    });
-
-    // Update URL
-    if (currentSection) {
-      history.replaceState(null, null, `#${currentSection}`);
-    } else if (scrollY < 100) {
-      history.replaceState(null, null, window.location.pathname);
-    }
-  }, 100); // Throttle to 100ms
-
-  window.addEventListener('scroll', handleScroll, { passive: true });
-
-  // Handle direct hash URLs on load
-  window.addEventListener('load', () => {
-    const targetId = window.location.hash.slice(1);
-    const target = targetId ? document.getElementById(targetId) : null;
-    if (target) setTimeout(() => scrollSectionIntoView(target, false), 0);
-    handleScroll(); // Set initial active link
-  });
-
-  // Mega menu handlers - toggle with hamburger
-  const toggleMenu = () => {
-    const isOpen = megaMenu.classList.contains('open');
-
-    if (isOpen) {
+    const closeMenuFn = () => {
       megaMenu.classList.remove('open');
       hamburger.classList.remove('active');
       document.body.style.overflow = '';
-    } else {
-      megaMenu.classList.add('open');
-      hamburger.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-  };
+      // Restore footer z-index when menu closes
+      if (footer) footer.style.zIndex = '';
+    };
 
-  const closeMenuFn = () => {
-    megaMenu.classList.remove('open');
-    hamburger.classList.remove('active');
-    document.body.style.overflow = '';
-  };
+    hamburger.addEventListener('click', toggleMenu);
+    megaMenuLinks.forEach(link => link.addEventListener('click', closeMenuFn));
 
-  hamburger.addEventListener('click', toggleMenu);
-  megaMenuLinks.forEach(link => link.addEventListener('click', closeMenuFn));
-
-  // ESC key to close menu
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && megaMenu.classList.contains('open')) closeMenuFn();
-  });
+    // ESC key to close menu
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && megaMenu.classList.contains('open')) closeMenuFn();
+    });
+  }
 </script>

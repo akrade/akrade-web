@@ -32,6 +32,7 @@ import '../styles/header.css';
   const hamburger = document.querySelector('.hamburger');
   const megaMenu = document.querySelector('.mega-menu');
   const megaMenuLinks = document.querySelectorAll('.mega-menu a');
+  const footer = document.querySelector('footer');
 
   // Only initialize if elements exist
   if (hamburger && megaMenu) {
@@ -43,10 +44,14 @@ import '../styles/header.css';
         megaMenu.classList.remove('open');
         hamburger.classList.remove('active');
         document.body.style.overflow = '';
+        // Restore footer z-index when menu closes
+        if (footer) footer.style.zIndex = '';
       } else {
         megaMenu.classList.add('open');
         hamburger.classList.add('active');
         document.body.style.overflow = 'hidden';
+        // Force footer behind menu overlay when menu opens
+        if (footer) footer.style.zIndex = '0';
       }
     };
 
@@ -54,6 +59,8 @@ import '../styles/header.css';
       megaMenu.classList.remove('open');
       hamburger.classList.remove('active');
       document.body.style.overflow = '';
+      // Restore footer z-index when menu closes
+      if (footer) footer.style.zIndex = '';
     };
 
     hamburger.addEventListener('click', toggleMenu);

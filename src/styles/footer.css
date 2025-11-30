@@ -137,12 +137,13 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  align-items: flex-start;
 }
 
 .footer-social-link {
   font-size: 1.25rem;
   color: var(--color-text);
-  text-decoration: underline;
+  text-decoration: none;
   transition: color 0.2s;
 }
 

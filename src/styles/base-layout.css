@@ -28,7 +28,7 @@ body {
 
 /* Default link styles */
 a {
-  color: var(--color-accent);
+  color: var(--color-accent-secondary);
   text-decoration: none;
   transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }

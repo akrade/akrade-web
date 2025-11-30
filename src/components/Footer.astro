@@ -1,91 +1,81 @@
 ---
 const year = new Date().getFullYear();
+import FooterNewsletter from './FooterNewsletter';
+
+// Design System
+import '../styles/footer.css';
+
 ---
 
 <footer>
-  <div class="footer-content">
-    <div class="footer-col">
-      <a href="https://x.com/akradeco" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">X</a>
-      <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
-      <a href="https://www.instagram.com/akrade" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
+  <!-- Upper Footer - Contact & Links Section -->
+  <div class="footer-upper">
+    <div class="footer-upper-content">
+      <div class="footer-upper-col">
+        <a href="/about" class="footer-link">About</a>
+        <a href="/services" class="footer-link">Services</a>
+        <a href="/contact" class="footer-link">Contact</a>
+        <a href="#"
+          class="footer-link"
+          data-trigger="schedule-panel"
+          id="footer-schedule-link"
+          >Let's Talk</a>
+      </div>
+
+      <div class="footer-upper-col">
+        <div class="footer-contact-section">
+          <h3 class="footer-heading">NEW BUSINESS</h3>
+          <div class="footer-contact">
+            <p><a href="tel:+14047819552" class="footer-contact-link">+1 404 781 9552</a></p>
+            <p><a href="mailto:hello@akrade.com" class="footer-contact-link">hello@akrade.com</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-upper-col">
+        <h3 class="footer-heading">SIGN UP FOR OUR NEWSLETTER</h3>
+        <FooterNewsletter client:load />
+        <div class="footer-social">
+          <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">LinkedIn</a>
+          <a href="https://instagram.com/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">Instagram</a>
+          <a href="https://www.threads.com/@akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">Threads</a>
+          <a href="https://x.com/akradeco" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">X</a>
+        </div>
+      </div>
     </div>
-    
-    <div class="footer-col">
-      <p class="copyright">© {year} Akradé. All rights reserved.</p>
-    </div>
-    
-    <div class="footer-col">
-      <a href="/legal/terms" rel="noopener noreferrer" aria-label="Terms of Service">Terms</a>
-      <a href="/legal/privacy-policy" rel="noopener noreferrer" aria-label="Privacy Policy">Privacy</a>
-      <a href="/legal/cookies" rel="noopener noreferrer" aria-label="Cookie Policy">Cookies</a>
+  </div>
+
+  <!-- Lower Footer - Legal & Copyright -->
+  <div class="footer-lower">
+    <div class="footer-content">
+      <div class="footer-col">
+        <p class="copyright">© {year} Akrade, LLC. All Rights Reserved.</p>
+      </div>
+
+      <div class="footer-col">
+        <a href="/legal/terms" rel="noopener noreferrer" aria-label="Terms of Service">Terms</a>
+        <a href="/legal/privacy-policy" rel="noopener noreferrer" aria-label="Privacy Policy">Privacy</a>
+        <a href="/legal/cookie-policy" rel="noopener noreferrer" aria-label="Cookie Policy">Cookies</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<style>
-  footer {
-    padding: 1rem 2rem;
-    border-top: 1px solid var(--color-bg-elevated);
-  }
+<script is:inline>
+  // Handle "Lets Talk" link to open schedule panel
+  document.addEventListener('DOMContentLoaded', function() {
+    const footerScheduleLink = document.getElementById('footer-schedule-link');
 
-  .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .footer-col {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-  }
-
-  .footer-col:first-child {
-    align-items: flex-start;
-  }
-
-  .footer-col:nth-child(2) {
-    align-items: center;
-  }
-
-  .footer-col:last-child {
-    align-items: flex-end;
-  }
-
-  .footer-col a {
-    color: var(--color-muted);
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.2s;
-  }
-
-  .footer-col a:hover {
-    color: var(--color-white);
-  }
-
-  .copyright {
-    color: var(--color-muted);
-    font-size: 0.875rem;
-    margin: 0;
-  }
-
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
+    if (footerScheduleLink) {
+      footerScheduleLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Call the global function exposed by ScheduleCallPanel
+        if (typeof window.openSchedulePanel === 'function') {
+          window.openSchedulePanel();
+        } else {
+          console.error('openSchedulePanel function not found');
+        }
+      });
     }
-
-    .footer-col {
-      justify-content: center;
-    }
-
-    .footer-col:first-child,
-    .footer-col:last-child {
-      align-items: center;
-    }
-  }
-</style>
+  });
+</script>

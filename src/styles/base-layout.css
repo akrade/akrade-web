@@ -183,3 +183,13 @@ body > :not(.grain-container):not(.vignette):not(.scanlines):not(.panel-backdrop
   position: relative;
   z-index: 10;
 }
+
+/* Standalone page sections */
+.about-page section,
+.services-page section,
+.contact-page section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  min-height: auto; /* Not full viewport like homepage */
+}

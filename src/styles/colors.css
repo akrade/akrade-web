@@ -13,8 +13,10 @@
   --color-teal: #4ccce6;
   --color-silver: #818385;
   --color-white: #ecedee;
+  --color-tomato: #ff6847;
 
   /* Semantic tokens */
+  --color-cursor: var(--color-tomato);
   --color-text: #ecedee;
   --color-muted: #b2b4b6;
   --color-accent: var(--color-teal);

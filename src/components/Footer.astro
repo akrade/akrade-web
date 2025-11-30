@@ -1,5 +1,6 @@
 ---
 const year = new Date().getFullYear();
+import FooterNewsletter from './FooterNewsletter';
 
 // Design System
 import '../styles/footer.css';
@@ -26,17 +27,14 @@ import '../styles/footer.css';
           <h3 class="footer-heading">NEW BUSINESS</h3>
           <div class="footer-contact">
             <p><a href="tel:+14047819552" class="footer-contact-link">+1 404 781 9552</a></p>
-            <p><a href="mailto:carson@bgstr.com" class="footer-contact-link">hello@akrade.com</a></p>
+            <p><a href="mailto:hello@akrade.com" class="footer-contact-link">hello@akrade.com</a></p>
           </div>
         </div>
       </div>
 
       <div class="footer-upper-col">
         <h3 class="footer-heading">SIGN UP FOR OUR NEWSLETTER</h3>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Email Address" class="newsletter-input" aria-label="Email Address">
-          <button type="submit" class="newsletter-submit" aria-label="Subscribe">→</button>
-        </form>
+        <FooterNewsletter client:load />
         <div class="footer-social">
           <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">LinkedIn</a>
           <a href="https://instagram.com/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">Instagram</a>

@@ -179,7 +179,7 @@ main {
 }
 
 /* Ensure content is above all effects */
-body > :not(.grain-container):not(.vignette):not(.scanlines):not(.panel-backdrop):not(.schedule-call-panel) {
+body > :not(.grain-container):not(.vignette):not(.scanlines):not(.panel-backdrop):not(.schedule-call-panel):not(.mega-menu) {
   position: relative;
   z-index: 10;
 }

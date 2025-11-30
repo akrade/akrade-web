@@ -51,31 +51,23 @@ export default function FooterNewsletter() {
       <form className="newsletter-form" onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Email Address"
-          className="newsletter-input"
+          placeholder={status === 'success' ? 'Thank you' : status === 'error' ? message : 'Email Address'}
+          className={`newsletter-input ${status}`}
           aria-label="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          disabled={status === 'loading'}
+          disabled={status === 'loading' || status === 'success' || status === 'error'}
           required
         />
         <button
           type="submit"
-          className="newsletter-submit"
+          className={`newsletter-submit ${status}`}
           aria-label="Subscribe"
-          disabled={status === 'loading'}
+          disabled={status === 'loading' || status === 'success' || status === 'error'}
         >
-          {status === 'loading' ? '⏳' : '→'}
+          {status === 'loading' ? <span className="spinner">◌</span> : status === 'success' ? '✓' : status === 'error' ? '✕' : '→'}
         </button>
       </form>
-      {message && (
-        <p
-          className={`newsletter-message ${status}`}
-          role={status === 'error' ? 'alert' : 'status'}
-        >
-          {message}
-        </p>
-      )}
     </>
   );
 }

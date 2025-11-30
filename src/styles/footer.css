@@ -155,18 +155,7 @@ footer {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-  }
-
-  .footer-col:first-child {
-    align-items: flex-start;
-  }
-
-  .footer-col:nth-child(2) {
     align-items: center;
-  }
-
-  .footer-col:last-child {
-    align-items: flex-end;
   }
 
   .footer-col a {

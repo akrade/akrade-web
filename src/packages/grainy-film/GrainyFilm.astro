@@ -1,0 +1,33 @@
+---
+/**
+ * Grainy Film Effect Component
+ *
+ * Usage:
+ * 1. Import this component in your page
+ * 2. Add data-grainy-film attribute to <html> tag
+ * 3. Include <GrainyFilm /> in your layout/page
+ *
+ * Example:
+ * <html data-grainy-film>
+ *   <body>
+ *     <GrainyFilm />
+ *     <!-- your content -->
+ *   </body>
+ * </html>
+ */
+
+// Import the CSS and JS
+import './grainy-film.css';
+---
+
+<!-- Grainy film effect HTML elements -->
+<div class="grain-container">
+  <canvas id="grainCanvas" class="grain"></canvas>
+</div>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+
+<script>
+  import { initGrainEffect } from './grainy-film.js';
+  // The initialization is handled automatically in the JS file
+</script>

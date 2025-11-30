@@ -13,7 +13,11 @@ import '../styles/footer.css';
       <div class="footer-upper-col">
         <a href="/#about" class="footer-link">About</a>
         <a href="/#services" class="footer-link">Services</a>
-        <a href="/#contact" class="footer-link">Contact</a>
+        <a href="#"
+          class="footer-link"
+          data-trigger="schedule-panel"
+          id="footer-schedule-link"
+          >Lets Talk</a>
       </div>
 
       <div class="footer-upper-col">
@@ -64,3 +68,22 @@ import '../styles/footer.css';
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  // Handle "Lets Talk" link to open schedule panel
+  document.addEventListener('DOMContentLoaded', function() {
+    const footerScheduleLink = document.getElementById('footer-schedule-link');
+
+    if (footerScheduleLink) {
+      footerScheduleLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Call the global function exposed by ScheduleCallPanel
+        if (typeof window.openSchedulePanel === 'function') {
+          window.openSchedulePanel();
+        } else {
+          console.error('openSchedulePanel function not found');
+        }
+      });
+    }
+  });
+</script>

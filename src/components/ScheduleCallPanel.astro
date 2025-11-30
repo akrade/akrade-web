@@ -30,7 +30,7 @@ import '../styles/schedule-call-panel.css';
   </div>
 </div>
 
-<script>
+<script is:inline>
   // Get elements
   const panel = document.getElementById('scheduleCallPanel');
   const backdrop = document.getElementById('scheduleCallBackdrop');
@@ -42,7 +42,7 @@ import '../styles/schedule-call-panel.css';
       panel.classList.add('open');
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
-      closeButton?.focus();
+      if (closeButton) closeButton.focus();
     }
   }
 
@@ -56,17 +56,17 @@ import '../styles/schedule-call-panel.css';
   }
 
   // Event listeners
-  closeButton?.addEventListener('click', closePanel);
-  backdrop?.addEventListener('click', closePanel);
+  if (closeButton) closeButton.addEventListener('click', closePanel);
+  if (backdrop) backdrop.addEventListener('click', closePanel);
 
   // Close on ESC key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && panel?.classList.contains('open')) {
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && panel && panel.classList.contains('open')) {
       closePanel();
     }
   });
 
   // Expose functions globally so they can be called from other components
-  (window as any).openSchedulePanel = openPanel;
-  (window as any).closeSchedulePanel = closePanel;
+  window.openSchedulePanel = openPanel;
+  window.closeSchedulePanel = closePanel;
 </script>

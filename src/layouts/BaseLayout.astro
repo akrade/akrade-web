@@ -18,12 +18,10 @@ import SpeedInsights  from "@vercel/speed-insights/astro"
 
 interface Props {
   title?: string;
-  showSchedulePanel?: boolean;
 }
 
 const {
-  title = "Akradé | AI-Driven Product Strategy",
-  showSchedulePanel = false
+  title = "Akradé | AI-Driven Product Strategy"
 } = Astro.props;
 ---
 
@@ -266,6 +264,6 @@ const {
     <Footer />
 
     <!-- Schedule Call Panel -->
-    {showSchedulePanel && <ScheduleCallPanel />}
+    <ScheduleCallPanel />
   </body>
 </html>

@@ -95,6 +95,16 @@ footer {
   line-height: 1.6;
 }
 
+.footer-upper-col a:link,
+.footer-upper-col a:visited {
+  color: var(--color-white);
+}
+
+.footer-upper-col a:hover {
+  color: var(--color-accent-secondary);
+}
+
+
 /* Newsletter Form */
 .newsletter-form {
   display: flex;

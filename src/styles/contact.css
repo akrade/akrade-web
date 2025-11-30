@@ -10,7 +10,6 @@
 .contact-hero {
   padding: 4rem 0 3rem;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact-hero h1 {
@@ -31,7 +30,6 @@
 /* Contact Information */
 .contact-info {
   padding: 4rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact-info h2 {
@@ -55,7 +53,6 @@
 /* Schedule Section */
 .contact-schedule {
   padding: 4rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact-schedule h2 {
@@ -174,7 +171,6 @@
 
   .contact-item:not(:last-child) {
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -216,7 +212,6 @@
 
   .contact-item:not(:last-child) {
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 1.5rem;
   }
 

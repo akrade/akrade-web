@@ -1,0 +1,193 @@
+/* Site Header - Main navigation */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 250;
+  padding: 0.8rem 2rem;
+  background: rgba(10, 10, 10, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.site-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+}
+
+/* Hamburger on the left */
+.hamburger {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem;
+  z-index: 251;
+}
+
+.hamburger span {
+  width: 30px;
+  height: 2px;
+  background: var(--color-text);
+  transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+  transform-origin: center;
+}
+
+.hamburger:hover span {
+  background: var(--color-accent-secondary);
+}
+
+/* Hamburger to X animation */
+.hamburger.active span {
+  width: 36px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* X hover state */
+.hamburger.active:hover span {
+  background: var(--color-accent-secondary);
+}
+
+/* Logo container */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  z-index: 251;
+  text-decoration: none;
+}
+
+/* Logo centered */
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+/* Tagline */
+.logo-container .tagline {
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: italic;
+  color: var(--color-accent-secondary);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+/* Mega Menu - Apple Style */
+.mega-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(26, 26, 26, 0.98);
+  backdrop-filter: blur(40px);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+
+.mega-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mega-menu-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 25vh;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.mega-menu-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.mega-menu-links li {
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mega-menu-links a {
+  display: block;
+  font-size: 3rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-muted);
+  padding: 1.5rem 0;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.mega-menu-links a:hover {
+  color: var(--color-accent-secondary);
+  padding-left: 2rem;
+}
+
+.mega-menu-links a.active {
+  color: var(--color-accent-secondary);
+  padding-left: 0;
+}
+
+.mega-menu-links a.active:hover {
+  padding-left: 2rem;
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 1rem;
+  }
+
+  .site-nav {
+    padding: 0;
+  }
+
+  .mega-menu-links a {
+    font-size: 2rem;
+    padding: 1rem 0;
+  }
+
+  .mega-menu-links a:hover {
+    color: var(--color-accent-secondary);
+    padding-left: 1rem;
+  }
+
+  .mega-menu-links a.active {
+    color: var(--color-accent-secondary);
+    padding-left: 0;
+  }
+
+  .mega-menu-links a.active:hover {
+    padding-left: 1rem;
+  }
+}

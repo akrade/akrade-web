@@ -3,10 +3,12 @@ import { fileURLToPath } from 'node:url';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import partytown from '@astrojs/partytown';
+import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://akrade.com',
   integrations: [
+    react(),
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,

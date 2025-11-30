@@ -142,6 +142,29 @@ footer {
   color: var(--color-accent-secondary);
 }
 
+.newsletter-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Newsletter Message */
+.newsletter-message {
+  font-size: 0.875rem;
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+}
+
+.newsletter-message.success {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.newsletter-message.error {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
 /* Social Links */
 .footer-social {
   display: flex;

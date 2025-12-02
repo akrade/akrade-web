@@ -67,6 +67,8 @@
   font-weight: 600;
 }
 
+/* Theme styles are now controlled via data-theme attribute in colors.css */
+
 /* Responsive */
 @media (max-width: 768px) {
   .legal-container {

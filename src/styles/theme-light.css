@@ -1,0 +1,313 @@
+/**
+ * Light Theme Overrides
+ *
+ * Comprehensive light theme styles for the entire site.
+ * Applied when [data-theme="light"] is set on the html element.
+ */
+
+/* ============================================
+   GLOBAL ELEMENTS
+   ============================================ */
+
+[data-theme="light"] body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Custom cursor for light theme - darker for visibility */
+[data-theme="light"] body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><circle cx="32" cy="32" r="16" fill="rgba(44, 122, 140, 0.85)"/></svg>') 32 32, auto;
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3 {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .about-lede {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .page-wrapper {
+  background: var(--color-bg-primary);
+}
+
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */
+
+/* Header with light backdrop */
+[data-theme="light"] .site-header {
+  background: rgba(247, 248, 250, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Hamburger icon */
+[data-theme="light"] .hamburger span {
+  background: var(--color-text-primary);
+}
+
+[data-theme="light"] .hamburger:hover span {
+  background: var(--color-accent-secondary);
+}
+
+/* Logo */
+[data-theme="light"] .logo {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .logo-container .tagline {
+  color: var(--color-accent-secondary);
+}
+
+/* Mega Menu - light overlay */
+[data-theme="light"] .mega-menu {
+  background: rgba(247, 248, 250, 0.98);
+  backdrop-filter: blur(40px);
+}
+
+[data-theme="light"] .mega-menu-links li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+[data-theme="light"] .mega-menu-links a {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .mega-menu-links a:hover,
+[data-theme="light"] .mega-menu-links a.active {
+  color: var(--color-accent-secondary);
+}
+
+/* ============================================
+   HOMEPAGE SECTIONS
+   ============================================ */
+
+/* Hero tagline */
+[data-theme="light"] .tagline {
+  color: var(--color-accent-secondary);
+}
+
+/* About section */
+[data-theme="light"] .about p {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .about .about-lede {
+  color: var(--color-text-primary);
+}
+
+/* Service cards - inverted borders and backgrounds */
+[data-theme="light"] .service-card {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-elevated);
+  transition: all 0.2s ease;
+}
+
+[data-theme="light"] .service-card:hover {
+  border-color: var(--color-accent-secondary);
+  background-color: var(--color-bg-hover);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .service-card p {
+  color: var(--color-text-muted);
+}
+
+/* Contact labels */
+[data-theme="light"] .contact-label {
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+[data-theme="light"] footer {
+  background: var(--color-bg-primary);
+}
+
+/* Footer links */
+[data-theme="light"] .footer-link {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .footer-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+/* Footer headings */
+[data-theme="light"] .footer-heading {
+  color: var(--color-text-primary);
+}
+
+/* Footer contact links */
+[data-theme="light"] .footer-contact-link {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .footer-contact-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+/* Footer address */
+[data-theme="light"] .footer-address {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .footer-upper-col a:link,
+[data-theme="light"] .footer-upper-col a:visited {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .footer-upper-col a:hover {
+  color: var(--color-accent-secondary);
+}
+
+/* Newsletter form */
+[data-theme="light"] .newsletter-form {
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme="light"] .newsletter-input {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .newsletter-input::placeholder {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .newsletter-submit {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .newsletter-submit:hover {
+  color: var(--color-accent-secondary);
+}
+
+/* Social links */
+[data-theme="light"] .footer-social-link {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .footer-social-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+/* Lower footer */
+[data-theme="light"] .footer-lower {
+  background: var(--color-bg-primary);
+  border-top: 1px solid var(--color-border);
+}
+
+[data-theme="light"] .footer-col a {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .footer-col a:hover {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .copyright {
+  color: var(--color-muted);
+}
+
+/* ============================================
+   LINKS & INTERACTIONS
+   ============================================ */
+
+[data-theme="light"] a {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] a:hover,
+[data-theme="light"] a:focus {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] a:visited {
+  color: var(--color-accent-secondary);
+}
+
+/* Special underline links */
+[data-theme="light"] a.special-underline::after {
+  background-color: currentColor;
+}
+
+/* ============================================
+   SCHEDULE CALL PANEL
+   ============================================ */
+
+[data-theme="light"] .schedule-call-panel {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="light"] .schedule-call-panel:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-accent-secondary);
+}
+
+/* ============================================
+   LEGAL PAGES
+   ============================================ */
+
+[data-theme="light"] .legal-header h1 {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .legal-content h2,
+[data-theme="light"] .legal-content h3,
+[data-theme="light"] .legal-content p,
+[data-theme="light"] .legal-content li {
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .last-updated {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .legal-content a {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] .legal-content a:hover {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .legal-content a:focus {
+  outline-color: var(--color-accent);
+}
+
+/* ============================================
+   CONTACT PAGE
+   ============================================ */
+
+[data-theme="light"] .contact-page {
+  background: var(--color-bg-primary);
+}
+
+[data-theme="light"] .contact-item {
+  color: var(--color-text-primary);
+}
+
+/* ============================================
+   ACCESSIBILITY & FOCUS STATES
+   ============================================ */
+
+[data-theme="light"] *:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   UTILITY OVERRIDES
+   ============================================ */
+
+/* Ensure proper contrast on light backgrounds */
+[data-theme="light"] ::selection {
+  background: var(--color-accent-secondary);
+  color: var(--color-bg-primary);
+}

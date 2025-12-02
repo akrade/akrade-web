@@ -8,12 +8,13 @@ interface Props {
   title: string;
   description?: string;
   lastUpdated?: string;
+  theme?: 'light' | 'dark' | 'neutral';
 }
 
-const { title, description, lastUpdated } = Astro.props;
+const { title, description, lastUpdated, theme } = Astro.props;
 ---
 
-<BaseLayout title={`${title} | Akradé`} description={description}>
+<BaseLayout title={`${title} | Akradé`} description={description} theme={theme}>
   <header class="legal-header">
     <h1>{title}</h1>
   </header>

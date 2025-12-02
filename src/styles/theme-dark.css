@@ -246,3 +246,13 @@
 [data-theme="dark"] .copyright {
   color: var(--color-muted);
 }
+
+/* Schedule Call Panel Colors */
+[data-theme="dark"] .panel-backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .schedule-call-panel {
+  background: #0F0F0F;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
+}

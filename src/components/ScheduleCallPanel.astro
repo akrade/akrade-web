@@ -35,6 +35,19 @@ import '../styles/schedule-call-panel.css';
   const panel = document.getElementById('scheduleCallPanel');
   const backdrop = document.getElementById('scheduleCallBackdrop');
   const closeButton = document.getElementById('closePanelButton');
+  const calIframe = document.getElementById('calEmbed');
+
+  // Update cal.com iframe theme based on site theme
+  function updateCalTheme() {
+    if (!calIframe) return;
+
+    const htmlElement = document.documentElement;
+    const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+    const baseUrl = 'https://cal.com/akrade';
+
+    // Update iframe src with theme parameter
+    calIframe.src = `${baseUrl}?theme=${currentTheme}`;
+  }
 
   // Open panel function
   function openPanel() {
@@ -43,6 +56,9 @@ import '../styles/schedule-call-panel.css';
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
       if (closeButton) closeButton.focus();
+
+      // Update cal.com theme when opening
+      updateCalTheme();
     }
   }
 
@@ -65,6 +81,25 @@ import '../styles/schedule-call-panel.css';
       closePanel();
     }
   });
+
+  // Watch for theme changes and update cal.com
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'data-theme') {
+        updateCalTheme();
+      }
+    });
+  });
+
+  if (document.documentElement) {
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  }
+
+  // Set initial theme
+  updateCalTheme();
 
   // Expose functions globally so they can be called from other components
   window.openSchedulePanel = openPanel;

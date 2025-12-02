@@ -1,33 +1,21 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-
-// Design System
-import '../styles/legal-layout.css';
+import PageLayout from '@/layouts/PageLayout.astro';
 
 interface Props {
   title: string;
   description?: string;
   lastUpdated?: string;
+  theme?: 'light' | 'dark' | 'neutral';
 }
 
-const { title, description, lastUpdated } = Astro.props;
+const { title, description, lastUpdated, theme } = Astro.props;
 ---
 
-<BaseLayout title={`${title} | Akradé`} description={description}>
-  <header class="legal-header">
-    <h1>{title}</h1>
-  </header>
-  <main class="legal-container">
-    <article>
-      
-      {lastUpdated && (
-        <p class="last-updated">Last Updated: {lastUpdated}</p>
-      )}
-      <div class="legal-container">
-        <div class="legal-content">
-          <slot />
-        </div>
-      </div>
-    </article>
-  </main>
-</BaseLayout>
+<PageLayout
+  title={title}
+  description={description}
+  meta={lastUpdated ? `Last Updated: ${lastUpdated}` : undefined}
+  theme={theme}
+>
+  <slot />
+</PageLayout>

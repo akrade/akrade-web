@@ -50,6 +50,11 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Hamburger Colors */
+[data-theme="light"] .hamburger.active span {
+  background: var(--color-charcoal);
+}
+
 /* Mega Menu - hardcoded rgba background */
 [data-theme="light"] .mega-menu {
   background: rgba(247, 248, 250, 0.98);

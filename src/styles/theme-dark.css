@@ -49,6 +49,11 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Hamburger Colors */
+[data-theme="dark"] .hamburger.active span {
+  background: var(--color-white);
+}
+
 /* Mega Menu - hardcoded rgba background */
 [data-theme="dark"] .mega-menu {
   background: rgba(26, 29, 30, 0.98);

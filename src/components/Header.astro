@@ -3,12 +3,14 @@
 import '../styles/header.css';
 ---
 
+<!-- Hamburger button - outside header for proper z-index stacking -->
+<button class="hamburger" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+</button>
+
 <header id="site-header" class="site-header">
   <nav class="site-nav">
-    <button class="hamburger" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-    </button>
     <a href="/" class="logo-container">
       <span class="logo">Akradé</span>
       <span class="tagline">Right Story. Perfect Strategy.</span>

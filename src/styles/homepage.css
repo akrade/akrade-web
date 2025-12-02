@@ -17,7 +17,6 @@
 
 .tagline {
   font-size: clamp(1.125rem, 3vw, 1.5rem);
-  color: var(--color-accent-secondary);
 }
 
 /* About */
@@ -29,13 +28,11 @@ h2 {
 
 .about p {
   font-size: 1.25rem;
-  color: var(--color-accent-secondary);
   max-width: 800px;
   line-height: 1.8;
 }
 
 .about .about-lede {
-  color: var(--color-white);
   font-style: italic;
   font-family: var(--font-serif);
   font-size: 2rem;
@@ -53,27 +50,16 @@ h2 {
 
 .service-card {
   padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
   transition: border-color 0.2s;
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.service-card:hover {
-  border-color: var(--color-accent-secondary);
-  background-color: rgba(255, 255, 255, 0.035);
 }
 
 .service-card h3 {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
 }
-
-.service-card p {
-  color: var(--color-accent-secondary);
-}
-
-
 
 /* Contact */
 .contact-grid {
@@ -96,23 +82,13 @@ h2 {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--color-white);
   margin-bottom: 0.5rem;
 }
 
 .contact-item a,
 .contact-item p:not(.contact-label) {
   font-size: 1.5rem;
-  color: var(--color-white);
   text-decoration: none;
-}
-
-.contact-item p:not(.contact-label) {
-  color: var(--color-text);
-}
-
-.contact-item a:hover {
-  color: var(--color-accent-secondary);
 }
 
 /* Tablet: Reduce link sizes */
@@ -129,7 +105,8 @@ h2 {
 
   .contact-item:not(:last-child) {
     margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     padding-bottom: 2rem;
   }
 }
@@ -166,11 +143,6 @@ h2 {
     margin-bottom: 2rem;
   }
 
-  .service-card:hover {
-    border-color: transparent;
-    background-color: transparent;
-  }
-
   .service-card:last-child {
     margin-bottom: 0;
   }
@@ -191,7 +163,8 @@ h2 {
 
   .contact-item:not(:last-child) {
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     padding-bottom: 1.5rem;
   }
 

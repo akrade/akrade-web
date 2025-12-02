@@ -26,7 +26,6 @@
 }
 
 .page-meta {
-  color: var(--color-muted);
   font-size: 0.875rem;
   font-style: italic;
 }
@@ -61,7 +60,8 @@
 
 /* Links inherit global styles from base-layout.css */
 .page-content a:focus {
-  outline: 2px solid var(--color-accent);
+  outline-width: 2px;
+  outline-style: solid;
   outline-offset: 2px;
 }
 

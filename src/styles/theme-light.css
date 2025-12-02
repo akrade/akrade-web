@@ -1,0 +1,274 @@
+/**
+ * Light Theme Overrides
+ *
+ * Minimal overrides for light theme. Most styling is handled automatically
+ * via CSS custom properties defined in colors.css [data-theme="light"].
+ * This file only contains overrides for hardcoded values that can't use CSS variables.
+ */
+
+/* Base Layout Colors */
+[data-theme="light"] html,
+[data-theme="light"] body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Custom cursor - needs inline SVG color override */
+[data-theme="light"] body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><circle cx="32" cy="32" r="16" fill="rgba(26,29,30,0.85)"/></svg>') 32 32, auto;
+}
+
+/* Link Colors */
+[data-theme="light"] a {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] a:hover,
+[data-theme="light"] a:focus {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] a:active {
+  color: var(--color-bronze);
+}
+
+[data-theme="light"] a:visited {
+  color: var(--color-accent-secondary);
+}
+
+/* Headings */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3 {
+  color: var(--color-charcoal);
+}
+
+/* Header - hardcoded rgba background */
+[data-theme="light"] .site-header {
+  background: rgba(247, 248, 250, 0.7);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Hamburger Colors */
+[data-theme="light"] .hamburger.active span {
+  background: var(--color-charcoal);
+}
+
+/* Mega Menu - hardcoded rgba background */
+[data-theme="light"] .mega-menu {
+  background: rgba(247, 248, 250, 0.98);
+}
+
+/* Mega menu borders - hardcoded rgba */
+[data-theme="light"] .mega-menu-links li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Service cards - add shadow on hover for depth */
+[data-theme="light"] .service-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* About lede - special bronze color treatment */
+[data-theme="light"] .about-lede {
+  color: var(--color-bronze);
+}
+
+/* Page layout title - ensure charcoal color */
+[data-theme="light"] .title-page h1 {
+  color: var(--color-charcoal);
+}
+
+/* Page Layout Colors */
+[data-theme="light"] .page-meta {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .page-content a:focus {
+  outline-color: var(--color-accent);
+}
+
+/* Homepage Colors */
+[data-theme="light"] .tagline {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] .about p {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] .about .about-lede {
+  color: var(--color-charcoal);
+}
+
+/* Service Cards */
+[data-theme="light"] .service-card {
+  border-color: rgba(0, 0, 0, 0.08);
+  background-color: var(--color-bg-elevated);
+}
+
+[data-theme="light"] .service-card p {
+  color: var(--color-text-muted);
+}
+
+/* Contact Section */
+[data-theme="light"] .contact-label {
+  color: var(--color-charcoal);
+}
+
+[data-theme="light"] .contact-item a,
+[data-theme="light"] .contact-item p:not(.contact-label) {
+  color: var(--color-charcoal);
+}
+
+[data-theme="light"] .contact-item p:not(.contact-label) {
+  color: var(--color-text);
+}
+
+[data-theme="light"] .contact-item a:hover {
+  color: var(--color-accent);
+}
+
+/* Responsive: Tablet */
+@media (min-width: 481px) and (max-width: 1000px) {
+  [data-theme="light"] .contact-item:not(:last-child) {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Responsive: Mobile */
+@media (max-width: 480px) {
+  [data-theme="light"] .service-card:hover {
+    border-color: transparent;
+    background-color: transparent;
+  }
+
+  [data-theme="light"] .contact-item:not(:last-child) {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Footer Colors */
+[data-theme="light"] .footer-link {
+  color: var(--color-bronze);
+}
+
+[data-theme="light"] .footer-link:hover {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .footer-heading {
+  color: var(--color-charcoal);
+}
+
+[data-theme="light"] .footer-contact-link {
+  color: var(--color-bronze);
+}
+
+[data-theme="light"] .footer-contact-link:hover {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .footer-address {
+  color: var(--color-text);
+}
+
+[data-theme="light"] .footer-upper-col a:link,
+[data-theme="light"] .footer-upper-col a:visited {
+  color: var(--color-charcoal);
+}
+
+[data-theme="light"] .footer-upper-col a:hover {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .newsletter-form {
+  border-bottom-color: var(--color-muted);
+}
+
+[data-theme="light"] .newsletter-input {
+  color: var(--color-text);
+}
+
+[data-theme="light"] .newsletter-input::placeholder {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .newsletter-submit {
+  color: var(--color-bronze);
+}
+
+[data-theme="light"] .newsletter-submit:hover {
+  color: var(--color-accent);
+}
+
+/* Newsletter Success/Error States */
+[data-theme="light"] .newsletter-input.success {
+  color: #10b981;
+}
+
+[data-theme="light"] .newsletter-input.success::placeholder {
+  color: #10b981;
+}
+
+[data-theme="light"] .newsletter-input.error {
+  color: #ef4444;
+}
+
+[data-theme="light"] .newsletter-input.error::placeholder {
+  color: #ef4444;
+}
+
+[data-theme="light"] .newsletter-submit.success {
+  color: #10b981;
+}
+
+[data-theme="light"] .newsletter-submit.error {
+  color: #ef4444;
+}
+
+[data-theme="light"] .newsletter-message.success {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+[data-theme="light"] .newsletter-message.error {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+[data-theme="light"] .footer-social-link {
+  color: var(--color-bronze);
+}
+
+[data-theme="light"] .footer-social-link:hover {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .footer-lower {
+  background: var(--color-bg-primary);
+  border-top-color: var(--color-border);
+}
+
+[data-theme="light"] .footer-col a {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .footer-col a:hover {
+  color: var(--color-charcoal);
+}
+
+[data-theme="light"] .copyright {
+  color: var(--color-muted);
+}
+
+/* Schedule Call Panel Colors */
+[data-theme="light"] .panel-backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .schedule-call-panel {
+  background: var(--color-white);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+}

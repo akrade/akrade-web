@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// Design System
+import '../styles/page-layout.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  meta?: string;
+  theme?: 'light' | 'dark' | 'neutral';
+  maxWidth?: '800px' | '1200px' | '1600px';
+}
+
+const {
+  title,
+  description,
+  meta,
+  theme,
+  maxWidth = '800px'
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} | Akradé`} description={description} theme={theme}>
+  <header class="page-header title-page">
+    <h1>{title}</h1>
+  </header>
+  <main class="page-container" style={`--max-width: ${maxWidth}`}>
+    <article>
+
+      {meta && (
+        <p class="page-meta">{meta}</p>
+      )}
+      <div class="page-container">
+        <div class="page-content">
+          <slot />
+        </div>
+      </div>
+    </article>
+  </main>
+</BaseLayout>

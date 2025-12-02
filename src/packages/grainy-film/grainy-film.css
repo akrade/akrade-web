@@ -1,0 +1,101 @@
+/*
+ * Grainy Film Effect Package
+ * Apply to any page by adding data-grainy-film attribute to <html> tag
+ */
+
+/* Critical grain container setup */
+html[data-grainy-film] .grain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+html[data-grainy-film] .grain {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.5;
+}
+
+/* Vignette overlay */
+html[data-grainy-film] .vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Non-critical grain effects */
+html[data-grainy-film] .grain::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 25%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.15; }
+  5% { opacity: 0.12; }
+  10% { opacity: 0.18; }
+  15% { opacity: 0.15; }
+  20% { opacity: 0.16; }
+  25% { opacity: 0.14; }
+  30% { opacity: 0.15; }
+  100% { opacity: 0.15; }
+}
+
+html[data-grainy-film] .grain {
+  animation: grain 8s steps(10) infinite, flicker 0.15s infinite;
+}
+
+/* Subtle scan lines */
+html[data-grainy-film] .scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.3;
+}
+
+/* Ensure content is above all effects */
+html[data-grainy-film] body > :not(.grain-container):not(.vignette):not(.scanlines):not(.panel-backdrop):not(.schedule-call-panel):not(.mega-menu) {
+  position: relative;
+  z-index: 10;
+}

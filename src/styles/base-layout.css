@@ -45,7 +45,6 @@ a.special-underline {
   position: relative;
   display: inline-block; /* keeps underline length to text only */
   text-decoration: none;
-  color: inherit;
 }
 
 /* Underline effect */

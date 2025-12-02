@@ -187,6 +187,41 @@
   color: var(--color-accent-secondary);
 }
 
+/* Newsletter Success/Error States */
+[data-theme="dark"] .newsletter-input.success {
+  color: #10b981;
+}
+
+[data-theme="dark"] .newsletter-input.success::placeholder {
+  color: #10b981;
+}
+
+[data-theme="dark"] .newsletter-input.error {
+  color: #ef4444;
+}
+
+[data-theme="dark"] .newsletter-input.error::placeholder {
+  color: #ef4444;
+}
+
+[data-theme="dark"] .newsletter-submit.success {
+  color: #10b981;
+}
+
+[data-theme="dark"] .newsletter-submit.error {
+  color: #ef4444;
+}
+
+[data-theme="dark"] .newsletter-message.success {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+[data-theme="dark"] .newsletter-message.error {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
 [data-theme="dark"] .footer-social-link {
   color: var(--color-text);
 }

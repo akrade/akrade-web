@@ -132,3 +132,82 @@
     border-bottom-color: rgba(255, 255, 255, 0.1);
   }
 }
+
+/* Footer Colors */
+[data-theme="dark"] .footer-link {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .footer-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="dark"] .footer-heading {
+  color: var(--color-white);
+}
+
+[data-theme="dark"] .footer-contact-link {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .footer-contact-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="dark"] .footer-address {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .footer-upper-col a:link,
+[data-theme="dark"] .footer-upper-col a:visited {
+  color: var(--color-white);
+}
+
+[data-theme="dark"] .footer-upper-col a:hover {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="dark"] .newsletter-form {
+  border-bottom-color: var(--color-muted);
+}
+
+[data-theme="dark"] .newsletter-input {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .newsletter-input::placeholder {
+  color: var(--color-muted);
+}
+
+[data-theme="dark"] .newsletter-submit {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .newsletter-submit:hover {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="dark"] .footer-social-link {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .footer-social-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="dark"] .footer-lower {
+  background: var(--color-bg-primary);
+  border-top-color: var(--color-bg-elevated);
+}
+
+[data-theme="dark"] .footer-col a {
+  color: var(--color-muted);
+}
+
+[data-theme="dark"] .footer-col a:hover {
+  color: var(--color-white);
+}
+
+[data-theme="dark"] .copyright {
+  color: var(--color-muted);
+}

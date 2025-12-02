@@ -22,8 +22,9 @@
 
 /* Hamburger on the left */
 .hamburger {
-  position: absolute;
-  left: 0;
+  position: fixed;
+  top: 0.8rem;
+  left: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,7 +34,7 @@
   border: none;
   cursor: pointer;
   padding: 0.75rem;
-  z-index: 350;
+  z-index: 10000;
 }
 
 .hamburger span {
@@ -42,6 +43,8 @@
   background: var(--color-text);
   transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
   transform-origin: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hamburger:hover span {
@@ -169,6 +172,11 @@
 
   .site-nav {
     padding: 0;
+  }
+
+  .hamburger {
+    top: 1rem;
+    left: 1rem;
   }
 
   .mega-menu-links a {

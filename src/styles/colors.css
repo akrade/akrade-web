@@ -51,7 +51,7 @@
   --color-text: var(--color-charcoal);
   --color-muted: #5b6066;
   --color-accent: var(--color-bronze);
-  --color-accent-secondary: #3f5a6a;
+  --color-accent-secondary: var(--color-bronze);
   --color-bg-primary: #f7f8fa;
   --color-bg-elevated: #ffffff;
   --color-bg-hover: #e8ebf0;

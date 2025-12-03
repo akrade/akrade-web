@@ -19,12 +19,12 @@ import '../styles/schedule-call-panel.css';
     <!-- Cal.com embed -->
     <div class="cal-embed-container">
       <iframe
-        src="https://cal.com/akrade"
         width="100%"
         height="100%"
         allow="camera; microphone; autoplay; encrypted-media;"
         title="Schedule a meeting with Akradé"
         id="calEmbed"
+        loading="lazy"
       ></iframe>
     </div>
   </div>
@@ -55,13 +55,51 @@ import '../styles/schedule-call-panel.css';
       // Only initialize if elements exist
       if (!panel || !backdrop) return;
 
-      // Update cal.com iframe theme based on site theme
-      function updateCalTheme() {
+      // Load cal.com iframe with correct theme (lazy load on first open)
+      function loadCalWithTheme() {
         if (!calIframe) return;
+
+        // Check if iframe already has content loaded
+        if (calIframe.src && calIframe.src !== 'about:blank') return;
 
         const htmlElement = document.documentElement;
         const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
         const baseUrl = 'https://cal.com/akrade';
+
+        // Remove loaded class before loading new content
+        calIframe.classList.remove('loaded');
+
+        // Listen for iframe load event to fade it in
+        const loadHandler = () => {
+          calIframe.classList.add('loaded');
+          calIframe.removeEventListener('load', loadHandler);
+        };
+        calIframe.addEventListener('load', loadHandler);
+
+        // Load iframe with theme parameter
+        calIframe.src = `${baseUrl}?theme=${currentTheme}`;
+      }
+
+      // Update cal.com iframe theme (only if already loaded)
+      function updateCalTheme() {
+        if (!calIframe) return;
+
+        // Only update if iframe already has content loaded
+        if (!calIframe.src || calIframe.src === 'about:blank') return;
+
+        const htmlElement = document.documentElement;
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+        const baseUrl = 'https://cal.com/akrade';
+
+        // Remove loaded class before reloading with new theme
+        calIframe.classList.remove('loaded');
+
+        // Listen for iframe load event to fade it in
+        const loadHandler = () => {
+          calIframe.classList.add('loaded');
+          calIframe.removeEventListener('load', loadHandler);
+        };
+        calIframe.addEventListener('load', loadHandler);
 
         // Update iframe src with theme parameter
         calIframe.src = `${baseUrl}?theme=${currentTheme}`;
@@ -75,8 +113,8 @@ import '../styles/schedule-call-panel.css';
           document.body.style.overflow = 'hidden';
           if (closeButton) closeButton.focus();
 
-          // Update cal.com theme when opening
-          updateCalTheme();
+          // Lazy load iframe with correct theme on first open
+          loadCalWithTheme();
         }
       }
 
@@ -116,9 +154,6 @@ import '../styles/schedule-call-panel.css';
           attributeFilter: ['data-theme']
         });
       }
-
-      // Set initial theme
-      updateCalTheme();
 
       // Expose functions globally so they can be called from other components
       window.openSchedulePanel = openPanel;

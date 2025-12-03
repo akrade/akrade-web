@@ -62,20 +62,52 @@ import '../styles/footer.css';
 </footer>
 
 <script is:inline>
-  // Handle "Lets Talk" link to open schedule panel
-  document.addEventListener('DOMContentLoaded', function() {
-    const footerScheduleLink = document.getElementById('footer-schedule-link');
+  // @ts-nocheck
+  // Handle "Let's Talk" link to open schedule panel - works with both initial load and View Transitions
+  (function() {
+    let cleanupFunctions = [];
 
-    if (footerScheduleLink) {
-      footerScheduleLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Call the global function exposed by ScheduleCallPanel
-        if (typeof window.openSchedulePanel === 'function') {
-          window.openSchedulePanel();
-        } else {
-          console.error('openSchedulePanel function not found');
-        }
-      });
+    function initFooterScheduleLink() {
+      // Cleanup any existing listeners first
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+
+      const footerScheduleLink = document.getElementById('footer-schedule-link');
+
+      if (footerScheduleLink) {
+        const clickHandler = (e) => {
+          e.preventDefault();
+          // Call the global function exposed by ScheduleCallPanel
+          if (typeof window.openSchedulePanel === 'function') {
+            window.openSchedulePanel();
+          } else {
+            console.error('openSchedulePanel function not found');
+          }
+        };
+
+        footerScheduleLink.addEventListener('click', clickHandler);
+
+        // Store cleanup function
+        cleanupFunctions.push(() => {
+          footerScheduleLink.removeEventListener('click', clickHandler);
+        });
+      }
     }
-  });
+
+    // Initialize immediately on first load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFooterScheduleLink);
+    } else {
+      initFooterScheduleLink();
+    }
+
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initFooterScheduleLink);
+
+    // Cleanup before navigation
+    document.addEventListener('astro:before-preparation', () => {
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+    });
+  })();
 </script>

@@ -67,18 +67,52 @@ import '../styles/homepage.css';
 </BaseLayout>
 
 <script is:inline>
-  // Handle Schedule a Meeting link in contact section
-  const contactScheduleLink = document.getElementById('contact-schedule-link');
+  // @ts-nocheck
+  // Handle Schedule a Meeting link in contact section - works with both initial load and View Transitions
+  (function() {
+    let cleanupFunctions = [];
 
-  if (contactScheduleLink) {
-    contactScheduleLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      // Call the global function exposed by ScheduleCallPanel
-      if (typeof window.openSchedulePanel === 'function') {
-        window.openSchedulePanel();
+    function initContactScheduleLink() {
+      // Cleanup any existing listeners first
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+
+      const contactScheduleLink = document.getElementById('contact-schedule-link');
+
+      if (contactScheduleLink) {
+        const clickHandler = (e) => {
+          e.preventDefault();
+          // Call the global function exposed by ScheduleCallPanel
+          if (typeof window.openSchedulePanel === 'function') {
+            window.openSchedulePanel();
+          }
+        };
+
+        contactScheduleLink.addEventListener('click', clickHandler);
+
+        // Store cleanup function
+        cleanupFunctions.push(() => {
+          contactScheduleLink.removeEventListener('click', clickHandler);
+        });
       }
+    }
+
+    // Initialize immediately on first load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initContactScheduleLink);
+    } else {
+      initContactScheduleLink();
+    }
+
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initContactScheduleLink);
+
+    // Cleanup before navigation
+    document.addEventListener('astro:before-preparation', () => {
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
     });
-  }
+  })();
 
   // Scroll-based theme transitions
   // Works with both initial load and View Transitions

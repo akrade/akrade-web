@@ -31,77 +31,129 @@ import '../styles/schedule-call-panel.css';
 </div>
 
 <script is:inline>
-  // Get elements
-  const panel = document.getElementById('scheduleCallPanel');
-  const backdrop = document.getElementById('scheduleCallBackdrop');
-  const closeButton = document.getElementById('closePanelButton');
-  const calIframe = document.getElementById('calEmbed');
+  // @ts-nocheck
+  // Schedule Call Panel functionality - works with both initial load and View Transitions
+  (function() {
+    let cleanupFunctions = [];
+    let themeObserver = null;
 
-  // Update cal.com iframe theme based on site theme
-  function updateCalTheme() {
-    if (!calIframe) return;
+    function initSchedulePanel() {
+      // Cleanup any existing listeners and observers first
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+      if (themeObserver) {
+        themeObserver.disconnect();
+        themeObserver = null;
+      }
 
-    const htmlElement = document.documentElement;
-    const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
-    const baseUrl = 'https://cal.com/akrade';
+      // Get elements
+      const panel = document.getElementById('scheduleCallPanel');
+      const backdrop = document.getElementById('scheduleCallBackdrop');
+      const closeButton = document.getElementById('closePanelButton');
+      const calIframe = document.getElementById('calEmbed');
 
-    // Update iframe src with theme parameter
-    calIframe.src = `${baseUrl}?theme=${currentTheme}`;
-  }
+      // Only initialize if elements exist
+      if (!panel || !backdrop) return;
 
-  // Open panel function
-  function openPanel() {
-    if (panel && backdrop) {
-      panel.classList.add('open');
-      backdrop.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      if (closeButton) closeButton.focus();
+      // Update cal.com iframe theme based on site theme
+      function updateCalTheme() {
+        if (!calIframe) return;
 
-      // Update cal.com theme when opening
+        const htmlElement = document.documentElement;
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+        const baseUrl = 'https://cal.com/akrade';
+
+        // Update iframe src with theme parameter
+        calIframe.src = `${baseUrl}?theme=${currentTheme}`;
+      }
+
+      // Open panel function
+      function openPanel() {
+        if (panel && backdrop) {
+          panel.classList.add('open');
+          backdrop.classList.add('open');
+          document.body.style.overflow = 'hidden';
+          if (closeButton) closeButton.focus();
+
+          // Update cal.com theme when opening
+          updateCalTheme();
+        }
+      }
+
+      // Close panel function
+      function closePanel() {
+        if (panel && backdrop) {
+          panel.classList.remove('open');
+          backdrop.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // ESC key handler
+      const escHandler = (e) => {
+        if (e.key === 'Escape' && panel && panel.classList.contains('open')) {
+          closePanel();
+        }
+      };
+
+      // Event listeners
+      if (closeButton) closeButton.addEventListener('click', closePanel);
+      if (backdrop) backdrop.addEventListener('click', closePanel);
+      document.addEventListener('keydown', escHandler);
+
+      // Watch for theme changes and update cal.com
+      themeObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'data-theme') {
+            updateCalTheme();
+          }
+        });
+      });
+
+      if (document.documentElement) {
+        themeObserver.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ['data-theme']
+        });
+      }
+
+      // Set initial theme
       updateCalTheme();
+
+      // Expose functions globally so they can be called from other components
+      window.openSchedulePanel = openPanel;
+      window.closeSchedulePanel = closePanel;
+
+      // Store cleanup functions
+      cleanupFunctions.push(() => {
+        if (closeButton) closeButton.removeEventListener('click', closePanel);
+        if (backdrop) backdrop.removeEventListener('click', closePanel);
+        document.removeEventListener('keydown', escHandler);
+        if (themeObserver) {
+          themeObserver.disconnect();
+          themeObserver = null;
+        }
+      });
     }
-  }
 
-  // Close panel function
-  function closePanel() {
-    if (panel && backdrop) {
-      panel.classList.remove('open');
-      backdrop.classList.remove('open');
-      document.body.style.overflow = '';
+    // Initialize immediately on first load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSchedulePanel);
+    } else {
+      initSchedulePanel();
     }
-  }
 
-  // Event listeners
-  if (closeButton) closeButton.addEventListener('click', closePanel);
-  if (backdrop) backdrop.addEventListener('click', closePanel);
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initSchedulePanel);
 
-  // Close on ESC key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && panel && panel.classList.contains('open')) {
-      closePanel();
-    }
-  });
-
-  // Watch for theme changes and update cal.com
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.attributeName === 'data-theme') {
-        updateCalTheme();
+    // Cleanup before navigation
+    document.addEventListener('astro:before-preparation', () => {
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+      if (themeObserver) {
+        themeObserver.disconnect();
+        themeObserver = null;
       }
     });
-  });
-
-  if (document.documentElement) {
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
-  }
-
-  // Set initial theme
-  updateCalTheme();
-
-  // Expose functions globally so they can be called from other components
-  window.openSchedulePanel = openPanel;
-  window.closeSchedulePanel = closePanel;
+  })();
 </script>

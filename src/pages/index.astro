@@ -79,4 +79,63 @@ import '../styles/homepage.css';
       }
     });
   }
+
+  // Scroll-based theme transitions
+  document.addEventListener('DOMContentLoaded', function() {
+    const html = document.documentElement;
+    const heroSection = document.querySelector('.hero');
+    const aboutSection = document.querySelector('#about');
+    const servicesSection = document.querySelector('#services');
+
+    // Get grain effect elements
+    const grainContainer = document.querySelector('.grain-container');
+    const vignette = document.querySelector('.vignette');
+    const scanlines = document.querySelector('.scanlines');
+
+    // Add smooth transitions for theme changes
+    html.style.transition = 'background-color 0.6s ease, color 0.6s ease';
+
+    // Add transitions to grain effect elements
+    if (grainContainer) grainContainer.style.transition = 'opacity 0.6s ease';
+    if (vignette) vignette.style.transition = 'opacity 0.6s ease';
+    if (scanlines) scanlines.style.transition = 'opacity 0.6s ease';
+
+    // IntersectionObserver options
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px', // Trigger when section is 20% from top
+      threshold: 0
+    };
+
+    // Helper function to toggle grain effect
+    function setGrainVisibility(visible) {
+      const opacity = visible ? '1' : '0';
+      if (grainContainer) grainContainer.style.opacity = opacity;
+      if (vignette) vignette.style.opacity = opacity;
+      if (scanlines) scanlines.style.opacity = opacity;
+    }
+
+    // Create observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target === heroSection) {
+            html.setAttribute('data-theme', 'dark');
+            setGrainVisibility(true);
+          } else if (entry.target === aboutSection) {
+            html.setAttribute('data-theme', 'light');
+            setGrainVisibility(false);
+          } else if (entry.target === servicesSection) {
+            html.setAttribute('data-theme', 'dark');
+            setGrainVisibility(true);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe sections
+    if (heroSection) observer.observe(heroSection);
+    if (aboutSection) observer.observe(aboutSection);
+    if (servicesSection) observer.observe(servicesSection);
+  });
 </script>

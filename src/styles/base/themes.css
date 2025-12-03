@@ -13,6 +13,37 @@
 
 @layer themes {
   /* ========================================
+   * THEME TRANSITIONS
+   * ======================================== */
+
+  /* Smooth transitions for theme changes */
+  html,
+  body,
+  .site-header,
+  .mega-menu,
+  .service-card,
+  h1, h2, h3,
+  a,
+  .footer-link,
+  .footer-heading,
+  .footer-contact-link,
+  .footer-social-link,
+  .footer-lower,
+  .schedule-call-panel,
+  .panel-backdrop,
+  .contact-label,
+  .contact-item a,
+  .contact-item p,
+  .tagline,
+  .about p,
+  .about-lede {
+    transition: background-color 0.6s ease,
+                color 0.6s ease,
+                border-color 0.6s ease,
+                box-shadow 0.6s ease;
+  }
+
+  /* ========================================
    * LIGHT THEME
    * ======================================== */
 

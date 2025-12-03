@@ -7,6 +7,9 @@
  * All tokens are defined as CSS custom properties for easy theming.
  */
 
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+
 @layer tokens {
   :root {
     /* ===== Breakpoint Tokens ===== */
@@ -17,7 +20,7 @@
 
     /* ===== Typography Tokens ===== */
     --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-serif: Georgia, 'Times New Roman', Times, serif;
+    --font-serif: 'Alegreya', Georgia, 'Times New Roman', Times, serif;
 
     /* ===== Primitive Colors ===== */
     /* Maintain naming compatibility with existing codebase */

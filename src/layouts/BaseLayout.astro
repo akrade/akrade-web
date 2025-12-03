@@ -5,11 +5,19 @@ import Footer from '@/components/Footer.astro';
 import ScheduleCallPanel from '@/components/ScheduleCallPanel.astro';
 import GrainyFilm from '@/packages/grainy-film/GrainyFilm.astro';
 
-// Design System
-import '../styles/colors.css';
-import '../styles/base-layout.css';
-import '../styles/theme-dark.css';
-import '../styles/theme-light.css';
+// Design System - Modern CSS Architecture with @layer
+// Foundation layer (lowest priority)
+import '../styles/foundation/00-layers.css';
+import '../styles/foundation/01-tokens.css';
+import '../styles/foundation/02-reset.css';
+import '../styles/foundation/03-animations.css';
+
+// Base layer
+import '../styles/base/typography.css';
+import '../styles/base/layout.css';
+
+// Theme layer (highest priority)
+import '../styles/base/themes.css';
 
 // Thrid-party Anlytics
 import Analytics from '@vercel/analytics/astro'

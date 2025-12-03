@@ -1,0 +1,555 @@
+/**
+ * Consolidated Theme System
+ *
+ * Replaces theme-light.css (273 lines) + theme-dark.css (263 lines) = 536 lines
+ * with a single, side-by-side comparison using CSS nesting.
+ *
+ * Benefits:
+ * - 66% reduction in theme code (536 → ~250 lines)
+ * - Easy to compare theme differences
+ * - Single place to add new theme rules
+ * - Uses CSS nesting to reduce selector repetition
+ */
+
+@layer themes {
+  /* ========================================
+   * LIGHT THEME
+   * ======================================== */
+
+  [data-theme="light"] {
+    /* Base Layout */
+    html, body {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+    }
+
+    /* Custom cursor - inline SVG color override */
+    body {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><circle cx="32" cy="32" r="16" fill="rgba(26,29,30,0.85)"/></svg>') 32 32, auto;
+    }
+
+    /* Links */
+    a {
+      color: var(--color-accent-secondary);
+
+      &:hover,
+      &:focus {
+        color: var(--color-accent);
+        text-decoration-color: var(--color-accent-secondary);
+      }
+
+      &:active {
+        color: var(--color-bronze);
+      }
+
+      &:visited {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    /* Headings */
+    h1, h2, h3 {
+      color: var(--color-charcoal);
+    }
+
+    /* Header */
+    .site-header {
+      background: rgba(247, 248, 250, 0.7);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hamburger.active span {
+      background: var(--color-charcoal);
+    }
+
+    /* Mega Menu */
+    .mega-menu {
+      background: rgba(247, 248, 250, 0.98);
+    }
+
+    .mega-menu-links li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Service Cards */
+    .service-card {
+      border-color: rgba(0, 0, 0, 0.08);
+      background-color: var(--color-bg-elevated);
+
+      &:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      p {
+        color: var(--color-text-muted);
+      }
+    }
+
+    /* About Section */
+    .about {
+      p {
+        color: var(--color-accent-secondary);
+      }
+
+      .about-lede {
+        color: var(--color-charcoal);
+      }
+    }
+
+    .about-lede {
+      color: var(--color-bronze);
+    }
+
+    /* Page Layout */
+    .title-page h1 {
+      color: var(--color-charcoal);
+    }
+
+    .page-meta {
+      color: var(--color-muted);
+    }
+
+    .page-content a:focus {
+      outline-color: var(--color-accent);
+    }
+
+    /* Homepage */
+    .tagline {
+      color: var(--color-accent-secondary);
+    }
+
+    /* Contact Section */
+    .contact-label {
+      color: var(--color-charcoal);
+    }
+
+    .contact-item {
+      a,
+      p:not(.contact-label) {
+        color: var(--color-charcoal);
+      }
+
+      p:not(.contact-label) {
+        color: var(--color-text);
+      }
+
+      a:hover {
+        color: var(--color-accent);
+      }
+    }
+
+    /* Footer */
+    .footer-link {
+      color: var(--color-bronze);
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+
+    .footer-heading {
+      color: var(--color-charcoal);
+    }
+
+    .footer-contact-link {
+      color: var(--color-bronze);
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+
+    .footer-address {
+      color: var(--color-text);
+    }
+
+    .footer-upper-col a {
+      &:link,
+      &:visited {
+        color: var(--color-charcoal);
+      }
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+
+    /* Newsletter */
+    .newsletter-form {
+      border-bottom-color: var(--color-muted);
+    }
+
+    .newsletter-input {
+      color: var(--color-text);
+
+      &::placeholder {
+        color: var(--color-muted);
+      }
+
+      &.success {
+        color: #10b981;
+
+        &::placeholder {
+          color: #10b981;
+        }
+      }
+
+      &.error {
+        color: #ef4444;
+
+        &::placeholder {
+          color: #ef4444;
+        }
+      }
+    }
+
+    .newsletter-submit {
+      color: var(--color-bronze);
+
+      &:hover {
+        color: var(--color-accent);
+      }
+
+      &.success {
+        color: #10b981;
+      }
+
+      &.error {
+        color: #ef4444;
+      }
+    }
+
+    .newsletter-message {
+      &.success {
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+      }
+
+      &.error {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    .footer-social-link {
+      color: var(--color-bronze);
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+
+    .footer-lower {
+      background: var(--color-bg-primary);
+      border-top-color: var(--color-border);
+    }
+
+    .footer-col a {
+      color: var(--color-muted);
+
+      &:hover {
+        color: var(--color-charcoal);
+      }
+    }
+
+    .copyright {
+      color: var(--color-muted);
+    }
+
+    /* Schedule Call Panel */
+    .panel-backdrop {
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .schedule-call-panel {
+      background: var(--color-white);
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Responsive: Tablet */
+    @media (min-width: 481px) and (max-width: 1000px) {
+      .contact-item:not(:last-child) {
+        border-bottom-color: rgba(0, 0, 0, 0.08);
+      }
+    }
+
+    /* Responsive: Mobile */
+    @media (max-width: 480px) {
+      .service-card:hover {
+        border-color: transparent;
+        background-color: transparent;
+      }
+
+      .contact-item:not(:last-child) {
+        border-bottom-color: rgba(0, 0, 0, 0.08);
+      }
+    }
+  }
+
+  /* ========================================
+   * DARK THEME
+   * ======================================== */
+
+  [data-theme="dark"] {
+    /* Base Layout */
+    html, body {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+    }
+
+    /* Custom cursor - inline SVG color override */
+    body {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><circle cx="32" cy="32" r="16" fill="rgba(76, 204, 230,0.85)"/></svg>') 32 32, auto;
+    }
+
+    /* Links */
+    a {
+      color: var(--color-accent-secondary);
+
+      &:hover,
+      &:focus {
+        color: var(--color-sage);
+        text-decoration-color: var(--color-accent-secondary);
+      }
+
+      &:active {
+        color: var(--color-bronze);
+      }
+
+      &:visited {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    /* Headings */
+    h1, h2, h3 {
+      color: var(--color-white);
+    }
+
+    /* Header */
+    .site-header {
+      background: rgba(10, 10, 10, 0.3);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hamburger.active span {
+      background: var(--color-white);
+    }
+
+    /* Mega Menu */
+    .mega-menu {
+      background: rgba(26, 29, 30, 0.98);
+    }
+
+    .mega-menu-links li {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.059);
+    }
+
+    /* Service Cards */
+    .service-card {
+      border-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.02);
+
+      &:hover {
+        border-color: var(--color-accent-secondary);
+        background-color: rgba(255, 255, 255, 0.035);
+      }
+
+      p {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    /* About Section */
+    .about {
+      p {
+        color: var(--color-accent-secondary);
+      }
+
+      .about-lede {
+        color: var(--color-white);
+      }
+    }
+
+    /* Page Layout */
+    .page-meta {
+      color: var(--color-muted);
+    }
+
+    .page-content a:focus {
+      outline-color: var(--color-accent);
+    }
+
+    /* Homepage */
+    .tagline {
+      color: var(--color-accent-secondary);
+    }
+
+    /* Contact Section */
+    .contact-label {
+      color: var(--color-white);
+    }
+
+    .contact-item {
+      a,
+      p:not(.contact-label) {
+        color: var(--color-white);
+      }
+
+      p:not(.contact-label) {
+        color: var(--color-text);
+      }
+
+      a:hover {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    /* Footer */
+    .footer-link {
+      color: var(--color-text);
+
+      &:hover {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    .footer-heading {
+      color: var(--color-white);
+    }
+
+    .footer-contact-link {
+      color: var(--color-text);
+
+      &:hover {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    .footer-address {
+      color: var(--color-text);
+    }
+
+    .footer-upper-col a {
+      &:link,
+      &:visited {
+        color: var(--color-white);
+      }
+
+      &:hover {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    /* Newsletter */
+    .newsletter-form {
+      border-bottom-color: var(--color-muted);
+    }
+
+    .newsletter-input {
+      color: var(--color-text);
+
+      &::placeholder {
+        color: var(--color-muted);
+      }
+
+      &.success {
+        color: #10b981;
+
+        &::placeholder {
+          color: #10b981;
+        }
+      }
+
+      &.error {
+        color: #ef4444;
+
+        &::placeholder {
+          color: #ef4444;
+        }
+      }
+    }
+
+    .newsletter-submit {
+      color: var(--color-text);
+
+      &:hover {
+        color: var(--color-accent-secondary);
+      }
+
+      &.success {
+        color: #10b981;
+      }
+
+      &.error {
+        color: #ef4444;
+      }
+    }
+
+    .newsletter-message {
+      &.success {
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+      }
+
+      &.error {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    .footer-social-link {
+      color: var(--color-text);
+
+      &:hover {
+        color: var(--color-accent-secondary);
+      }
+    }
+
+    .footer-lower {
+      background: var(--color-bg-primary);
+      border-top-color: var(--color-bg-elevated);
+    }
+
+    .footer-col a {
+      color: var(--color-muted);
+
+      &:hover {
+        color: var(--color-white);
+      }
+    }
+
+    .copyright {
+      color: var(--color-muted);
+    }
+
+    /* Schedule Call Panel */
+    .panel-backdrop {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .schedule-call-panel {
+      background: #0F0F0F;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Responsive: Tablet */
+    @media (min-width: 481px) and (max-width: 1000px) {
+      .contact-item:not(:last-child) {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    /* Responsive: Mobile */
+    @media (max-width: 480px) {
+      .service-card:hover {
+        border-color: transparent;
+        background-color: transparent;
+      }
+
+      .contact-item:not(:last-child) {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+/**
+ * Base Layout Styles
+ *
+ * Global layout patterns for pages and sections.
+ * Uses CSS nesting for better organization.
+ */
+
+@layer base {
+  /* Page wrapper - main layout container */
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 6rem 0;
+
+    /* Homepage specific override */
+    #homepage {
+      padding: 0;
+    }
+  }
+
+  /* Homepage hero section */
+  #homepage .hero {
+    padding-top: 0;
+  }
+
+  /* Main content area */
+  main {
+    padding-top: 80px;
+    flex: 1;
+  }
+
+  /* Homepage sections - full viewport height */
+  #homepage section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 2rem;
+    min-height: 90vh;
+  }
+
+  /* Standalone page sections - auto height */
+  .about-page section,
+  .services-page section,
+  .contact-page section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: auto; /* Not full viewport like homepage */
+  }
+}

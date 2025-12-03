@@ -5,8 +5,7 @@
   left: 0;
   right: 0;
   z-index: 10;
-  padding: 0.8rem 2rem;
-  background: rgba(10, 10, 10, 0.3);
+  padding: 1.25rem 2rem;
   backdrop-filter: blur(10px);
 }
 
@@ -23,7 +22,7 @@
 /* Hamburger on the left */
 .hamburger {
   position: fixed;
-  top: 0.8rem;
+  top: 1.2rem;
   left: 2rem;
   display: flex;
   flex-direction: column;
@@ -81,8 +80,10 @@
 
 /* Logo centered */
 .logo {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 2rem;
+  font-weight: 300;
   text-decoration: none;
   color: var(--color-text);
   line-height: 1;
@@ -92,7 +93,7 @@
 .logo-container .tagline {
   font-size: 0.75rem;
   font-weight: 400;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: var(--font-serif);
   font-style: italic;
   color: var(--color-accent-secondary);
   letter-spacing: 0.05em;
@@ -106,7 +107,6 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(40px);
   z-index: 9999;
   opacity: 0;
@@ -139,14 +139,13 @@
 
 .mega-menu-links li {
   margin: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mega-menu-links a {
   display: block;
   font-size: 3rem;
   text-decoration: none;
-  color: var(--color-muted);
+  color: var(--color-accent-secondary);
   padding: 1.5rem 0;
   transition: color 0.3s ease, padding-left 0.3s ease;
 }
@@ -157,7 +156,6 @@
 }
 
 .mega-menu-links a.active {
-  color: var(--color-accent-secondary);
   padding-left: 0;
 }
 

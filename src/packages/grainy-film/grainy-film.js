@@ -74,10 +74,15 @@ export function initGrainEffect() {
   });
 }
 
-// Initialize grain effect immediately for visual feedback
-// The effect is already optimized (1fps, low density) so it won't block rendering
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initGrainEffect);
-} else {
-  initGrainEffect();
-}
+// Initialize grain effect - works with both initial load and View Transitions
+(function() {
+  // Initialize immediately on first load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGrainEffect);
+  } else {
+    initGrainEffect();
+  }
+
+  // Re-initialize after View Transitions navigation
+  document.addEventListener('astro:page-load', initGrainEffect);
+})();

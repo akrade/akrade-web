@@ -22,7 +22,7 @@
 /* Hamburger on the left */
 .hamburger {
   position: fixed;
-  top: 0.8rem;
+  top: 1.2rem;
   left: 2rem;
   display: flex;
   flex-direction: column;
@@ -82,8 +82,8 @@
 .logo {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 300;
   text-decoration: none;
   color: var(--color-text);
   line-height: 1;

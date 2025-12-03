@@ -105,7 +105,6 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(40px);
   z-index: 9999;
   opacity: 0;
@@ -138,14 +137,13 @@
 
 .mega-menu-links li {
   margin: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mega-menu-links a {
   display: block;
   font-size: 3rem;
   text-decoration: none;
-  color: var(--color-muted);
+  color: var(--color-accent-secondary);
   padding: 1.5rem 0;
   transition: color 0.3s ease, padding-left 0.3s ease;
 }
@@ -156,7 +154,6 @@
 }
 
 .mega-menu-links a.active {
-  color: var(--color-accent-secondary);
   padding-left: 0;
 }
 

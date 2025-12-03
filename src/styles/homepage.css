@@ -107,6 +107,12 @@ h2 {
   }
 }
 
+.footer-upper {
+  padding-top: 4rem;
+  background: transparent;
+}
+
+
 /* Mobile: Reduce font sizes and simplify layout */
 @media (max-width: 480px) {
   h2 {

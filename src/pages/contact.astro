@@ -24,12 +24,12 @@ import '../styles/contact.css';
     <section class="contact-schedule">
       <div class="cal-embed-container">
         <iframe
-          src="https://cal.com/akrade"
           width="100%"
           height="700"
           frameborder="0"
           allow="camera; microphone; autoplay; encrypted-media;"
           title="Schedule a meeting with Akradé"
+          id="contactCalEmbed"
         ></iframe>
       </div>
     </section>
@@ -37,3 +37,32 @@ import '../styles/contact.css';
   </main>
 
 </BaseLayout>
+
+<script is:inline>
+  // @ts-nocheck
+  // Set cal.com iframe theme based on page theme - works with both initial load and View Transitions
+  (function() {
+    function initContactCalTheme() {
+      const calIframe = document.getElementById('contactCalEmbed');
+
+      if (calIframe) {
+        const htmlElement = document.documentElement;
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
+        const baseUrl = 'https://cal.com/akrade';
+
+        // Set iframe src with theme parameter
+        calIframe.src = `${baseUrl}?theme=${currentTheme}`;
+      }
+    }
+
+    // Initialize immediately on first load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initContactCalTheme);
+    } else {
+      initContactCalTheme();
+    }
+
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initContactCalTheme);
+  })();
+</script>

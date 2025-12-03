@@ -105,9 +105,20 @@
   position: relative;
 }
 
+/* General iframe styles */
 .cal-embed-container iframe {
   border: none;
   border-radius: 8px;
+}
+
+/* Schedule panel specific iframe fade-in */
+.schedule-call-panel .cal-embed-container iframe {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.schedule-call-panel .cal-embed-container iframe.loaded {
+  opacity: 1;
 }
 
 /* Mobile responsiveness */

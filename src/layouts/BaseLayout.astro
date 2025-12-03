@@ -1,4 +1,7 @@
 ---
+// Astro View Transitions
+import { ViewTransitions } from 'astro:transitions';
+
 // Global Page Components
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
@@ -176,6 +179,9 @@ const {
     }
     </script>
     <Clarity />
+
+    <!-- View Transitions for smooth page navigation -->
+    <ViewTransitions />
   </head>
   <body>
     <div class="page-wrapper">

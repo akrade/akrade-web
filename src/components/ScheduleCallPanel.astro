@@ -19,89 +19,176 @@ import '../styles/schedule-call-panel.css';
     <!-- Cal.com embed -->
     <div class="cal-embed-container">
       <iframe
-        src="https://cal.com/akrade"
         width="100%"
         height="100%"
         allow="camera; microphone; autoplay; encrypted-media;"
         title="Schedule a meeting with Akradé"
         id="calEmbed"
+        loading="lazy"
       ></iframe>
     </div>
   </div>
 </div>
 
 <script is:inline>
-  // Get elements
-  const panel = document.getElementById('scheduleCallPanel');
-  const backdrop = document.getElementById('scheduleCallBackdrop');
-  const closeButton = document.getElementById('closePanelButton');
-  const calIframe = document.getElementById('calEmbed');
+  // @ts-nocheck
+  // Schedule Call Panel functionality - works with both initial load and View Transitions
+  (function() {
+    let cleanupFunctions = [];
+    let themeObserver = null;
 
-  // Update cal.com iframe theme based on site theme
-  function updateCalTheme() {
-    if (!calIframe) return;
+    function initSchedulePanel() {
+      // Cleanup any existing listeners and observers first
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+      if (themeObserver) {
+        themeObserver.disconnect();
+        themeObserver = null;
+      }
 
-    const htmlElement = document.documentElement;
-    const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
-    const baseUrl = 'https://cal.com/akrade';
+      // Get elements
+      const panel = document.getElementById('scheduleCallPanel');
+      const backdrop = document.getElementById('scheduleCallBackdrop');
+      const closeButton = document.getElementById('closePanelButton');
+      const calIframe = document.getElementById('calEmbed');
 
-    // Update iframe src with theme parameter
-    calIframe.src = `${baseUrl}?theme=${currentTheme}`;
-  }
+      // Only initialize if elements exist
+      if (!panel || !backdrop) return;
 
-  // Open panel function
-  function openPanel() {
-    if (panel && backdrop) {
-      panel.classList.add('open');
-      backdrop.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      if (closeButton) closeButton.focus();
+      // Load cal.com iframe with correct theme (lazy load on first open)
+      function loadCalWithTheme() {
+        if (!calIframe) return;
 
-      // Update cal.com theme when opening
-      updateCalTheme();
+        // Check if iframe already has content loaded
+        if (calIframe.src && calIframe.src !== 'about:blank') return;
+
+        const htmlElement = document.documentElement;
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+        const baseUrl = 'https://cal.com/akrade';
+
+        // Remove loaded class before loading new content
+        calIframe.classList.remove('loaded');
+
+        // Listen for iframe load event to fade it in
+        const loadHandler = () => {
+          calIframe.classList.add('loaded');
+          calIframe.removeEventListener('load', loadHandler);
+        };
+        calIframe.addEventListener('load', loadHandler);
+
+        // Load iframe with theme parameter
+        calIframe.src = `${baseUrl}?theme=${currentTheme}`;
+      }
+
+      // Update cal.com iframe theme (only if already loaded)
+      function updateCalTheme() {
+        if (!calIframe) return;
+
+        // Only update if iframe already has content loaded
+        if (!calIframe.src || calIframe.src === 'about:blank') return;
+
+        const htmlElement = document.documentElement;
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+        const baseUrl = 'https://cal.com/akrade';
+
+        // Remove loaded class before reloading with new theme
+        calIframe.classList.remove('loaded');
+
+        // Listen for iframe load event to fade it in
+        const loadHandler = () => {
+          calIframe.classList.add('loaded');
+          calIframe.removeEventListener('load', loadHandler);
+        };
+        calIframe.addEventListener('load', loadHandler);
+
+        // Update iframe src with theme parameter
+        calIframe.src = `${baseUrl}?theme=${currentTheme}`;
+      }
+
+      // Open panel function
+      function openPanel() {
+        if (panel && backdrop) {
+          panel.classList.add('open');
+          backdrop.classList.add('open');
+          document.body.style.overflow = 'hidden';
+          if (closeButton) closeButton.focus();
+
+          // Lazy load iframe with correct theme on first open
+          loadCalWithTheme();
+        }
+      }
+
+      // Close panel function
+      function closePanel() {
+        if (panel && backdrop) {
+          panel.classList.remove('open');
+          backdrop.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // ESC key handler
+      const escHandler = (e) => {
+        if (e.key === 'Escape' && panel && panel.classList.contains('open')) {
+          closePanel();
+        }
+      };
+
+      // Event listeners
+      if (closeButton) closeButton.addEventListener('click', closePanel);
+      if (backdrop) backdrop.addEventListener('click', closePanel);
+      document.addEventListener('keydown', escHandler);
+
+      // Watch for theme changes and update cal.com
+      themeObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'data-theme') {
+            updateCalTheme();
+          }
+        });
+      });
+
+      if (document.documentElement) {
+        themeObserver.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ['data-theme']
+        });
+      }
+
+      // Expose functions globally so they can be called from other components
+      window.openSchedulePanel = openPanel;
+      window.closeSchedulePanel = closePanel;
+
+      // Store cleanup functions
+      cleanupFunctions.push(() => {
+        if (closeButton) closeButton.removeEventListener('click', closePanel);
+        if (backdrop) backdrop.removeEventListener('click', closePanel);
+        document.removeEventListener('keydown', escHandler);
+        if (themeObserver) {
+          themeObserver.disconnect();
+          themeObserver = null;
+        }
+      });
     }
-  }
 
-  // Close panel function
-  function closePanel() {
-    if (panel && backdrop) {
-      panel.classList.remove('open');
-      backdrop.classList.remove('open');
-      document.body.style.overflow = '';
+    // Initialize immediately on first load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSchedulePanel);
+    } else {
+      initSchedulePanel();
     }
-  }
 
-  // Event listeners
-  if (closeButton) closeButton.addEventListener('click', closePanel);
-  if (backdrop) backdrop.addEventListener('click', closePanel);
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initSchedulePanel);
 
-  // Close on ESC key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && panel && panel.classList.contains('open')) {
-      closePanel();
-    }
-  });
-
-  // Watch for theme changes and update cal.com
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.attributeName === 'data-theme') {
-        updateCalTheme();
+    // Cleanup before navigation
+    document.addEventListener('astro:before-preparation', () => {
+      cleanupFunctions.forEach(fn => fn());
+      cleanupFunctions = [];
+      if (themeObserver) {
+        themeObserver.disconnect();
+        themeObserver = null;
       }
     });
-  });
-
-  if (document.documentElement) {
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
-  }
-
-  // Set initial theme
-  updateCalTheme();
-
-  // Expose functions globally so they can be called from other components
-  window.openSchedulePanel = openPanel;
-  window.closeSchedulePanel = closePanel;
+  })();
 </script>

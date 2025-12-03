@@ -1,0 +1,44 @@
+/**
+ * Centralized Animations
+ *
+ * All @keyframes animations in one place to avoid duplication.
+ * Previously, 'spin' was defined in both footer.css and newsletter.css.
+ */
+
+@layer base {
+  /* Spinner animation - used by newsletter and footer loading states */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Grain effect animation - used by grainy-film effect */
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    20% { transform: translate(-15%, 5%); }
+    30% { transform: translate(7%, -25%); }
+    40% { transform: translate(-5%, 25%); }
+    50% { transform: translate(-15%, 10%); }
+    60% { transform: translate(15%, 0%); }
+    70% { transform: translate(0%, 15%); }
+    80% { transform: translate(3%, 25%); }
+    90% { transform: translate(-10%, 10%); }
+  }
+
+  /* Flicker effect animation - used by grainy-film effect */
+  @keyframes flicker {
+    0% { opacity: 0.15; }
+    5% { opacity: 0.12; }
+    10% { opacity: 0.18; }
+    15% { opacity: 0.15; }
+    20% { opacity: 0.16; }
+    25% { opacity: 0.14; }
+    30% { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+}

@@ -1,0 +1,65 @@
+/**
+ * Base Typography Styles
+ *
+ * Default styles for links, headings, and text elements.
+ * Uses CSS nesting for better organization.
+ */
+
+@layer base {
+  /* Default link styles with nesting */
+  a {
+    font-weight: 200;
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+
+    /* Special underline effect variant */
+    &.special-underline {
+      position: relative;
+      display: inline-block; /* keeps underline length to text only */
+      text-decoration: none;
+
+      /* Underline pseudo-element */
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -0.125rem; /* space between text and underline */
+        width: 100%;
+        height: 0.1875rem; /* line thickness */
+        background-color: currentColor;
+        transition: width 0.25s ease;
+      }
+
+      /* Hover animates underline removal */
+      &:hover::after,
+      &:focus-visible::after {
+        width: 0;
+      }
+    }
+  }
+
+  /* Heading defaults */
+  h1 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  h3 {
+    font-weight: 300;
+  }
+}

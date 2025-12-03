@@ -1,0 +1,22 @@
+/**
+ * CSS Cascade Layer Declarations
+ *
+ * Defines the order of CSS layers for explicit cascade control.
+ * Layers are applied in order of declaration (earlier = lower priority).
+ *
+ * Layer hierarchy:
+ * 1. reset    - Browser normalization (lowest priority)
+ * 2. tokens   - Design system variables (colors, breakpoints, spacing)
+ * 3. base     - Element defaults (html, body, headings, links, animations)
+ * 4. components - Component-specific styles
+ * 5. utilities - Helper classes
+ * 6. themes   - Theme overrides (highest priority)
+ *
+ * This explicit ordering means:
+ * - Reset styles won't accidentally override components
+ * - Theme overrides always win, regardless of import order
+ * - Component styles can rely on base styles being available
+ * - No more specificity wars or !important hacks
+ */
+
+@layer reset, tokens, base, components, utilities, themes;

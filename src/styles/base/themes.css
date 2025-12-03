@@ -55,7 +55,7 @@
     /* Header */
     .site-header {
       background: rgba(247, 248, 250, 0.7);
-      border-bottom: 1px solid var(--color-border);
+      background-color: var(--color-bg-elevated);
     }
 
     .hamburger.active span {
@@ -65,6 +65,7 @@
     /* Mega Menu */
     .mega-menu {
       background: rgba(247, 248, 250, 0.98);
+      background-color: var(--color-bg-elevated);
     }
 
     .mega-menu-links li {

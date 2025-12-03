@@ -46,7 +46,7 @@ h2 {
 
 .service-card {
   padding: 2rem;
-  border-width: 1px;
+  border-width: 0px;
   border-style: solid;
   border-radius: 8px;
   transition: border-color 0.2s;

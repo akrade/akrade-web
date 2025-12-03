@@ -81,69 +81,102 @@ import '../styles/homepage.css';
   }
 
   // Scroll-based theme transitions
-  document.addEventListener('DOMContentLoaded', function() {
-    const html = document.documentElement;
-    const heroSection = document.querySelector('.hero');
-    const aboutSection = document.querySelector('#about');
-    const servicesSection = document.querySelector('#services');
+  // Works with both initial load and View Transitions
+  (function() {
+    let observer = null;
 
-    // Get grain effect elements
-    const grainContainer = document.querySelector('.grain-container');
-    const vignette = document.querySelector('.vignette');
-    const scanlines = document.querySelector('.scanlines');
-
-    // Add smooth transitions for theme changes
-    html.style.transition = 'background-color 0.6s ease, color 0.6s ease';
-
-    // Add transitions to grain effect elements
-    if (grainContainer) grainContainer.style.transition = 'opacity 0.6s ease';
-    if (vignette) vignette.style.transition = 'opacity 0.6s ease';
-    if (scanlines) scanlines.style.transition = 'opacity 0.6s ease';
-
-    // Helper function to toggle grain effect
-    function setGrainVisibility(visible) {
-      const opacity = visible ? '1' : '0';
-      if (grainContainer) grainContainer.style.opacity = opacity;
-      if (vignette) vignette.style.opacity = opacity;
-      if (scanlines) scanlines.style.opacity = opacity;
-    }
-
-    // Helper function to apply theme based on section
-    function applyTheme(section) {
-      if (section === heroSection) {
-        html.setAttribute('data-theme', 'dark');
-        setGrainVisibility(true);
-      } else if (section === aboutSection) {
-        html.setAttribute('data-theme', 'light');
-        setGrainVisibility(false);
-      } else if (section === servicesSection) {
-        html.setAttribute('data-theme', 'dark');
-        setGrainVisibility(true);
+    function initScrollTransitions() {
+      // Cleanup any existing observer
+      if (observer) {
+        observer.disconnect();
+        observer = null;
       }
+
+      const html = document.documentElement;
+      const heroSection = document.querySelector('.hero');
+      const aboutSection = document.querySelector('#about');
+      const servicesSection = document.querySelector('#services');
+
+      // Get grain effect elements
+      const grainContainer = document.querySelector('.grain-container');
+      const vignette = document.querySelector('.vignette');
+      const scanlines = document.querySelector('.scanlines');
+
+      // Add smooth transitions for theme changes
+      html.style.transition = 'background-color 0.6s ease, color 0.6s ease';
+
+      // Add transitions to grain effect elements
+      if (grainContainer) grainContainer.style.transition = 'opacity 0.6s ease';
+      if (vignette) vignette.style.transition = 'opacity 0.6s ease';
+      if (scanlines) scanlines.style.transition = 'opacity 0.6s ease';
+
+      // Helper function to toggle grain effect
+      function setGrainVisibility(visible) {
+        const opacity = visible ? '1' : '0';
+        if (grainContainer) grainContainer.style.opacity = opacity;
+        if (vignette) vignette.style.opacity = opacity;
+        if (scanlines) scanlines.style.opacity = opacity;
+      }
+
+      // Helper function to apply theme based on section
+      function applyTheme(section) {
+        if (section === heroSection) {
+          html.setAttribute('data-theme', 'dark');
+          setGrainVisibility(true);
+        } else if (section === aboutSection) {
+          html.setAttribute('data-theme', 'light');
+          setGrainVisibility(false);
+        } else if (section === servicesSection) {
+          html.setAttribute('data-theme', 'dark');
+          setGrainVisibility(true);
+        }
+      }
+
+      // Track which section is currently active
+      let activeSection = heroSection;
+
+      // Initialize with hero theme
+      if (heroSection) {
+        applyTheme(heroSection);
+      }
+
+      // Observe sections with threshold array for better bidirectional scrolling detection
+      const observerOptions = {
+        root: null,
+        rootMargin: '-40% 0px -40% 0px', // Middle 20% of viewport triggers change
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      };
+
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.target !== activeSection) {
+            activeSection = entry.target;
+            applyTheme(activeSection);
+          }
+        });
+      }, observerOptions);
+
+      // Observe sections
+      if (heroSection) observer.observe(heroSection);
+      if (aboutSection) observer.observe(aboutSection);
+      if (servicesSection) observer.observe(servicesSection);
     }
 
-    // Track which section is currently active
-    let activeSection = heroSection;
+    // Initialize immediately on first load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollTransitions);
+    } else {
+      initScrollTransitions();
+    }
 
-    // Observe sections with threshold array for better bidirectional scrolling detection
-    const observerOptions = {
-      root: null,
-      rootMargin: '-40% 0px -40% 0px', // Middle 20% of viewport triggers change
-      threshold: [0, 0.25, 0.5, 0.75, 1]
-    };
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initScrollTransitions);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.target !== activeSection) {
-          activeSection = entry.target;
-          applyTheme(activeSection);
-        }
-      });
-    }, observerOptions);
-
-    // Observe sections
-    if (heroSection) observer.observe(heroSection);
-    if (aboutSection) observer.observe(aboutSection);
-    if (servicesSection) observer.observe(servicesSection);
-  });
+    // Cleanup before navigation
+    document.addEventListener('astro:before-preparation', function() {
+      if (observer) {
+        observer.disconnect();
+      }
+    });
+  })();
 </script>

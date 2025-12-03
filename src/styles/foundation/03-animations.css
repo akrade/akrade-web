@@ -41,4 +41,63 @@
     30% { opacity: 0.15; }
     100% { opacity: 0.15; }
   }
+
+  /* Page transition fade-out animation - used by View Transitions */
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Page transition fade-in animation - used by View Transitions */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* ========================================
+   * VIEW TRANSITIONS
+   * ======================================== */
+
+  /* Smooth fade transition for page navigation */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
+  }
+
+  ::view-transition-old(root) {
+    animation-name: fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: fade-in;
+  }
+
+  /* Ensure smooth transitions for all elements */
+  @media (prefers-reduced-motion: no-preference) {
+    ::view-transition-group(*),
+    ::view-transition-image-pair(*) {
+      animation-duration: 0.4s;
+      animation-timing-function: ease-in-out;
+    }
+  }
+
+  /* Respect user preference for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-group(*),
+    ::view-transition-image-pair(*) {
+      animation-duration: 0.01s !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
 }

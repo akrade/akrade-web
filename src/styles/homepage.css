@@ -5,185 +5,182 @@
  * about, services, and contact grids with responsive layouts.
  */
 
-@layer components {
-  /* Hero */
-  .hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+/* Hero */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  margin-bottom: 1rem;
+}
+
+.tagline {
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+}
+
+/* About */
+h2 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.about p {
+  font-size: 1.25rem;
+  max-width: 800px;
+  line-height: 1.8;
+}
+
+.about .about-lede {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 2rem;
+}
+
+/* Services */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.service-card {
+  padding: 2rem;
+  border-width: 0px;
+  border-style: solid;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.service-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Contact */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.contact-item {
+  text-align: left;
+}
+
+.contact-item > p:nth-of-type(2) {
+  margin: 0;
+}
+
+.contact-label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.contact-item a,
+.contact-item p:not(.contact-label) {
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+/* Tablet: Reduce link sizes */
+@media (min-width: 481px) and (max-width: 1000px) {
+  .contact-item a,
+  .contact-item p:not(.contact-label) {
+    font-size: 1.25rem;
   }
 
-  .hero h1 {
-    margin-bottom: 1rem;
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
-  .tagline {
-    font-size: clamp(1.125rem, 3vw, 1.5rem);
-  }
-
-  /* About */
-  h2 {
-    font-size: 4rem;
+  .contact-item:not(:last-child) {
     margin-bottom: 2rem;
-    font-weight: 400;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-bottom: 2rem;
+  }
+}
+
+.footer-upper {
+  padding-top: 4rem;
+  background: transparent;
+}
+
+/* Mobile: Reduce font sizes and simplify layout */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .about p {
-    font-size: 1.25rem;
-    max-width: 800px;
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .about .about-lede {
-    font-style: italic;
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    line-height: 1.3;
-    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
   }
 
-  /* Services */
   .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+    display: block;
+    gap: 0;
+    margin-top: 2rem;
   }
 
   .service-card {
-    padding: 2rem;
-    border-width: 0px;
-    border-style: solid;
-    border-radius: 8px;
-    transition: border-color 0.2s;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    margin-bottom: 2rem;
+  }
+
+  .service-card:last-child {
+    margin-bottom: 0;
   }
 
   .service-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-
-  /* Contact */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 3rem;
-  }
-
-  .contact-item {
-    text-align: left;
-  }
-
-  .contact-item > p:nth-of-type(2) {
-    margin: 0;
-  }
-
-  .contact-label {
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
   }
 
-  .contact-item a,
-  .contact-item p:not(.contact-label) {
-    font-size: 1.5rem;
-    text-decoration: none;
+  .service-card p {
+    font-size: 0.9rem;
   }
 
-  /* Tablet: Reduce link sizes */
-  @media (min-width: 481px) and (max-width: 1000px) {
-    .contact-item a,
-    .contact-item p:not(.contact-label) {
-      font-size: 1.25rem;
-    }
-
-    .contact-grid {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-
-    .contact-item:not(:last-child) {
-      margin-bottom: 2rem;
-      border-bottom-width: 1px;
-      border-bottom-style: solid;
-      padding-bottom: 2rem;
-    }
+  .contact-grid {
+    gap: 0;
+    margin-top: 2rem;
   }
 
-  .footer-upper {
-    padding-top: 4rem;
-    background: transparent;
+  .contact-item:not(:last-child) {
+    margin-bottom: 1.5rem;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-bottom: 1.5rem;
   }
 
+  .contact-grid .contact-item a {
+    font-size: 1rem;
+  }
 
-  /* Mobile: Reduce font sizes and simplify layout */
-  @media (max-width: 480px) {
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .about p {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .about .about-lede {
-      font-size: 1.25rem;
-      line-height: 1.4;
-      margin-bottom: 1.5rem;
-    }
-
-    .services-grid {
-      display: block;
-      gap: 0;
-      margin-top: 2rem;
-    }
-
-    .service-card {
-      padding: 0;
-      border: none;
-      border-radius: 0;
-      background-color: transparent;
-      margin-bottom: 2rem;
-    }
-
-    .service-card:last-child {
-      margin-bottom: 0;
-    }
-
-    .service-card h3 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .service-card p {
-      font-size: 0.9rem;
-    }
-
-    .contact-grid {
-      gap: 0;
-      margin-top: 2rem;
-    }
-
-    .contact-item:not(:last-child) {
-      margin-bottom: 1.5rem;
-      border-bottom-width: 1px;
-      border-bottom-style: solid;
-      padding-bottom: 1.5rem;
-    }
-
-    .contact-grid .contact-item a {
-      font-size: 1rem;
-    }
-
-    .contact-grid .contact-item p:not(.contact-label) {
-      font-size: 1rem;
-    }
+  .contact-grid .contact-item p:not(.contact-label) {
+    font-size: 1rem;
   }
 }

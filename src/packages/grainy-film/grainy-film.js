@@ -15,7 +15,7 @@ export function initGrainEffect() {
   const canvas = document.getElementById('grainCanvas');
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d', { alpha: false, willReadFrequently: false });
+  const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
   let animationId;
   let lastFrame = 0;
   const fps = 1; // Reduced from 60fps to 1fps for performance
@@ -34,6 +34,9 @@ export function initGrainEffect() {
     }
 
     lastFrame = timestamp;
+
+    // Clear canvas with transparency
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const imageData = ctx.createImageData(canvas.width, canvas.height);
     const buffer = new Uint32Array(imageData.data.buffer);

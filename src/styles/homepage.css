@@ -5,7 +5,7 @@
  * about, services, and contact grids with responsive layouts. 
  */
 
-@layer components {
+
   /* Hero */
   .hero {
     display: flex;
@@ -186,4 +186,3 @@
       font-size: 1rem;
     }
   }
-}

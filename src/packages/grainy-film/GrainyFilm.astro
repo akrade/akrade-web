@@ -2,18 +2,36 @@
 /**
  * Grainy Film Effect Component
  *
+ * Supports multiple effect types: 'classic', 'heavy', 'subtle', 'vintage'
+ *
  * Usage:
  * 1. Import this component in your page
- * 2. Add data-grainy-film attribute to <html> tag
+ * 2. Add data-grainy-film attribute with type to <html> tag
  * 3. Include <GrainyFilm /> in your layout/page
  *
  * Example:
- * <html data-grainy-film>
+ * <html data-grainy-film="classic">
  *   <body>
  *     <GrainyFilm />
  *     <!-- your content -->
  *   </body>
  * </html>
+ *
+ * Effect Types:
+ * - "classic": Standard grain (density: 0.001, brightness: 220-255)
+ * - "heavy": Intense grain (density: 0.005, brightness: 200-255, 2fps)
+ * - "subtle": Light grain (density: 0.0005, brightness: 230-255)
+ * - "vintage": Sepia-toned (density: 0.002, brightness: 180-220)
+ * - "none": Disable effect
+ *
+ * JavaScript API:
+ * window.grainEffect.enable('heavy')       // Enable with type
+ * window.grainEffect.disable()             // Disable
+ * window.grainEffect.toggle()              // Toggle on/off
+ * window.grainEffect.setType('vintage')    // Change type
+ * window.grainEffect.getType()             // Get current type
+ * window.grainEffect.isEnabled()           // Check if enabled
+ * window.grainEffect.getAvailableTypes()   // ['classic', 'heavy', 'subtle', 'vintage']
  */
 
 // Import the CSS and JS
@@ -24,8 +42,6 @@ import './grainy-film.css';
 <div class="grain-container">
   <canvas id="grainCanvas" class="grain"></canvas>
 </div>
-<div class="vignette"></div>
-<div class="scanlines"></div>
 
 <script>
   import { initGrainEffect } from './grainy-film.js';

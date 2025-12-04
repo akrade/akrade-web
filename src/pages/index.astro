@@ -5,7 +5,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import '../styles/homepage.css';
 ---
 
-<BaseLayout data-grainy-film="true" theme="dark">
+<BaseLayout data-grainy-film="classic" theme="dark">
   
   <main id="homepage">
     <!-- Hero Section -->
@@ -133,23 +133,17 @@ import '../styles/homepage.css';
 
       // Get grain effect elements
       const grainContainer = document.querySelector('.grain-container');
-      const vignette = document.querySelector('.vignette');
-      const scanlines = document.querySelector('.scanlines');
 
       // Add smooth transitions for theme changes
       html.style.transition = 'background-color 0.6s ease, color 0.6s ease';
 
-      // Add transitions to grain effect elements
+      // Add transition to grain effect container
       if (grainContainer) grainContainer.style.transition = 'opacity 0.6s ease';
-      if (vignette) vignette.style.transition = 'opacity 0.6s ease';
-      if (scanlines) scanlines.style.transition = 'opacity 0.6s ease';
 
-      // Helper function to toggle grain effect
+      // Helper function to toggle grain effect visibility
       function setGrainVisibility(visible) {
         const opacity = visible ? '1' : '0';
         if (grainContainer) grainContainer.style.opacity = opacity;
-        if (vignette) vignette.style.opacity = opacity;
-        if (scanlines) scanlines.style.opacity = opacity;
       }
 
       // Helper function to apply theme based on section

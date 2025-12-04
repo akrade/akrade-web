@@ -25,9 +25,9 @@
 
   /* About */
   h2 {
-    font-size: 2rem;
+    font-size: 4rem;
     margin-bottom: 2rem;
-    font-weight: 600;
+    font-weight: 400;
   }
 
   .about p {

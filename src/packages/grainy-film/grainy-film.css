@@ -20,7 +20,25 @@ html[data-grainy-film] .grain {
   left: -50%;
   width: 200%;
   height: 200%;
+  opacity: 0.5; /* Default for 'classic' */
+}
+
+/* Effect type-specific opacity overrides */
+html[data-grainy-film="classic"] .grain {
   opacity: 0.5;
+}
+
+html[data-grainy-film="heavy"] .grain {
+  opacity: 0.7;
+}
+
+html[data-grainy-film="subtle"] .grain {
+  opacity: 0.3;
+}
+
+html[data-grainy-film="vintage"] .grain {
+  opacity: 0.6;
+  mix-blend-mode: multiply; /* Vintage film effect */
 }
 
 @keyframes grain {

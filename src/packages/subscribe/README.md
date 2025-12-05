@@ -15,7 +15,7 @@ A reusable, self-contained newsletter subscription package with React form compo
 ## What's Included
 
 ```
-src/packages/newsletter-subscription/
+src/packages/subscribe/
 ├── NewsletterForm.tsx          # React form component
 ├── newsletter.css              # Structural styles (layout, spacing)
 ├── api/
@@ -26,7 +26,7 @@ src/packages/newsletter-subscription/
 
 ## Installation
 
-The package is already included in your project at `src/packages/newsletter-subscription/`.
+The package is already included in your project at `src/packages/subscribe/`.
 
 ## Prerequisites
 
@@ -80,7 +80,7 @@ Ensure these are in your `package.json`:
 Copy the API handler to `/src/pages/api/subscribe.ts`:
 
 ```bash
-cp src/packages/newsletter-subscription/api/subscribe.ts src/pages/api/subscribe.ts
+cp src/packages/subscribe/api/subscribe.ts src/pages/api/subscribe.ts
 ```
 
 **Note**: Due to Astro API route limitations with request body handling, the handler code must be copied directly rather than re-exported. This ensures the request stream is properly consumed.
@@ -91,8 +91,8 @@ In your Astro component (e.g., Footer):
 
 ```astro
 ---
-import { NewsletterForm } from '@/packages/newsletter-subscription';
-import '@/packages/newsletter-subscription/newsletter.css';
+import { NewsletterForm } from '@/packages/subscribe';
+import '@/packages/subscribe/newsletter.css';
 ---
 
 <div class="newsletter-section">

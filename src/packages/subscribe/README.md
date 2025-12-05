@@ -4,6 +4,7 @@ A reusable, self-contained newsletter subscription package with React form compo
 
 ## Features
 
+- **Multiple Display Variants**: Choose between inline footer style or CTA button with modal
 - **React Component**: Pre-built form with state management and validation
 - **API Handler**: Supabase-integrated backend with email validation
 - **Theme Support**: Separates structural CSS from color theming
@@ -85,9 +86,13 @@ cp src/packages/subscribe/api/subscribe.ts src/pages/api/subscribe.ts
 
 **Note**: Due to Astro API route limitations with request body handling, the handler code must be copied directly rather than re-exported. This ensures the request stream is properly consumed.
 
-### 2. Import the Component
+### 2. Choose Your Display Style
 
-In your Astro component (e.g., Footer):
+The package supports two display variants:
+
+#### **Variant A: Inline (Footer Style)**
+
+Perfect for footers - shows the email input field upfront with a subtle submit button.
 
 ```astro
 ---
@@ -97,11 +102,33 @@ import '@/packages/subscribe/newsletter.css';
 
 <div class="newsletter-section">
   <h3>Sign Up for Our Newsletter</h3>
-  <NewsletterForm client:load />
+  <NewsletterForm client:load variant="inline" />
 </div>
 ```
 
-### 3. Add Theme Colors
+#### **Variant B: CTA Button with Modal**
+
+Perfect for hero sections or prominent placements - shows a call-to-action button that opens a modal with the subscription form.
+
+```astro
+---
+import { NewsletterForm } from '@/packages/subscribe';
+import '@/packages/subscribe/newsletter.css';
+---
+
+<div class="hero-section">
+  <NewsletterForm
+    client:load
+    variant="cta"
+    title="Subscribe to the Opal Newsletter"
+    description="Latest news, musings, announcements and updates direct to your inbox."
+    ctaText="Subscribe"
+    source="hero"
+  />
+</div>
+```
+
+### 3. Add Theme Colors (Optional for Inline Variant)
 
 Add newsletter colors to your theme files:
 
@@ -187,7 +214,38 @@ Add newsletter colors to your theme files:
 
 ## Component Props
 
-The `NewsletterForm` component accepts no props but can be customized via CSS.
+The `NewsletterForm` component accepts the following props:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'inline' \| 'cta'` | `'inline'` | Display style: inline form or CTA button with modal |
+| `source` | `string` | `'website'` | Source identifier for analytics (e.g., 'footer', 'hero', 'sidebar') |
+| `title` | `string` | `'Subscribe to the Newsletter'` | Modal title (CTA variant only) |
+| `description` | `string` | `'Latest news, musings...'` | Modal description (CTA variant only) |
+| `ctaText` | `string` | `'Subscribe'` | Button text for CTA and submit button |
+
+**Example - Inline variant in footer:**
+
+```astro
+<NewsletterForm
+  client:load
+  variant="inline"
+  source="footer"
+/>
+```
+
+**Example - CTA variant in hero section:**
+
+```astro
+<NewsletterForm
+  client:load
+  variant="cta"
+  source="hero"
+  title="Join Our Newsletter"
+  description="Get weekly insights delivered to your inbox."
+  ctaText="Sign Me Up"
+/>
+```
 
 ## API Endpoint
 

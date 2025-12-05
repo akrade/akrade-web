@@ -5,8 +5,11 @@
  * Color properties are defined in theme files.
  */
 
-/* Newsletter Form */
-.newsletter-form {
+/* ========================================
+   INLINE VARIANT (Footer Style)
+   ======================================== */
+
+.newsletter-form--inline {
   display: flex;
   align-items: center;
   border-bottom-width: 0.3rem;
@@ -15,7 +18,7 @@
   margin-top: -0.625rem;
 }
 
-.newsletter-input {
+.newsletter-form--inline .newsletter-input {
   flex: 1;
   background: transparent;
   border: none;
@@ -24,7 +27,7 @@
   outline: none;
 }
 
-.newsletter-submit {
+.newsletter-form--inline .newsletter-submit {
   background: transparent;
   border: none;
   font-size: 1.5rem;
@@ -33,11 +36,190 @@
   transition: color 0.2s;
 }
 
-.newsletter-submit:disabled {
+.newsletter-form--inline .newsletter-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
+/* ========================================
+   CTA VARIANT (Button + Modal)
+   ======================================== */
+
+/* CTA Button */
+.newsletter-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.newsletter-cta:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.newsletter-cta:active {
+  transform: translateY(0);
+}
+
+.newsletter-cta-arrow {
+  font-size: 1.25rem;
+  transition: transform 0.2s;
+}
+
+.newsletter-cta:hover .newsletter-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Modal Overlay */
+.newsletter-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.newsletter-modal {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.newsletter-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.newsletter-modal-close:hover {
+  opacity: 1;
+}
+
+/* Modal Content */
+.newsletter-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.newsletter-modal-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.newsletter-modal-description {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+/* Modal Form */
+.newsletter-form--modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.newsletter-form--modal .newsletter-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletter-form--modal .newsletter-input:focus {
+  border-color: #000;
+}
+
+.newsletter-form--modal .newsletter-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.newsletter-submit--modal {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.newsletter-submit--modal:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.newsletter-submit--modal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   SHARED STYLES
+   ======================================== */
+
+/* Spinner Animation */
 .spinner {
   display: inline-block;
   animation: spin 1s linear infinite;
@@ -55,7 +237,37 @@
 /* Newsletter Message */
 .newsletter-message {
   font-size: 0.875rem;
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.5rem 0 0 0;
   padding: 0.5rem 0.75rem;
-  border-radius: 4px;
+  border-radius: 0.375rem;
+  text-align: center;
+}
+
+.newsletter-message--success {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.newsletter-message--error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 640px) {
+  .newsletter-modal {
+    padding: 2rem 1.5rem;
+  }
+
+  .newsletter-modal-title {
+    font-size: 1.5rem;
+  }
+
+  .newsletter-cta {
+    padding: 0.875rem 1.75rem;
+    font-size: 0.9375rem;
+  }
 }

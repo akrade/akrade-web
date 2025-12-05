@@ -35,7 +35,11 @@ import '@/packages/subscribe/newsletter.css';
 
       <div class="footer-upper-col">
         <h3 class="footer-heading">SIGN UP FOR OUR NEWSLETTER</h3>
-        <NewsletterForm client:load />
+        <NewsletterForm 
+          client:load 
+          variant="cta"
+          description="Latest news, musings, announcements and updates direct to your inbox."
+          />
         <div class="footer-social">
           <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">LinkedIn</a>
           <a href="https://instagram.com/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">Instagram</a>

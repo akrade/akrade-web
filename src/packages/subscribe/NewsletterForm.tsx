@@ -97,6 +97,7 @@ export default function NewsletterForm({
   // CTA variant - button that opens modal
   return (
     <>
+      <p className="newsletter-cta-description">{description}</p>
       <button
         type="button"
         className="newsletter-cta"

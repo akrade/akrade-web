@@ -55,36 +55,43 @@
 
 /* CTA Button */
 .newsletter-cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2rem;
-  background: #000;
-  color: #fff;
+  gap: 0.5rem;
+  padding: 0;
+  background: transparent;
   border: none;
-  border-radius: 3rem;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
+  text-decoration: none;
 
-  &:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-
-    & .newsletter-cta-arrow {
-      transform: translateX(4px);
-    }
+  /* Underline pseudo-element */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.125rem;
+    width: 100%;
+    height: 0.1875rem;
+    background-color: currentColor;
+    transition: width 0.25s ease;
   }
 
-  &:active {
-    transform: translateY(0);
+  /* Hover animates underline removal */
+  &:hover::after {
+    width: 0;
   }
 }
 
 .newsletter-cta-arrow {
-  font-size: 1.25rem;
+  font-size: 1rem;
   transition: transform 0.2s;
+
+  .newsletter-cta:hover & {
+    transform: translateX(4px);
+  }
 }
 
 /* Modal Overlay */
@@ -272,10 +279,5 @@
 
   .newsletter-modal-title {
     font-size: 1.5rem;
-  }
-
-  .newsletter-cta {
-    padding: 0.875rem 1.75rem;
-    font-size: 0.9375rem;
   }
 }

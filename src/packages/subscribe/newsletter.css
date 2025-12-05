@@ -49,23 +49,27 @@
 .newsletter-cta-description {
   font-size: 1rem;
   line-height: 1.5;
-  margin: 0 0 1rem 0;
+  margin: 0;
   opacity: 0.8;
 }
 
 /* CTA Button */
 .newsletter-cta {
-  position: relative;
   display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
   padding: 0;
+  margin-bottom: 2rem;
   background: transparent;
   border: none;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-family: inherit;
   cursor: pointer;
   text-decoration: none;
+}
+
+.newsletter-cta-text {
+  position: relative;
+  display: inline-block;
 
   /* Underline pseudo-element */
   &::after {
@@ -80,17 +84,8 @@
   }
 
   /* Hover animates underline removal */
-  &:hover::after {
+  .newsletter-cta:hover &::after {
     width: 0;
-  }
-}
-
-.newsletter-cta-arrow {
-  font-size: 1rem;
-  transition: transform 0.2s;
-
-  .newsletter-cta:hover & {
-    transform: translateX(4px);
   }
 }
 

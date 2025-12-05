@@ -104,8 +104,7 @@ export default function NewsletterForm({
         onClick={() => setIsModalOpen(true)}
         aria-label="Open newsletter subscription"
       >
-        {ctaText}
-        <span className="newsletter-cta-arrow">→</span>
+        <span className="newsletter-cta-text">{ctaText}</span>
       </button>
 
       {isModalOpen && (

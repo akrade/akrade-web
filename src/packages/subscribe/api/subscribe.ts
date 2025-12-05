@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
+import { sendConfirmationEmail } from '@/utils/email/sendConfirmationEmail';
 
 export const prerender = false;
 
@@ -70,7 +71,7 @@ export const POST: APIRoute = async ({ request }) => {
       '';
     const clientIp = ipHeader.split(',')[0]?.trim() || undefined;
     const userAgent = request.headers.get('user-agent') || undefined;
-    const origin = request.headers.get('origin') || '';
+    const origin = request.headers.get('origin') || process.env.AKRADE_SITE_URL || import.meta.env.AKRADE_SITE_URL || '';
 
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -159,11 +160,21 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // TODO: Send confirmation email with token link
-    const confirmLink = origin
-      ? `${origin.replace(/\/$/, '')}/confirm?token=${token}`
-      : `/confirm?token=${token}`;
-    console.info('Confirmation link (send via email):', confirmLink);
+    try {
+      await sendConfirmationEmail({
+        to: cleanEmail,
+        token,
+        origin,
+        consentCopy,
+        formUrl
+      });
+    } catch (emailError) {
+      console.error('Email send error:', emailError);
+      return new Response(
+        JSON.stringify({ error: 'Failed to send confirmation email' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
     return new Response(
       JSON.stringify({

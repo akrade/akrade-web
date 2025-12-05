@@ -180,6 +180,20 @@ CREATE UNIQUE INDEX idx_newsletter_email ON newsletter_subscribers(LOWER(email))
 - **Production env**: Uses `process.env.*` from Vercel Functions runtime
 - API route respects both patterns to support dev and production seamlessly
 
+## BusyFolk Newsletter Panel (site-specific, slide-panel based)
+- Component lives at `src/components/BusyFolkNewsletterPanel.astro` and wraps the shared `SlidePanel` package.
+- Renders a branded BusyFolk form posting to `/api/subscribe` (same API as the main newsletter).
+- Usage on any page/layout:
+  ```astro
+  ---
+  import BusyFolkNewsletterPanel from '@/components/BusyFolkNewsletterPanel.astro';
+  ---
+  <BusyFolkNewsletterPanel />
+  ```
+- Open/close helpers are auto-generated from `id="busyfolk-newsletter"`: call `openBusyfolkNewsletterPanel()` or `closeBusyfolkNewsletterPanel()`.
+- To wire a CTA to this panel, set `panelId="busyfolk-newsletter"` on `NewsletterForm` (CTA variant, `displayMode="panel"`), or call the helper directly from a button/link.
+- Keep brand-specific copy/styling inside this component; don’t modify the shared slide-panel package.
+
 ## References
 
 - **Astro Docs**: https://docs.astro.build

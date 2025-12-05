@@ -33,6 +33,7 @@ import '@/packages/subscribe/newsletter.css';
         </div>
       </div>
 
+      <!-- Upper Footer - Newsletter & Social Media -->
       <div class="footer-upper-col">
         <h3 class="footer-heading">SIGN UP FOR OUR NEWSLETTER</h3>
         <NewsletterForm 
@@ -40,6 +41,8 @@ import '@/packages/subscribe/newsletter.css';
           variant="cta"
           description="Latest news, musings, announcements and updates direct to your inbox."
           displayMode="panel"
+          panelId="busyfolk-newsletter"
+          ctaText="Join BusyFolk"
           />
         <div class="footer-social">
           <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">LinkedIn</a>
@@ -73,42 +76,59 @@ import '@/packages/subscribe/newsletter.css';
   (function() {
     let cleanupFunctions = [];
 
-    function initFooterScheduleLink() {
+    function initFooterLinks() {
       // Cleanup any existing listeners first
       cleanupFunctions.forEach(fn => fn());
       cleanupFunctions = [];
 
-      const footerScheduleLink = document.getElementById('footer-schedule-link');
+      const linkConfigs = [
+        {
+          id: 'footer-schedule-link',
+          action: () => {
+            if (typeof window.openSchedulePanel === 'function') {
+              window.openSchedulePanel();
+            } else {
+              console.error('openSchedulePanel function not found');
+            }
+          }
+        },
+        {
+          id: 'footer-busyfolk-link',
+          action: () => {
+            if (typeof window.openBusyfolkNewsletterPanel === 'function') {
+              window.openBusyfolkNewsletterPanel();
+            } else {
+              console.error('openBusyfolkNewsletterPanel function not found');
+            }
+          }
+        }
+      ];
 
-      if (footerScheduleLink) {
+      linkConfigs.forEach(({ id, action }) => {
+        const link = document.getElementById(id);
+        if (!link) return;
+
         const clickHandler = (e) => {
           e.preventDefault();
-          // Call the global function exposed by ScheduleCallPanel
-          if (typeof window.openSchedulePanel === 'function') {
-            window.openSchedulePanel();
-          } else {
-            console.error('openSchedulePanel function not found');
-          }
+          action();
         };
 
-        footerScheduleLink.addEventListener('click', clickHandler);
-
-        // Store cleanup function
+        link.addEventListener('click', clickHandler);
         cleanupFunctions.push(() => {
-          footerScheduleLink.removeEventListener('click', clickHandler);
+          link.removeEventListener('click', clickHandler);
         });
-      }
+      });
     }
 
     // Initialize immediately on first load
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initFooterScheduleLink);
+      document.addEventListener('DOMContentLoaded', initFooterLinks);
     } else {
-      initFooterScheduleLink();
+      initFooterLinks();
     }
 
     // Re-initialize after View Transitions navigation
-    document.addEventListener('astro:page-load', initFooterScheduleLink);
+    document.addEventListener('astro:page-load', initFooterLinks);
 
     // Cleanup before navigation
     document.addEventListener('astro:before-preparation', () => {

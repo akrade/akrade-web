@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 interface NewsletterFormProps {
   variant?: 'inline' | 'cta' | 'panel';
   displayMode?: 'modal' | 'panel'; // For CTA variant: choose between modal or slide panel
+  panelId?: string; // For displayMode="panel": which slide panel to open
   source?: string;
   title?: string;
   description?: string;
@@ -12,6 +13,7 @@ interface NewsletterFormProps {
 export default function NewsletterForm({
   variant = 'inline',
   displayMode = 'modal',
+  panelId = 'newsletter-subscribe',
   source = 'website',
   title = 'Subscribe to the Newsletter',
   description = 'Latest news, musings, announcements and updates direct to your inbox.',
@@ -141,11 +143,15 @@ export default function NewsletterForm({
   // CTA variant - button that opens modal or slide panel
   const handleCtaClick = () => {
     if (displayMode === 'panel') {
-      // Open slide panel using global function
-      if (typeof window !== 'undefined' && (window as any).openNewsletterSubscribePanel) {
-        (window as any).openNewsletterSubscribePanel();
+      const helperName = (() => {
+        const camel = panelId.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+        return `open${camel.charAt(0).toUpperCase() + camel.slice(1)}Panel`;
+      })();
+
+      if (typeof window !== 'undefined' && (window as any)[helperName]) {
+        (window as any)[helperName]();
       } else {
-        console.error('openNewsletterSubscribePanel function not found. Make sure NewsletterSlidePanel is added to your layout.');
+        console.error(`${helperName} function not found. Ensure the slide panel with id="${panelId}" is rendered.`);
       }
     } else {
       // Open modal (default behavior)

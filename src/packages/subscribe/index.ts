@@ -5,4 +5,5 @@
  */
 
 export { default as NewsletterForm } from './NewsletterForm';
+export { default as NewsletterSlidePanel } from './NewsletterSlidePanel.astro';
 export { POST as subscribeHandler } from './api/subscribe';

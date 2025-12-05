@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 interface NewsletterFormProps {
-  variant?: 'inline' | 'cta';
+  variant?: 'inline' | 'cta' | 'panel';
+  displayMode?: 'modal' | 'panel'; // For CTA variant: choose between modal or slide panel
   source?: string;
   title?: string;
   description?: string;
@@ -10,6 +11,7 @@ interface NewsletterFormProps {
 
 export default function NewsletterForm({
   variant = 'inline',
+  displayMode = 'modal',
   source = 'website',
   title = 'Subscribe to the Newsletter',
   description = 'Latest news, musings, announcements and updates direct to your inbox.',
@@ -94,20 +96,76 @@ export default function NewsletterForm({
     );
   }
 
-  // CTA variant - button that opens modal
+  // Panel variant - form inside slide panel
+  if (variant === 'panel') {
+    return (
+      <div className="newsletter-panel-form">
+        <form className="newsletter-form newsletter-form--panel" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email Address"
+            className={`newsletter-input ${status}`}
+            aria-label="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={status === 'loading' || status === 'success' || status === 'error'}
+            required
+            autoFocus
+          />
+          <button
+            type="submit"
+            className={`newsletter-submit newsletter-submit--panel ${status}`}
+            disabled={status === 'loading' || status === 'success' || status === 'error'}
+          >
+            {status === 'loading' ? (
+              <span className="spinner">◌</span>
+            ) : status === 'success' ? (
+              '✓ Subscribed'
+            ) : status === 'error' ? (
+              '✕ Error'
+            ) : (
+              ctaText
+            )}
+          </button>
+        </form>
+
+        {message && (
+          <p className={`newsletter-message newsletter-message--${status}`}>
+            {message}
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  // CTA variant - button that opens modal or slide panel
+  const handleCtaClick = () => {
+    if (displayMode === 'panel') {
+      // Open slide panel using global function
+      if (typeof window !== 'undefined' && (window as any).openNewsletterSubscribePanel) {
+        (window as any).openNewsletterSubscribePanel();
+      } else {
+        console.error('openNewsletterSubscribePanel function not found. Make sure NewsletterSlidePanel is added to your layout.');
+      }
+    } else {
+      // Open modal (default behavior)
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <>
       <p className="newsletter-cta-description">{description}</p>
       <button
         type="button"
         className="newsletter-cta"
-        onClick={() => setIsModalOpen(true)}
+        onClick={handleCtaClick}
         aria-label="Open newsletter subscription"
       >
         <span className="newsletter-cta-text">{ctaText}</span>
       </button>
 
-      {isModalOpen && (
+      {displayMode === 'modal' && isModalOpen && (
         <div
           className="newsletter-modal-overlay"
           onClick={() => setIsModalOpen(false)}

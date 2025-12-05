@@ -1,0 +1,40 @@
+---
+/**
+ * Newsletter Slide Panel Component
+ *
+ * A right slide-out panel for newsletter subscription using the slide-panel package.
+ * Provides an alternative to the modal variant.
+ */
+
+import { SlidePanel } from '../slide-panel';
+import NewsletterForm from './NewsletterForm';
+---
+
+<SlidePanel id="newsletter-subscribe" title="Subscribe to the Newsletter">
+  <div class="newsletter-panel-content">
+    <p class="newsletter-panel-description">
+      Latest news, musings, announcements and updates direct to your inbox.
+    </p>
+
+    <NewsletterForm
+      client:load
+      variant="panel"
+      source="panel"
+    />
+  </div>
+</SlidePanel>
+
+<style>
+  .newsletter-panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .newsletter-panel-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin: 0;
+  }
+</style>

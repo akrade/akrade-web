@@ -16,29 +16,29 @@
   border-bottom-style: solid;
   margin-bottom: 1.5rem;
   margin-top: -0.625rem;
-}
 
-.newsletter-form--inline .newsletter-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  font-size: 1rem;
-  padding: 0.5rem 0;
-  outline: none;
-}
+  & .newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    outline: none;
+  }
 
-.newsletter-form--inline .newsletter-submit {
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  transition: color 0.2s;
-}
+  & .newsletter-submit {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
 
-.newsletter-form--inline .newsletter-submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 }
 
 /* ========================================
@@ -59,24 +59,24 @@
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.2s, opacity 0.2s;
-}
 
-.newsletter-cta:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
 
-.newsletter-cta:active {
-  transform: translateY(0);
+    & .newsletter-cta-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .newsletter-cta-arrow {
   font-size: 1.25rem;
   transition: transform 0.2s;
-}
-
-.newsletter-cta:hover .newsletter-cta-arrow {
-  transform: translateX(4px);
 }
 
 /* Modal Overlay */
@@ -139,10 +139,10 @@
   line-height: 1;
   opacity: 0.6;
   transition: opacity 0.2s;
-}
 
-.newsletter-modal-close:hover {
-  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 /* Modal Content */
@@ -172,25 +172,25 @@
   flex-direction: column;
   gap: 1rem;
   margin-top: 0.5rem;
-}
 
-.newsletter-form--modal .newsletter-input {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  font-size: 1rem;
-  border: 2px solid #e5e5e5;
-  border-radius: 0.5rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
+  & .newsletter-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
 
-.newsletter-form--modal .newsletter-input:focus {
-  border-color: #000;
-}
+    &:focus {
+      border-color: #000;
+    }
 
-.newsletter-form--modal .newsletter-input:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .newsletter-submit--modal {
@@ -204,15 +204,15 @@
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.2s;
-}
 
-.newsletter-submit--modal:hover:not(:disabled) {
-  opacity: 0.9;
-}
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
 
-.newsletter-submit--modal:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 /* ========================================
@@ -241,16 +241,16 @@
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
   text-align: center;
-}
 
-.newsletter-message--success {
-  background: #f0fdf4;
-  color: #166534;
-}
+  &--success {
+    background: #f0fdf4;
+    color: #166534;
+  }
 
-.newsletter-message--error {
-  background: #fef2f2;
-  color: #991b1b;
+  &--error {
+    background: #fef2f2;
+    color: #991b1b;
+  }
 }
 
 /* ========================================

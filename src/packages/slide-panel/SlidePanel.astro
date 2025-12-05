@@ -1,0 +1,102 @@
+---
+/**
+ * SlidePanel - Reusable right slide-out panel component
+ *
+ * A flexible panel that slides in from the right side of the screen.
+ * Can be used for forms, content, or any other purpose.
+ *
+ * @prop {string} id - Unique identifier for this panel instance
+ * @prop {string} [title] - Optional title to display at the top of the panel
+ */
+
+import './slide-panel.css';
+
+interface Props {
+  id: string;
+  title?: string;
+}
+
+const { id, title } = Astro.props;
+
+// Generate unique IDs for the panel components
+const panelId = `${id}-panel`;
+const backdropId = `${id}-backdrop`;
+const closeButtonId = `${id}-close-button`;
+---
+
+<!-- Backdrop overlay -->
+<div class="slide-panel-backdrop" id={backdropId}></div>
+
+<!-- Panel container -->
+<div class="slide-panel" id={panelId}>
+  <button class="slide-panel-close-button" id={closeButtonId} aria-label="Close panel">
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="slide-panel-content">
+    {title && <h2>{title}</h2>}
+    <slot />
+  </div>
+</div>
+
+<script>
+  import { initSlidePanel } from './slide-panel.js';
+
+  // Track active panel instances
+  const panelInstances = new Map();
+
+  function initializePanels() {
+    // Find all slide panels on the page
+    const panels = document.querySelectorAll('.slide-panel');
+
+    panels.forEach((panel) => {
+      const panelId = panel.id;
+      const backdropId = panelId.replace('-panel', '-backdrop');
+      const closeButtonId = panelId.replace('-panel', '-close-button');
+
+      // Clean up existing instance if it exists
+      if (panelInstances.has(panelId)) {
+        const instance = panelInstances.get(panelId);
+        instance.cleanup();
+        panelInstances.delete(panelId);
+      }
+
+      // Initialize the panel
+      const instance = initSlidePanel({
+        panelId,
+        backdropId,
+        closeButtonId,
+      });
+
+      // Store instance
+      panelInstances.set(panelId, instance);
+
+      // Expose open/close functions globally
+      // Extract the base ID (without the '-panel' suffix)
+      const baseId = panelId.replace('-panel', '');
+      const camelCaseId = baseId.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+
+      window[`open${camelCaseId.charAt(0).toUpperCase() + camelCaseId.slice(1)}Panel`] = instance.open;
+      window[`close${camelCaseId.charAt(0).toUpperCase() + camelCaseId.slice(1)}Panel`] = instance.close;
+    });
+  }
+
+  // Initialize immediately on first load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePanels);
+  } else {
+    initializePanels();
+  }
+
+  // Re-initialize after View Transitions navigation
+  document.addEventListener('astro:page-load', initializePanels);
+
+  // Cleanup before navigation
+  document.addEventListener('astro:before-preparation', () => {
+    panelInstances.forEach((instance) => {
+      instance.cleanup();
+    });
+    panelInstances.clear();
+  });
+</script>

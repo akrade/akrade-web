@@ -1,0 +1,61 @@
+/**
+ * Newsletter Subscription Package Styles
+ *
+ * Structural styles for the newsletter subscription form.
+ * Color properties are defined in theme files.
+ */
+
+/* Newsletter Form */
+.newsletter-form {
+  display: flex;
+  align-items: center;
+  border-bottom-width: 0.3rem;
+  border-bottom-style: solid;
+  margin-bottom: 1.5rem;
+  margin-top: -0.625rem;
+}
+
+.newsletter-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  outline: none;
+}
+
+.newsletter-submit {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+}
+
+.newsletter-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Newsletter Message */
+.newsletter-message {
+  font-size: 0.875rem;
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+}

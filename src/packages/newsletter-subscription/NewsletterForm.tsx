@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function FooterNewsletter() {
+export default function NewsletterForm() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');

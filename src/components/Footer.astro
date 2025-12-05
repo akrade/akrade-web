@@ -1,9 +1,10 @@
 ---
 const year = new Date().getFullYear();
-import FooterNewsletter from './FooterNewsletter';
+import { NewsletterForm } from '@/packages/newsletter-subscription';
 
 // Design System
 import '../styles/footer.css';
+import '@/packages/newsletter-subscription/newsletter.css';
 
 ---
 
@@ -34,7 +35,7 @@ import '../styles/footer.css';
 
       <div class="footer-upper-col">
         <h3 class="footer-heading">SIGN UP FOR OUR NEWSLETTER</h3>
-        <FooterNewsletter client:load />
+        <NewsletterForm client:load />
         <div class="footer-social">
           <a href="https://linkedin.com/company/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">LinkedIn</a>
           <a href="https://instagram.com/akrade" target="_blank" rel="noopener noreferrer" class="footer-social-link special-underline">Instagram</a>

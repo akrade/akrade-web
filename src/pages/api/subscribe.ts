@@ -33,11 +33,28 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const { email, source = 'website' } = data;
+    const normalize = (value: unknown) =>
+      typeof value === 'string' ? value.trim() : undefined;
+
+    const {
+      email,
+      source = 'website',
+      full_name,
+      company_name,
+      role,
+      // Accept alt keys from BusyFolk form payload
+      name,
+      company
+    } = data || {};
+
+    const cleanEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+    const cleanFullName = normalize(full_name ?? name);
+    const cleanCompany = normalize(company_name ?? company);
+    const cleanRole = normalize(role);
 
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
       return new Response(
         JSON.stringify({ error: 'Invalid email address' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
@@ -49,7 +66,10 @@ export const POST: APIRoute = async ({ request }) => {
       .from('newsletter_subscribers')
       .insert([
         {
-          email: email.toLowerCase().trim(),
+          email: cleanEmail,
+          full_name: cleanFullName || null,
+          company_name: cleanCompany || null,
+          role: cleanRole || null,
           source,
           metadata: {
             user_agent: request.headers.get('user-agent'),

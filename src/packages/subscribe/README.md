@@ -33,12 +33,15 @@ The package is already included in your project at `src/packages/subscribe/`.
 
 ### 1. Supabase Setup
 
-Create a `newsletter_subscribers` table in your Supabase database:
+Create/align a `newsletter_subscribers` table in your Supabase database (includes optional role/company/name fields used by the BusyFolk panel):
 
 ```sql
 CREATE TABLE newsletter_subscribers (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  email TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL,
+  full_name TEXT,          -- optional
+  company_name TEXT,       -- optional
+  role TEXT,               -- optional (select input)
   source TEXT DEFAULT 'website',
   metadata JSONB,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -46,7 +49,8 @@ CREATE TABLE newsletter_subscribers (
 );
 
 -- Add index for email lookups
-CREATE INDEX idx_newsletter_email ON newsletter_subscribers(email);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_newsletter_email_lower ON newsletter_subscribers ((lower(email)));
+CREATE INDEX IF NOT EXISTS idx_newsletter_email ON newsletter_subscribers(email);
 
 -- Add RLS policies (adjust as needed)
 ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;

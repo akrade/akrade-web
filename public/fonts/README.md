@@ -32,12 +32,37 @@ Self-hosted web fonts for better performance, privacy, and reliability.
 4. **Control**: Version pinning, no unexpected font updates
 5. **Compliance**: Better GDPR compliance (no third-party data sharing)
 
-## Format
+## Format & Browser Support
 
 All fonts are in WOFF2 format, which provides:
 - Best compression (~30% smaller than WOFF)
 - Broad browser support (all modern browsers)
 - Optimized for web delivery
+
+### Variable Font Fallbacks
+
+Noto Sans uses a variable font file that supports all weights (100-900) in a single file. For older browser compatibility, the same file is declared multiple times with specific weight values:
+
+- **Modern browsers** (Chrome 88+, Firefox 62+, Safari 11.1+): Use the variable font with weight range `100 900`
+- **Older browsers**: Fall back to specific weight declarations (400, 600, 700) using the same file
+- **Format support**:
+  - `woff2-variations` for variable font support
+  - `woff2` fallback for browsers without variable font support
+
+### Browser Compatibility
+
+| Browser | Version | Support |
+|---------|---------|---------|
+| Chrome | 88+ | Variable fonts ✓ |
+| Chrome | 62+ | WOFF2 static ✓ |
+| Firefox | 62+ | Variable fonts ✓ |
+| Firefox | 39+ | WOFF2 static ✓ |
+| Safari | 11.1+ | Variable fonts ✓ |
+| Safari | 10+ | WOFF2 static ✓ |
+| Edge | 79+ | Variable fonts ✓ |
+| Edge | 14+ | WOFF2 static ✓ |
+
+Browsers without WOFF2 support (IE 11 and older) will fall back to system fonts defined in the font stack.
 
 ## Unicode Range
 

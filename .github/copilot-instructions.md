@@ -202,3 +202,28 @@ CREATE UNIQUE INDEX idx_newsletter_email ON newsletter_subscribers(LOWER(email))
 - **Vercel Adapter**: https://docs.astro.build/en/guides/integrations-guide/vercel/
 - **Vercel.json Reference**: https://vercel.com/docs/projects/project-configuration
 - **Deployment**: Site auto-deploys on push to `main` via Vercel
+
+## Implementation Plan: High-Compliance Newsletter Form (DOI + Consent)
+
+1) Schema (Supabase)
+- Add/ensure columns on `newsletter_subscribers`: `status` (pending|confirmed), `confirmation_token` (uuid or hashed), `confirmation_sent_at`, `confirmed_at`, `subscribed_at` default now, `email` (unique lower), `full_name`, `company_name`, `role`, `source`, `form_url`, `user_agent`, `ip_address`, `consent_copy` (text), `metadata` (jsonb). Keep existing indexes on lower(email); add index on token for confirmation lookup.
+
+2) Capture + validate (API)
+- In `src/packages/subscribe/api/subscribe.ts` and `src/pages/api/subscribe.ts`: require a `consent` boolean; reject if false. Normalize email (trim/lower), optional fields (name/company/role), accept BusyFolk aliases. Record `form_url` from `request.headers.get('referer')`, `user_agent`, `ip_address` from `x-forwarded-for`/`cf-connecting-ip`. Persist `consent_copy` sent from client (the exact string shown). Insert row with `status='pending'`, generated `confirmation_token`, and `confirmation_sent_at`.
+
+3) UI/UX (forms)
+- `NewsletterForm.tsx` (CTA/inline/panel) and `BusyFolkNewsletterPanel.astro`: add required consent checkbox with explicit text + privacy link; disable submit until email is valid and consent is checked. Update headings/value prop to emphasize benefit/cadence; keep single-column mobile-friendly layout. CTA text outcome-focused.
+- On submit success, show “Check your inbox to confirm” message (no final success yet).
+
+4) Double opt-in flow
+- Create `/api/confirm-subscribe` (Astro API) that accepts `token`: find pending row by token, set `status='confirmed'`, `confirmed_at=now()`, log confirm IP/UA, clear token. On failure, return friendly error.
+- Add confirmation page `/confirm` (or similar) that calls the API and renders final success/invalid token states; link to it from the email.
+
+5) Confirmation email
+- Send immediately on subscribe using the API: templated email with a single high-contrast button linking to `/confirm?token=...`. Include fallback text URL. Use existing email provider (Supabase function/Edge Function or SMTP service).
+
+6) Auditing
+- Store: `status`, `subscribed_at`, `confirmation_sent_at`, `confirmed_at`, `form_url`, `source`, `ip_address`, `user_agent`, `consent_copy`, `email` (lower), optional profile fields, metadata. Do not send marketing until `status='confirmed'`.
+
+7) Testing
+- Manual: submit with/without consent (expect rejection), invalid email, happy path pending + confirmation link + confirmed state, duplicate email (should return 409), BusyFolk form field mapping. Verify DB rows store consent text, form URL, IP, and status transitions. Automated: add API tests for validation and token confirmation.

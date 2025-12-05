@@ -23,24 +23,44 @@ export default function NewsletterForm({
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [consent, setConsent] = useState(false);
+
+  const consentCopy =
+    'I agree to receive the newsletter and occasional updates.';
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isEmailValid = emailRegex.test(email.trim());
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent || !isEmailValid) {
+      setMessage('Please provide a valid email and consent.');
+      setStatus('error');
+      return;
+    }
+
     setStatus('loading');
+    const formUrl = typeof window !== 'undefined' ? window.location.href : undefined;
 
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source })
+        body: JSON.stringify({
+          email,
+          source,
+          consent: true,
+          consent_copy: consentCopy,
+          form_url: formUrl
+        })
       });
 
       const data = await response.json();
 
       if (response.ok) {
         setStatus('success');
-        setMessage(data.message);
+        setMessage(data.message || 'Almost done! Check your inbox to confirm.');
         setEmail('');
+        setConsent(false);
 
         // Optional: Track with analytics
         if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -90,10 +110,22 @@ export default function NewsletterForm({
           type="submit"
           className={`newsletter-submit ${status}`}
           aria-label="Subscribe"
-          disabled={status === 'loading' || status === 'success' || status === 'error'}
+          disabled={status === 'loading' || status === 'success' || status === 'error' || !consent || !isEmailValid}
         >
           {status === 'loading' ? <span className="spinner">◌</span> : status === 'success' ? '✓' : status === 'error' ? '✕' : '→'}
         </button>
+        <label className="newsletter-consent">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            required
+          />
+          <span>
+            I agree to receive the newsletter and occasional updates, and I have read the{' '}
+            <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+          </span>
+        </label>
       </form>
     );
   }
@@ -114,10 +146,22 @@ export default function NewsletterForm({
             required
             autoFocus
           />
+          <label className="newsletter-consent">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+            />
+            <span>
+              {consentCopy}{' '}
+              <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+            </span>
+          </label>
           <button
             type="submit"
             className={`newsletter-submit newsletter-submit--panel ${status}`}
-            disabled={status === 'loading' || status === 'success' || status === 'error'}
+            disabled={status === 'loading' || status === 'success' || status === 'error' || !consent || !isEmailValid}
           >
             {status === 'loading' ? (
               <span className="spinner">◌</span>
@@ -199,24 +243,36 @@ export default function NewsletterForm({
               <form className="newsletter-form newsletter-form--modal" onSubmit={handleSubmit}>
                 <input
                   type="email"
-                  placeholder="Email Address"
-                  className={`newsletter-input ${status}`}
-                  aria-label="Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={status === 'loading' || status === 'success' || status === 'error'}
-                  required
-                  autoFocus
-                />
-                <button
-                  type="submit"
-                  className={`newsletter-submit newsletter-submit--modal ${status}`}
-                  disabled={status === 'loading' || status === 'success' || status === 'error'}
-                >
-                  {status === 'loading' ? (
-                    <span className="spinner">◌</span>
-                  ) : status === 'success' ? (
-                    '✓ Subscribed'
+              placeholder="Email Address"
+              className={`newsletter-input ${status}`}
+              aria-label="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={status === 'loading' || status === 'success' || status === 'error'}
+              required
+              autoFocus
+            />
+            <label className="newsletter-consent">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                required
+              />
+              <span>
+                {consentCopy}{' '}
+                <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+              </span>
+            </label>
+            <button
+              type="submit"
+              className={`newsletter-submit newsletter-submit--modal ${status}`}
+              disabled={status === 'loading' || status === 'success' || status === 'error' || !consent || !isEmailValid}
+            >
+              {status === 'loading' ? (
+                <span className="spinner">◌</span>
+              ) : status === 'success' ? (
+                '✓ Subscribed'
                   ) : status === 'error' ? (
                     '✕ Error'
                   ) : (

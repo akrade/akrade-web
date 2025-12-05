@@ -12,6 +12,7 @@
 .newsletter-form--inline {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   border-bottom-width: 0.3rem;
   border-bottom-style: solid;
   margin-bottom: 1.5rem;
@@ -39,6 +40,26 @@
       cursor: not-allowed;
     }
   }
+}
+
+.newsletter-consent {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-top: 0.75rem;
+  max-width: 540px;
+  width: 100%;
+}
+
+.newsletter-consent input[type="checkbox"] {
+  margin-top: 0.25rem;
+}
+
+.newsletter-consent a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 /* ========================================

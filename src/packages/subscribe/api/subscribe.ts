@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { createClient } from '@supabase/supabase-js';
+import crypto from 'node:crypto';
 
 export const prerender = false;
 
@@ -42,6 +43,9 @@ export const POST: APIRoute = async ({ request }) => {
       full_name,
       company_name,
       role,
+      consent,
+      consent_copy,
+      form_url,
       // Accept alt keys from BusyFolk form payload
       name,
       company
@@ -51,6 +55,22 @@ export const POST: APIRoute = async ({ request }) => {
     const cleanFullName = normalize(full_name ?? name);
     const cleanCompany = normalize(company_name ?? company);
     const cleanRole = normalize(role);
+    const consentCopy =
+      typeof consent_copy === 'string' && consent_copy.trim().length > 0
+        ? consent_copy.trim()
+        : 'I agree to receive the newsletter and occasional updates.';
+    const formUrl =
+      typeof form_url === 'string' && form_url.trim().length > 0
+        ? form_url.trim()
+        : request.headers.get('referer') || undefined;
+    const ipHeader =
+      request.headers.get('x-forwarded-for') ||
+      request.headers.get('cf-connecting-ip') ||
+      request.headers.get('true-client-ip') ||
+      '';
+    const clientIp = ipHeader.split(',')[0]?.trim() || undefined;
+    const userAgent = request.headers.get('user-agent') || undefined;
+    const origin = request.headers.get('origin') || '';
 
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,52 +81,94 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Insert into database
-    const { data: subscriber, error } = await supabase
-      .from('newsletter_subscribers')
-      .insert([
-        {
-          email: cleanEmail,
-          full_name: cleanFullName || null,
-          company_name: cleanCompany || null,
-          role: cleanRole || null,
-          source,
-          metadata: {
-            user_agent: request.headers.get('user-agent'),
-            referrer: request.headers.get('referer')
-          }
-        }
-      ])
-      .select()
-      .single();
+    if (consent !== true) {
+      return new Response(
+        JSON.stringify({ error: 'Consent required before subscribing' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
-    if (error) {
-      console.error('Supabase error:', error);
-      // Handle duplicate email
-      if (error.code === '23505') {
+    // Check for existing subscriber
+    const { data: existing } = await supabase
+      .from('newsletter_subscribers')
+      .select('id,status')
+      .eq('email', cleanEmail)
+      .maybeSingle();
+
+    const token = crypto.randomUUID();
+    const now = new Date().toISOString();
+
+    if (existing && existing.status === 'confirmed') {
+      return new Response(
+        JSON.stringify({ success: true, message: 'You are already confirmed.' }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const payload = {
+      email: cleanEmail,
+      full_name: cleanFullName || null,
+      company_name: cleanCompany || null,
+      role: cleanRole || null,
+      source,
+      status: 'pending',
+      subscribed_at: now,
+      confirmation_token: token,
+      confirmation_sent_at: now,
+      form_url: formUrl,
+      consent_copy: consentCopy,
+      metadata: {
+        user_agent: userAgent,
+        referrer: request.headers.get('referer'),
+        ip: clientIp
+      }
+    };
+
+    let supabaseError;
+    if (existing) {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .update(payload)
+        .eq('id', existing.id);
+      supabaseError = error;
+    } else {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert([payload])
+        .single();
+      supabaseError = error;
+    }
+
+    if (supabaseError) {
+      console.error('Supabase error:', supabaseError);
+      // Handle duplicate email gracefully
+      if (supabaseError.code === '23505') {
         return new Response(
-          JSON.stringify({ error: 'Email already subscribed' }),
-          { status: 409, headers: { 'Content-Type': 'application/json' } }
+          JSON.stringify({ success: true, message: 'You are already subscribed.' }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
       }
       // Return detailed error for debugging
       return new Response(
         JSON.stringify({
           error: 'Database error',
-          details: error.message,
-          code: error.code
+          details: supabaseError.message,
+          code: supabaseError.code
         }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // Optional: Trigger CRM sync here
-    // await syncToCRM(subscriber.email);
+    // TODO: Send confirmation email with token link
+    const confirmLink = origin
+      ? `${origin.replace(/\/$/, '')}/confirm?token=${token}`
+      : `/confirm?token=${token}`;
+    console.info('Confirmation link (send via email):', confirmLink);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Successfully subscribed!'
+        message: 'Almost done! Check your inbox to confirm your subscription.'
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );

@@ -51,7 +51,6 @@ import { SlidePanel } from '../packages/slide-panel';
         aria-label="Email Address"
         required
       />
-
       <input
         type="text"
         name="name"
@@ -81,6 +80,18 @@ import { SlidePanel } from '../packages/slide-panel';
         <option value="strategy">Strategy</option>
         <option value="other">Other</option>
       </select>
+
+      <label class="busyfolk-consent">
+        <input
+          type="checkbox"
+          id="busyfolk-consent"
+          required
+        />
+        <span>
+          I agree to receive the BusyFolk newsletter and occasional updates, and I have read the
+          <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
+        </span>
+      </label>
 
       <button type="submit" class="busyfolk-submit">
         Join BusyFolk
@@ -170,6 +181,23 @@ import { SlidePanel } from '../packages/slide-panel';
     flex-direction: column;
     gap: 0.875rem;
     margin-top: 0.5rem;
+  }
+
+  .busyfolk-consent {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .busyfolk-consent input[type="checkbox"] {
+    margin-top: 0.25rem;
+  }
+
+  .busyfolk-consent a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .busyfolk-input,
@@ -297,11 +325,29 @@ import { SlidePanel } from '../packages/slide-panel';
     const form = document.getElementById('busyfolk-newsletter-form') as HTMLFormElement;
     const submitButton = form?.querySelector('.busyfolk-submit') as HTMLButtonElement;
     const messageEl = document.getElementById('busyfolk-message');
+    const consentEl = document.getElementById('busyfolk-consent') as HTMLInputElement;
 
     if (!form || !submitButton || !messageEl) return;
+    submitButton.disabled = true;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement | null;
+      const emailValue = emailInput?.value?.trim() || '';
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(emailValue)) {
+        messageEl.className = 'busyfolk-message error';
+        messageEl.textContent = 'Please enter a valid email.';
+        return;
+      }
+
+      if (!consentEl?.checked) {
+        messageEl.className = 'busyfolk-message error';
+        messageEl.textContent = 'Please consent to receive BusyFolk updates.';
+        return;
+      }
 
       // Get form data
       const formData = new FormData(form);
@@ -310,7 +356,10 @@ import { SlidePanel } from '../packages/slide-panel';
         name: formData.get('name'),
         company: formData.get('company'),
         role: formData.get('role'),
-        source: 'busyfolk-panel'
+        source: 'busyfolk-panel',
+        consent: true,
+        consent_copy: 'I agree to receive the BusyFolk newsletter and occasional updates.',
+        form_url: typeof window !== 'undefined' ? window.location.href : undefined
       };
 
       // Update UI
@@ -332,6 +381,7 @@ import { SlidePanel } from '../packages/slide-panel';
           messageEl.className = 'busyfolk-message success';
           messageEl.textContent = result.message || 'Welcome to BusyFolk! Check your email.';
           form.reset();
+          if (consentEl) consentEl.checked = false;
 
           // Track with analytics
           if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -341,14 +391,14 @@ import { SlidePanel } from '../packages/slide-panel';
             });
           }
         } else {
-          throw new Error(result.error || 'Subscription failed');
+          throw new Error(result.details || result.error || 'Subscription failed');
         }
       } catch (error) {
         messageEl.className = 'busyfolk-message error';
         messageEl.textContent = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
       } finally {
-        submitButton.disabled = false;
-        submitButton.classList.remove('loading');
+      submitButton.disabled = !consentEl?.checked || !emailRegex.test(emailValue);
+      submitButton.classList.remove('loading');
 
         // Clear message after 5 seconds
         setTimeout(() => {
@@ -357,6 +407,18 @@ import { SlidePanel } from '../packages/slide-panel';
         }, 5000);
       }
     });
+
+    const toggleSubmit = () => {
+      if (!submitButton || !consentEl) return;
+      const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement | null;
+      const emailValue = emailInput?.value?.trim() || '';
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      submitButton.disabled = !consentEl.checked || !emailRegex.test(emailValue);
+    };
+
+    form.querySelector('input[name="email"]')?.addEventListener('input', toggleSubmit);
+    consentEl?.addEventListener('change', toggleSubmit);
+    toggleSubmit();
   }
 
   // Initialize on load

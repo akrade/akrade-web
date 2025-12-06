@@ -92,7 +92,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Check for existing subscriber
     const { data: existing } = await supabase
       .from('newsletter_subscribers')
-      .select('id,status')
+      .select('id,status,subscribed_at')
       .eq('email', cleanEmail)
       .maybeSingle();
 

@@ -529,6 +529,14 @@
       }
     }
 
+    .newsletter-cta {
+      color: var(--color-text);
+
+      &:hover {
+        color: var(--color-accent-secondary);
+      }
+    }
+
     .footer-social-link {
       color: var(--color-text);
 

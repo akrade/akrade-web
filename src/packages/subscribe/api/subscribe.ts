@@ -118,6 +118,7 @@ export const POST: APIRoute = async ({ request }) => {
       }
     };
 
+    // Upsert to avoid duplicate-key errors while refreshing pending records
     const { error: upsertError } = await supabase
       .from('newsletter_subscribers')
       .upsert(payload, { onConflict: 'email' });

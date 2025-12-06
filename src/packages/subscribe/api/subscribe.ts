@@ -99,21 +99,14 @@ export const POST: APIRoute = async ({ request }) => {
     const token = crypto.randomUUID();
     const now = new Date().toISOString();
 
-    if (existing && existing.status === 'confirmed') {
-      return new Response(
-        JSON.stringify({ success: true, message: 'You are already confirmed.' }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
     const payload = {
       email: cleanEmail,
       full_name: cleanFullName || null,
       company_name: cleanCompany || null,
       role: cleanRole || null,
       source,
-      status: 'pending',
-      subscribed_at: now,
+      status: existing?.status === 'confirmed' ? 'confirmed' : 'pending',
+      subscribed_at: existing?.subscribed_at || now,
       confirmation_token: token,
       confirmation_sent_at: now,
       form_url: formUrl,
@@ -125,37 +118,15 @@ export const POST: APIRoute = async ({ request }) => {
       }
     };
 
-    let supabaseError;
-    if (existing) {
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .update(payload)
-        .eq('id', existing.id);
-      supabaseError = error;
-    } else {
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .insert([payload])
-        .single();
-      supabaseError = error;
-    }
+    // Upsert to avoid duplicate-key errors while refreshing pending records
+    const { error: upsertError } = await supabase
+      .from('newsletter_subscribers')
+      .upsert(payload, { onConflict: 'email' });
 
-    if (supabaseError) {
-      console.error('Supabase error:', supabaseError);
-      // Handle duplicate email gracefully
-      if (supabaseError.code === '23505') {
-        return new Response(
-          JSON.stringify({ success: true, message: 'You are already subscribed.' }),
-          { status: 200, headers: { 'Content-Type': 'application/json' } }
-        );
-      }
-      // Return detailed error for debugging
+    if (upsertError) {
+      console.error('Supabase upsert error:', upsertError);
       return new Response(
-        JSON.stringify({
-          error: 'Database error',
-          details: supabaseError.message,
-          code: supabaseError.code
-        }),
+        JSON.stringify({ error: 'Database error', details: upsertError.message, code: upsertError.code }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }

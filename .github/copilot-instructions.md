@@ -224,6 +224,11 @@ CREATE UNIQUE INDEX idx_newsletter_email ON newsletter_subscribers(LOWER(email))
 
 6) Auditing
 - Store: `status`, `subscribed_at`, `confirmation_sent_at`, `confirmed_at`, `form_url`, `source`, `ip_address`, `user_agent`, `consent_copy`, `email` (lower), optional profile fields, metadata. Do not send marketing until `status='confirmed'`.
+- After confirmation, clear `confirmation_token` (keeps tokens from lingering). Auditing relies on `status`, timestamps, consent copy, form URL, and metadata, not the raw token. If long-term token proof is required, store a hashed token instead of the raw value.
+
+## SMTP (SendGrid example)
+- Env: `AKRADE_SMTP_HOST=smtp.sendgrid.net`, `AKRADE_SMTP_PORT=587` (or 2525 if blocked), `AKRADE_SMTP_USER=apikey`, `AKRADE_SMTP_PASS=<SendGrid API key>`, `AKRADE_SMTP_FROM=<verified sender>`, `AKRADE_SITE_URL=https://www.akrade.com`.
+- The subscribe APIs send confirmation emails via SMTP; failures return a 500 with `Failed to send confirmation email`. Ensure the sender is verified and SPF/DKIM are set on the domain.
 
 7) Testing
 - Manual: submit with/without consent (expect rejection), invalid email, happy path pending + confirmation link + confirmed state, duplicate email (should return 409), BusyFolk form field mapping. Verify DB rows store consent text, form URL, IP, and status transitions. Automated: add API tests for validation and token confirmation.

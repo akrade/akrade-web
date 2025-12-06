@@ -192,10 +192,28 @@ export default function NewsletterForm({
         return `open${camel.charAt(0).toUpperCase() + camel.slice(1)}Panel`;
       })();
 
-      if (typeof window !== 'undefined' && (window as any)[helperName]) {
-        (window as any)[helperName]();
-      } else {
-        console.error(`${helperName} function not found. Ensure the slide panel with id="${panelId}" is rendered.`);
+      const tryOpen = () => {
+        if (typeof window === 'undefined') return false;
+        const fn = (window as any)[helperName];
+        if (typeof fn === 'function') {
+          fn();
+          return true;
+        }
+        return false;
+      };
+
+      if (!tryOpen()) {
+        // Poll briefly in case slide-panel helper registers late
+        let attempts = 0;
+        const timer = setInterval(() => {
+          attempts += 1;
+          if (tryOpen() || attempts >= 15) {
+            clearInterval(timer);
+            if (attempts >= 15) {
+              console.error(`${helperName} function not found. Ensure the slide panel with id="${panelId}" is rendered.`);
+            }
+          }
+        }, 100);
       }
     } else {
       // Open modal (default behavior)

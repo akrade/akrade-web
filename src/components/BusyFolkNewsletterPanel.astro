@@ -328,6 +328,11 @@ import { SlidePanel } from '../packages/slide-panel';
     const consentEl = document.getElementById('busyfolk-consent') as HTMLInputElement;
 
     if (!form || !submitButton || !messageEl) return;
+
+    // Prevent duplicate initialization
+    if ((form as any).__busyfolk_initialized) return;
+    (form as any).__busyfolk_initialized = true;
+
     submitButton.disabled = true;
 
     form.addEventListener('submit', async (e) => {

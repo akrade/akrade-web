@@ -113,6 +113,17 @@ const inputId = `floating-${name}-${Math.random().toString(36).substring(7)}`;
     border-color: var(--color-text, #fff);
   }
 
+  /* Autofill override - prevent browser yellow background */
+  .floating-input:-webkit-autofill,
+  .floating-input:-webkit-autofill:hover,
+  .floating-input:-webkit-autofill:focus,
+  .floating-input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--color-text, #fff);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px var(--color-bg-elevated, rgba(255, 255, 255, 0.03));
+  }
+
   /* Disabled state */
   .floating-input:disabled {
     opacity: 0.5;

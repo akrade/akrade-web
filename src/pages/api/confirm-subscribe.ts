@@ -65,6 +65,21 @@ export const GET: APIRoute = async ({ request }) => {
     const userAgent = request.headers.get('user-agent') || undefined;
     const now = new Date().toISOString();
 
+    // Update confirmation history with confirmation details for audit trail
+    const confirmationHistory = (existing.metadata as any)?.confirmation_history || [];
+    const updatedHistory = confirmationHistory.map((entry: any) => {
+      // Find the matching token entry and add confirmation details
+      if (entry.token === token) {
+        return {
+          ...entry,
+          confirmed_at: now,
+          confirm_ip: clientIp,
+          confirm_user_agent: userAgent
+        };
+      }
+      return entry;
+    });
+
     const { error: updateError } = await supabase
       .from('newsletter_subscribers')
       .update({
@@ -74,7 +89,8 @@ export const GET: APIRoute = async ({ request }) => {
         metadata: {
           ...(existing.metadata || {}),
           confirm_ip: clientIp,
-          confirm_user_agent: userAgent
+          confirm_user_agent: userAgent,
+          confirmation_history: updatedHistory
         }
       })
       .eq('id', existing.id);

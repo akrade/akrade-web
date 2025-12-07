@@ -38,9 +38,7 @@ const hasSlotContent = Astro.slots.has('default');
   />
   <label for={checkboxId} class="checkbox-label">
     <span class="checkbox-box">
-      <svg class="checkbox-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
-      </svg>
+      <!-- Checkmark created with pseudo-elements -->
     </span>
     <span class="checkbox-text">
       {hasSlotContent ? (
@@ -80,49 +78,102 @@ const hasSlotContent = Astro.slots.has('default');
   }
 
   .checkbox-box {
+    display: inline-block;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.25rem;
-    height: 1.25rem;
-    min-width: 1.25rem;
-    margin-top: 0.125rem;
+    background-color: transparent;
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1.5rem;
+    transform-origin: center;
     border: 2px solid var(--color-border, rgba(255, 255, 255, 0.3));
-    border-radius: 0.25rem;
-    background: transparent;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 0.625rem;
+    margin-top: 0.125rem;
+    transition: background-color 150ms 200ms, transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
   }
 
-  .checkbox-icon {
-    width: 1rem;
-    height: 1rem;
-    color: var(--color-bg-primary, #000);
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Checkmark lines created with pseudo-elements */
+  .checkbox-box::before {
+    content: "";
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-text, #fff);
+    position: absolute;
+    transform: rotate(45deg);
+    top: 0.8125rem;
+    left: 0.5625rem;
+    transition: width 50ms ease 50ms;
+    transform-origin: 0% 0%;
+  }
+
+  .checkbox-box::after {
+    content: "";
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-text, #fff);
+    position: absolute;
+    transform: rotate(305deg);
+    top: 1rem;
+    left: 0.625rem;
+    transition: width 50ms ease;
+    transform-origin: 0% 0%;
+  }
+
+  /* Hover preview of checkmark */
+  .checkbox-label:hover .checkbox-box::before {
+    width: 0.3125rem;
+    transition: width 100ms ease;
+  }
+
+  .checkbox-label:hover .checkbox-box::after {
+    width: 0.625rem;
+    transition: width 150ms ease 100ms;
   }
 
   /* Checked state */
   .checkbox-input:checked + .checkbox-label .checkbox-box {
-    background: var(--color-accent, #fff);
+    background-color: var(--color-accent, #fff);
     border-color: var(--color-accent, #fff);
+    transform: scale(1.25);
   }
 
-  .checkbox-input:checked + .checkbox-label .checkbox-icon {
-    opacity: 1;
-    transform: scale(1);
+  .checkbox-input:checked + .checkbox-label .checkbox-box::before {
+    width: 0.3125rem;
+    background: var(--color-bg-primary, #000);
+    transition: width 150ms ease 100ms;
+  }
+
+  .checkbox-input:checked + .checkbox-label .checkbox-box::after {
+    width: 0.625rem;
+    background: var(--color-bg-primary, #000);
+    transition: width 150ms ease 100ms;
+  }
+
+  /* Checked hover state */
+  .checkbox-input:checked + .checkbox-label:hover .checkbox-box {
+    background-color: var(--color-accent, #fff);
+    transform: scale(1.25);
+  }
+
+  .checkbox-input:checked + .checkbox-label:hover .checkbox-box::before {
+    width: 0.3125rem;
+    background: var(--color-bg-primary, #000);
+    transition: width 150ms ease 100ms;
+  }
+
+  .checkbox-input:checked + .checkbox-label:hover .checkbox-box::after {
+    width: 0.625rem;
+    background: var(--color-bg-primary, #000);
+    transition: width 150ms ease 100ms;
   }
 
   /* Focus state */
   .checkbox-input:focus + .checkbox-label .checkbox-box {
     outline: 2px solid var(--color-accent, #fff);
     outline-offset: 2px;
-  }
-
-  /* Hover state */
-  .checkbox-label:hover .checkbox-box {
-    border-color: var(--color-accent, #fff);
   }
 
   /* Disabled state */

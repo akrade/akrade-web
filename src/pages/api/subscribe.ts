@@ -89,15 +89,43 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    // Verify SMTP configuration before proceeding
+    const smtpHost = process.env.AKRADE_SMTP_HOST || import.meta.env.AKRADE_SMTP_HOST;
+    const smtpUser = process.env.AKRADE_SMTP_USER || import.meta.env.AKRADE_SMTP_USER;
+    const smtpPass = process.env.AKRADE_SMTP_PASS || import.meta.env.AKRADE_SMTP_PASS;
+
+    if (!smtpHost || !smtpUser || !smtpPass) {
+      console.error('Missing SMTP configuration in environment');
+      return new Response(
+        JSON.stringify({
+          error: 'Email service not configured',
+          details: 'SMTP credentials missing. Please contact support.'
+        }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Check for existing subscriber
     const { data: existing } = await supabase
       .from('newsletter_subscribers')
-      .select('id,status,subscribed_at')
+      .select('id,status,subscribed_at,metadata')
       .eq('email', cleanEmail)
       .maybeSingle();
 
     const token = crypto.randomUUID();
     const now = new Date().toISOString();
+
+    // Preserve existing confirmation history and add new entry
+    const existingHistory = (existing?.metadata as any)?.confirmation_history || [];
+    const newConfirmationEntry = {
+      token,
+      sent_at: now,
+      sent_ip: clientIp,
+      sent_user_agent: userAgent,
+      consent_copy: consentCopy,
+      form_url: formUrl,
+      source
+    };
 
     const payload = {
       email: cleanEmail,
@@ -112,9 +140,11 @@ export const POST: APIRoute = async ({ request }) => {
       form_url: formUrl,
       consent_copy: consentCopy,
       metadata: {
+        ...(existing?.metadata || {}),
         user_agent: userAgent,
         referrer: request.headers.get('referer'),
-        ip: clientIp
+        ip: clientIp,
+        confirmation_history: [...existingHistory, newConfirmationEntry]
       }
     };
 
@@ -140,8 +170,15 @@ export const POST: APIRoute = async ({ request }) => {
       });
     } catch (emailError) {
       console.error('Email send error:', emailError);
+      console.error('Email error details:', emailError instanceof Error ? emailError.message : String(emailError));
+
+      // Return detailed error info to help diagnose SMTP issues
+      const errorMessage = emailError instanceof Error ? emailError.message : 'Unknown error';
       return new Response(
-        JSON.stringify({ error: 'Failed to send confirmation email' }),
+        JSON.stringify({
+          error: 'Failed to send confirmation email',
+          details: errorMessage
+        }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }

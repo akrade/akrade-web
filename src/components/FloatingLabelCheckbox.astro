@@ -102,8 +102,9 @@ const hasSlotContent = Astro.slots.has('default');
   .checkbox-box svg {
     position: absolute;
     z-index: 1;
-    top: 0.5rem;
-    left: 0.375rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     fill: none;
     stroke: var(--color-bg-primary, #000);
     stroke-width: 2;
@@ -113,7 +114,6 @@ const hasSlotContent = Astro.slots.has('default');
     stroke-dashoffset: 16px;
     transition: all 0.3s ease;
     transition-delay: 0.1s;
-    transform: translate3d(0, 0, 0);
   }
 
   .checkbox-box::before {

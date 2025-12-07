@@ -51,21 +51,24 @@ import { SlidePanel } from '../packages/slide-panel';
         aria-label="Email Address"
         required
       />
-      <input
-        type="text"
-        name="name"
-        placeholder="Full Name (optional)"
-        class="busyfolk-input"
-        aria-label="Full Name"
-      />
 
-      <input
-        type="text"
-        name="company"
-        placeholder="Company (optional)"
-        class="busyfolk-input"
-        aria-label="Company"
-      />
+      <div class="busyfolk-form-row">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name (optional)"
+          class="busyfolk-input"
+          aria-label="Full Name"
+        />
+
+        <input
+          type="text"
+          name="company"
+          placeholder="Company (optional)"
+          class="busyfolk-input"
+          aria-label="Company"
+        />
+      </div>
 
       <select
         name="role"
@@ -181,6 +184,18 @@ import { SlidePanel } from '../packages/slide-panel';
     flex-direction: column;
     gap: 0.875rem;
     margin-top: 0.5rem;
+  }
+
+  .busyfolk-form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  @media (min-width: 640px) {
+    .busyfolk-form-row {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   .busyfolk-consent {

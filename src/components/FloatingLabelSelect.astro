@@ -1,0 +1,210 @@
+---
+/**
+ * Floating Label Select Component
+ * Material Design 3 inspired select with floating label animation
+ */
+
+export interface Props {
+  name: string;
+  label: string;
+  options: Array<{ value: string; label: string }>;
+  required?: boolean;
+  value?: string;
+  class?: string;
+}
+
+const {
+  name,
+  label,
+  options,
+  required = false,
+  value = '',
+  class: className = '',
+} = Astro.props;
+
+const selectId = `floating-select-${name}-${Math.random().toString(36).substring(7)}`;
+---
+
+<div class={`floating-select-wrapper ${className}`}>
+  <select
+    id={selectId}
+    name={name}
+    class="floating-select"
+    required={required}
+    aria-label={label}
+  >
+    <option value="" disabled selected={!value}></option>
+    {options.map((option) => (
+      <option value={option.value} selected={value === option.value}>
+        {option.label}
+      </option>
+    ))}
+  </select>
+  <label for={selectId} class="floating-label">
+    {label}{required && <span class="required-asterisk">*</span>}
+  </label>
+  <div class="floating-border"></div>
+  <svg class="select-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<style>
+  .floating-select-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .floating-select {
+    width: 100%;
+    padding: 1.125rem 2.5rem 0.5rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--color-bg-elevated, rgba(255, 255, 255, 0.03));
+    color: var(--color-text, #fff);
+    border: 2px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .floating-select option {
+    background: var(--color-bg-primary, #000);
+    color: var(--color-text, #fff);
+  }
+
+  .floating-label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--color-text, #fff);
+    opacity: 0.6;
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--color-bg-elevated, rgba(255, 255, 255, 0.03));
+    padding: 0 0.25rem;
+  }
+
+  .required-asterisk {
+    color: var(--color-accent, #ff6b6b);
+    margin-left: 0.125rem;
+  }
+
+  /* Floating state - when has value */
+  .floating-select:not([value=""]) + .floating-label,
+  .floating-select:focus + .floating-label,
+  .floating-select:valid + .floating-label {
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    opacity: 1;
+    color: var(--color-accent, #fff);
+  }
+
+  /* Custom arrow */
+  .select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text, #fff);
+    opacity: 0.6;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .floating-select:focus ~ .select-arrow {
+    opacity: 1;
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  /* Border highlight */
+  .floating-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent, #fff);
+    transform: scaleX(0);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  .floating-select:focus {
+    border-color: var(--color-accent, #fff);
+  }
+
+  .floating-select:focus ~ .floating-border {
+    transform: scaleX(1);
+  }
+
+  /* Disabled state */
+  .floating-select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .floating-select:disabled + .floating-label {
+    opacity: 0.3;
+  }
+
+  .floating-select:disabled ~ .select-arrow {
+    opacity: 0.3;
+  }
+
+  /* Error state */
+  .floating-select-wrapper.error .floating-select {
+    border-color: #ef4444;
+  }
+
+  .floating-select-wrapper.error .floating-label {
+    color: #ef4444;
+  }
+
+  .floating-select-wrapper.error .floating-border {
+    background: #ef4444;
+  }
+</style>
+
+<script>
+  // Enhanced floating label behavior for select
+  function initFloatingSelects() {
+    const selects = document.querySelectorAll('.floating-select');
+
+    selects.forEach((select) => {
+      const selectEl = select as HTMLSelectElement;
+      const wrapper = selectEl.closest('.floating-select-wrapper');
+      const label = wrapper?.querySelector('.floating-label');
+
+      const updateLabel = () => {
+        if (selectEl.value && selectEl.value !== '') {
+          label?.classList.add('has-value');
+        } else {
+          label?.classList.remove('has-value');
+        }
+      };
+
+      // Initial check
+      updateLabel();
+
+      // Listen for changes
+      selectEl.addEventListener('change', updateLabel);
+    });
+  }
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFloatingSelects);
+  } else {
+    initFloatingSelects();
+  }
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:page-load', initFloatingSelects);
+</script>

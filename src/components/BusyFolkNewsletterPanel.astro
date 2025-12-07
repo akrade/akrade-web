@@ -36,7 +36,7 @@ const roleOptions = [
 
     <!-- Value Statement -->
     <div class="busyfolk-value">
-      <p class="busyfolk-value-label">Each edition covers:</p>
+      <h3 class="busyfolk-value-label">Each edition covers:</h3>
       <ul class="busyfolk-coverage">
         <li><strong>AI + Product Strategy</strong><br/>emerging patterns, practical applications, team readiness</li>
         <li><strong>Experience Design</strong><br/>modern practice, vision setting, and cross-functional alignment</li>
@@ -46,54 +46,55 @@ const roleOptions = [
       </ul>
     </div>
 
-  
-
-    <!-- Form -->
-    <form class="busyfolk-form" id="busyfolk-newsletter-form">
-      <FloatingLabelInput
-        name="email"
-        type="email"
-        label="Email Address"
-        required={true}
-        autocomplete="email"
-      />
-
-      <div class="busyfolk-form-row">
+    <div class="busyfolk-value"></div>
+      <h3 class="busyfolk-value-label">Take the next step and get strategic clarity:</h3>
+      <!-- Form -->
+      <form class="busyfolk-form" id="busyfolk-newsletter-form">
         <FloatingLabelInput
-          name="name"
-          type="text"
-          label="Full Name"
-          autocomplete="name"
+          name="email"
+          type="email"
+          label="Email Address"
+          required={true}
+          autocomplete="email"
         />
 
-        <FloatingLabelInput
-          name="company"
-          type="text"
-          label="Company"
-          autocomplete="organization"
+        <div class="busyfolk-form-row">
+          <FloatingLabelInput
+            name="name"
+            type="text"
+            label="Full Name"
+            autocomplete="name"
+          />
+
+          <FloatingLabelInput
+            name="company"
+            type="text"
+            label="Company"
+            autocomplete="organization"
+          />
+        </div>
+
+        <FloatingLabelSelect
+          name="role"
+          label="Role"
+          options={roleOptions}
         />
-      </div>
 
-      <FloatingLabelSelect
-        name="role"
-        label="Role"
-        options={roleOptions}
-      />
+        <FloatingLabelCheckbox
+          name="consent"
+          required={true}
+        >
+          I agree to receive the BusyFolk newsletter and occasional updates, and I have read the
+          <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
+        </FloatingLabelCheckbox>
 
-      <FloatingLabelCheckbox
-        name="consent"
-        required={true}
-      >
-        I agree to receive the BusyFolk newsletter and occasional updates, and I have read the
-        <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
-      </FloatingLabelCheckbox>
+        <button type="submit" class="busyfolk-submit">
+          Join BusyFolk
+        </button>
 
-      <button type="submit" class="busyfolk-submit">
-        Join BusyFolk
-      </button>
-
-      <p class="busyfolk-message" id="busyfolk-message"></p>
-    </form>
+        <p class="busyfolk-message" id="busyfolk-message"></p>
+      </form>
+    <div class="busyfolk-value"></div>
 
     <!-- Trust / Microcopy -->
     <p class="busyfolk-trust">

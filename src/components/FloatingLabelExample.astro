@@ -6,6 +6,7 @@
 
 import FloatingLabelInput from './FloatingLabelInput.astro';
 import FloatingLabelSelect from './FloatingLabelSelect.astro';
+import FloatingLabelCheckbox from './FloatingLabelCheckbox.astro';
 
 const roleOptions = [
   { value: 'cxo', label: 'CXO' },
@@ -61,6 +62,18 @@ const roleOptions = [
       label="Password"
       required={true}
       autocomplete="current-password"
+    />
+
+    <!-- Checkbox Example -->
+    <FloatingLabelCheckbox
+      name="newsletter"
+      label="Subscribe to newsletter updates"
+    />
+
+    <FloatingLabelCheckbox
+      name="terms"
+      label="I agree to the terms and conditions"
+      required={true}
     />
 
     <button type="submit" class="submit-button">

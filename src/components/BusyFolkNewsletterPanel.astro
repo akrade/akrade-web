@@ -10,6 +10,7 @@
 import { SlidePanel } from '../packages/slide-panel';
 import FloatingLabelInput from './FloatingLabelInput.astro';
 import FloatingLabelSelect from './FloatingLabelSelect.astro';
+import FloatingLabelCheckbox from './FloatingLabelCheckbox.astro';
 
 const roleOptions = [
   { value: 'cxo', label: 'CXO' },
@@ -84,17 +85,13 @@ const roleOptions = [
         options={roleOptions}
       />
 
-      <label class="busyfolk-consent">
-        <input
-          type="checkbox"
-          id="busyfolk-consent"
-          required
-        />
-        <span>
-          I agree to receive the BusyFolk newsletter and occasional updates, and I have read the
-          <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
-        </span>
-      </label>
+      <FloatingLabelCheckbox
+        name="consent"
+        required={true}
+      >
+        I agree to receive the BusyFolk newsletter and occasional updates, and I have read the
+        <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
+      </FloatingLabelCheckbox>
 
       <button type="submit" class="busyfolk-submit">
         Join BusyFolk
@@ -199,24 +196,6 @@ const roleOptions = [
     }
   }
 
-  .busyfolk-consent {
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-  }
-
-  .busyfolk-consent input[type="checkbox"] {
-    margin-top: 0.25rem;
-  }
-
-  .busyfolk-consent a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
   .busyfolk-submit {
     width: 100%;
     padding: 0.875rem 1.5rem;
@@ -310,7 +289,7 @@ const roleOptions = [
     const form = document.getElementById('busyfolk-newsletter-form') as HTMLFormElement;
     const submitButton = form?.querySelector('.busyfolk-submit') as HTMLButtonElement;
     const messageEl = document.getElementById('busyfolk-message');
-    const consentEl = document.getElementById('busyfolk-consent') as HTMLInputElement;
+    const consentEl = form?.querySelector('input[name="consent"]') as HTMLInputElement;
 
     if (!form || !submitButton || !messageEl) return;
 

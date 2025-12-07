@@ -1,0 +1,196 @@
+---
+/**
+ * Floating Label Checkbox Component
+ * Material Design 3 inspired checkbox with custom styling
+ */
+
+export interface Props {
+  name: string;
+  label?: string;
+  required?: boolean;
+  checked?: boolean;
+  value?: string;
+  class?: string;
+}
+
+const {
+  name,
+  label,
+  required = false,
+  checked = false,
+  value = 'on',
+  class: className = '',
+} = Astro.props;
+
+const checkboxId = `checkbox-${name}-${Math.random().toString(36).substring(7)}`;
+const hasSlotContent = Astro.slots.has('default');
+---
+
+<div class={`checkbox-wrapper ${className}`}>
+  <input
+    type="checkbox"
+    id={checkboxId}
+    name={name}
+    class="checkbox-input"
+    required={required}
+    checked={checked}
+    value={value}
+  />
+  <label for={checkboxId} class="checkbox-label">
+    <span class="checkbox-box">
+      <svg class="checkbox-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="checkbox-text">
+      {hasSlotContent ? (
+        <slot />
+      ) : (
+        <>
+          {label}{!required && <span class="optional-indicator"> (optional)</span>}
+        </>
+      )}
+    </span>
+  </label>
+</div>
+
+<style>
+  .checkbox-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .checkbox-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text, #fff);
+  }
+
+  .checkbox-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    min-width: 1.25rem;
+    margin-top: 0.125rem;
+    border: 2px solid var(--color-border, rgba(255, 255, 255, 0.3));
+    border-radius: 0.25rem;
+    background: transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .checkbox-icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-bg-primary, #000);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Checked state */
+  .checkbox-input:checked + .checkbox-label .checkbox-box {
+    background: var(--color-accent, #fff);
+    border-color: var(--color-accent, #fff);
+  }
+
+  .checkbox-input:checked + .checkbox-label .checkbox-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Focus state */
+  .checkbox-input:focus + .checkbox-label .checkbox-box {
+    outline: 2px solid var(--color-accent, #fff);
+    outline-offset: 2px;
+  }
+
+  /* Hover state */
+  .checkbox-label:hover .checkbox-box {
+    border-color: var(--color-accent, #fff);
+  }
+
+  /* Disabled state */
+  .checkbox-input:disabled + .checkbox-label {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .checkbox-input:disabled + .checkbox-label .checkbox-box {
+    border-color: var(--color-border, rgba(255, 255, 255, 0.2));
+  }
+
+  .checkbox-text {
+    flex: 1;
+  }
+
+  .optional-indicator {
+    opacity: 0.5;
+    font-size: 0.9em;
+  }
+
+  /* Link styling within checkbox text */
+  .checkbox-text a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.125rem;
+  }
+
+  .checkbox-text a:hover {
+    opacity: 0.8;
+  }
+
+  /* Error state */
+  .checkbox-wrapper.error .checkbox-box {
+    border-color: #ef4444;
+  }
+
+  .checkbox-wrapper.error .checkbox-text {
+    color: #ef4444;
+  }
+</style>
+
+<script>
+  // Enhanced checkbox behavior
+  function initCheckboxes() {
+    const checkboxes = document.querySelectorAll('.checkbox-input');
+
+    checkboxes.forEach((checkbox) => {
+      const checkboxEl = checkbox as HTMLInputElement;
+
+      // Add keyboard support for space bar
+      checkboxEl.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          checkboxEl.checked = !checkboxEl.checked;
+          checkboxEl.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+  }
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCheckboxes);
+  } else {
+    initCheckboxes();
+  }
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:page-load', initCheckboxes);
+</script>

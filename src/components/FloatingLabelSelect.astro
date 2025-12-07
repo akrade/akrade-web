@@ -102,7 +102,7 @@ const selectId = `floating-select-${name}-${Math.random().toString(36).substring
     transform: translateY(0);
     font-size: 0.75rem;
     opacity: 1;
-    color: var(--color-accent, #fff);
+    color: var(--color-text, #fff);
   }
 
   /* Custom arrow */
@@ -122,8 +122,12 @@ const selectId = `floating-select-${name}-${Math.random().toString(36).substring
     transform: translateY(-50%) rotate(180deg);
   }
 
+  .floating-select:hover {
+    border-color: var(--color-hover, #d4af37);
+  }
+
   .floating-select:focus {
-    border-color: var(--color-accent, #fff);
+    border-color: var(--color-text, #fff);
   }
 
   /* Disabled state */

@@ -42,7 +42,7 @@ const inputId = `floating-${name}-${Math.random().toString(36).substring(7)}`;
     aria-label={label}
   />
   <label for={inputId} class="floating-label">
-    {label}{required && <span class="required-asterisk">*</span>}
+    {label}{!required && <span class="optional-indicator"> (optional)</span>}
   </label>
 </div>
 
@@ -90,9 +90,9 @@ const inputId = `floating-${name}-${Math.random().toString(36).substring(7)}`;
     padding: 0;
   }
 
-  .required-asterisk {
-    color: var(--color-accent, #ff6b6b);
-    margin-left: 0.125rem;
+  .optional-indicator {
+    opacity: 0.5;
+    font-size: 0.9em;
   }
 
   /* Floating state - when focused or has value */

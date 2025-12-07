@@ -41,7 +41,7 @@ const selectId = `floating-select-${name}-${Math.random().toString(36).substring
     ))}
   </select>
   <label for={selectId} class="floating-label">
-    {label}{required && <span class="required-asterisk">*</span>}
+    {label}{!required && <span class="optional-indicator"> (optional)</span>}
   </label>
   <svg class="select-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -89,9 +89,9 @@ const selectId = `floating-select-${name}-${Math.random().toString(36).substring
     padding: 0;
   }
 
-  .required-asterisk {
-    color: var(--color-accent, #ff6b6b);
-    margin-left: 0.125rem;
+  .optional-indicator {
+    opacity: 0.5;
+    font-size: 0.9em;
   }
 
   /* Floating state - when has value */

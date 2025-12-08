@@ -92,6 +92,8 @@
 .newsletter-cta-text {
   position: relative;
   display: inline-block;
+  font-weight: 400;
+
 
   /* Underline pseudo-element */
   &::after {

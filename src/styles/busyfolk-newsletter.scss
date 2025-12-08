@@ -1,0 +1,208 @@
+/* BusyFolk Newsletter Panel Styles */
+
+/* Override SlidePanel's h2 title styling */
+#busyfolk-newsletter-panel .slide-panel-content > h2 {
+  font-size: 3.5rem;
+  margin: 0;
+}
+
+#busyfolk-newsletter-panel .busyfolk-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h2 {
+    font-size: 3.5rem;
+    margin: 0;
+  }
+
+  > h3:first-of-type {
+    color: var(--color-accent-secondary);
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  h3 {
+    font-weight: 600;
+    color: var(--color-accent-secondary);
+  }
+}
+
+.busyfolk-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.busyfolk-value {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.busyfolk-value-intro {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.busyfolk-value-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.busyfolk-coverage {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.busyfolk-coverage li {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.busyfolk-coverage li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: -0.35rem;
+  color: var(--color-accent-secondary);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.busyfolk-coverage li strong {
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .busyfolk-coverage {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.busyfolk-audience {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  font-style: italic;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.busyfolk-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0.5rem;
+}
+
+.busyfolk-form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (min-width: 640px) {
+  .busyfolk-form-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+}
+
+.busyfolk-submit {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: var(--color-text);
+  color: var(--color-bg-primary);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 3rem;
+}
+
+.busyfolk-submit:hover:not(:disabled) {
+  background: var(--color-text-primary);
+  opacity: 0.95;
+}
+
+.busyfolk-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.busyfolk-submit.loading {
+  position: relative;
+}
+
+.busyfolk-submit.loading::after {
+  content: "◌";
+  display: inline-block;
+  margin-left: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.busyfolk-message {
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  display: none;
+}
+
+.busyfolk-message.success {
+  display: block;
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-accent);
+}
+
+.busyfolk-message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.busyfolk-trust {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.6;
+  text-align: center;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .busyfolk-panel-content {
+    gap: 1.25rem;
+  }
+
+  .busyfolk-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .busyfolk-coverage li {
+    font-size: 0.8125rem;
+  }
+}

@@ -206,6 +206,10 @@
       }
     }
 
+    .newsletter-cta:hover {
+      color: var(--color-accent);
+    }
+
     /* Newsletter */
     .newsletter-form {
       border-bottom-color: var(--color-muted);
@@ -297,6 +301,7 @@
       background: var(--color-white);
       box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
     }
+  
 
     /* Responsive: Tablet */
     @media (min-width: 481px) and (max-width: 1000px) {
@@ -472,6 +477,10 @@
       }
     }
 
+    .newsletter-cta:hover {
+      color: var(--color-accent-secondary);
+    }
+
     /* Newsletter */
     .newsletter-form {
       border-bottom-color: var(--color-muted);
@@ -526,6 +535,14 @@
       &.error {
         color: #ef4444;
         background: rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    .newsletter-cta {
+      color: var(--color-text);
+
+      &:hover {
+        color: var(--color-accent-secondary);
       }
     }
 

@@ -1,0 +1,130 @@
+---
+/**
+ * Example usage of FloatingLabelInput and FloatingLabelSelect components
+ * This file demonstrates how to use the Material Design 3 floating label inputs
+ */
+
+import FloatingLabelInput from './FloatingLabelInput.astro';
+import FloatingLabelSelect from './FloatingLabelSelect.astro';
+import FloatingLabelCheckbox from './FloatingLabelCheckbox.astro';
+
+const roleOptions = [
+  { value: 'cxo', label: 'CXO' },
+  { value: 'founder', label: 'Founder' },
+  { value: 'design', label: 'Design Leader' },
+  { value: 'product', label: 'Product Leader' },
+  { value: 'strategy', label: 'Strategy' },
+  { value: 'other', label: 'Other' },
+];
+---
+
+<div class="floating-label-demo">
+  <h2>Floating Label Components Demo</h2>
+
+  <form class="demo-form">
+    <!-- Email Input -->
+    <FloatingLabelInput
+      name="email"
+      type="email"
+      label="Email Address"
+      required={true}
+      autocomplete="email"
+    />
+
+    <!-- Two inputs side by side -->
+    <div class="form-row">
+      <FloatingLabelInput
+        name="name"
+        type="text"
+        label="Full Name"
+        autocomplete="name"
+      />
+
+      <FloatingLabelInput
+        name="company"
+        type="text"
+        label="Company"
+        autocomplete="organization"
+      />
+    </div>
+
+    <!-- Select Dropdown -->
+    <FloatingLabelSelect
+      name="role"
+      label="Role"
+      options={roleOptions}
+    />
+
+    <!-- Password Input -->
+    <FloatingLabelInput
+      name="password"
+      type="password"
+      label="Password"
+      required={true}
+      autocomplete="current-password"
+    />
+
+    <!-- Checkbox Example -->
+    <FloatingLabelCheckbox
+      name="newsletter"
+      label="Subscribe to newsletter updates"
+    />
+
+    <FloatingLabelCheckbox
+      name="terms"
+      label="I agree to the terms and conditions"
+      required={true}
+    />
+
+    <button type="submit" class="submit-button">
+      Submit
+    </button>
+  </form>
+</div>
+
+<style>
+  .floating-label-demo {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+
+  .floating-label-demo h2 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .demo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .submit-button {
+    padding: 1rem 2rem;
+    background: var(--color-accent, #fff);
+    color: var(--color-bg-primary, #000);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .submit-button:hover {
+    opacity: 0.9;
+  }
+</style>

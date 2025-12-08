@@ -8,7 +8,7 @@
 @layer base {
   /* Default link styles with nesting */
   a {
-    font-weight: 200;
+    font-weight: 400;
     text-decoration: none;
     transition: color 0.2s ease, text-decoration-color 0.2s ease;
 
@@ -60,6 +60,11 @@
   }
 
   h3 {
+    font-weight: 300;
+  }
+
+  /* Paragraph defaults */
+  p {
     font-weight: 300;
   }
 }

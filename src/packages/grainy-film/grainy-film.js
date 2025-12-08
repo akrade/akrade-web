@@ -3,10 +3,12 @@
  *
  * Supports multiple effect types via data-grainy-film attribute value
  * Optimized grain effect with reduced frame rate for better performance
+ *
+ * Can create scoped grain effects for specific containers
  */
 
 // Effect configurations
-const EFFECT_CONFIGS = {
+export const EFFECT_CONFIGS = {
   'classic': {
     fps: 1,
     density: 0.001,
@@ -33,9 +35,95 @@ const EFFECT_CONFIGS = {
   }
 };
 
-// Global state
+// Global state for main grain effect
 let currentAnimation = null;
 let currentType = null;
+
+/**
+ * Create a scoped grain effect for a specific canvas and container
+ * Returns cleanup function
+ */
+export function createScopedGrainEffect(canvasId, options = {}) {
+  const {
+    effectType = 'classic',
+    width = 600,
+    height = () => window.innerHeight
+  } = options;
+
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return () => {};
+
+  const config = EFFECT_CONFIGS[effectType] || EFFECT_CONFIGS['classic'];
+  const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
+  if (!ctx) return () => {};
+
+  let animationId = null;
+  let lastFrame = 0;
+  const frameInterval = 1000 / config.fps;
+
+  function resizeCanvas() {
+    canvas.width = width;
+    canvas.height = typeof height === 'function' ? height() : height;
+  }
+
+  function drawGrain(timestamp) {
+    if (timestamp - lastFrame < frameInterval) {
+      animationId = requestAnimationFrame(drawGrain);
+      return;
+    }
+
+    lastFrame = timestamp;
+
+    // Clear canvas with transparency for animation effect
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const imageData = ctx.createImageData(canvas.width, canvas.height);
+    const buffer = new Uint32Array(imageData.data.buffer);
+    const len = buffer.length;
+
+    const brightnessRange = config.brightnessMax - config.brightnessMin;
+    for (let i = 0; i < len; i++) {
+      if (Math.random() < config.density) {
+        const gray = (config.brightnessMin + Math.random() * brightnessRange) | 0;
+        buffer[i] = (255 << 24) | (gray << 16) | (gray << 8) | gray;
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    animationId = requestAnimationFrame(drawGrain);
+  }
+
+  function start() {
+    if (animationId) cancelAnimationFrame(animationId);
+    resizeCanvas();
+    animationId = requestAnimationFrame(drawGrain);
+  }
+
+  function stop() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Start the effect
+  start();
+
+  // Handle window resize
+  let resizeTimeout;
+  const resizeHandler = () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(resizeCanvas, 250);
+  };
+  window.addEventListener('resize', resizeHandler);
+
+  // Return cleanup function
+  return () => {
+    stop();
+    window.removeEventListener('resize', resizeHandler);
+  };
+}
 
 /**
  * Initialize or reinitialize the grain effect

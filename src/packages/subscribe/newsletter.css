@@ -1,0 +1,366 @@
+/**
+ * Newsletter Subscription Package Styles
+ *
+ * Structural styles for the newsletter subscription form.
+ * Color properties are defined in theme files.
+ */
+
+/* ========================================
+   INLINE VARIANT (Footer Style)
+   ======================================== */
+
+.newsletter-form--inline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom-width: 0.3rem;
+  border-bottom-style: solid;
+  margin-bottom: 1.5rem;
+  margin-top: -0.625rem;
+
+  & .newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    outline: none;
+  }
+
+  & .newsletter-submit {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.newsletter-consent {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-top: 0.75rem;
+  max-width: 540px;
+  width: 100%;
+}
+
+.newsletter-consent input[type="checkbox"] {
+  margin-top: 0.25rem;
+}
+
+.newsletter-consent a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ========================================
+   CTA VARIANT (Button + Modal)
+   ======================================== */
+
+/* CTA Description */
+.newsletter-cta-description {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* CTA Button */
+.newsletter-cta {
+  display: inline-flex;
+  padding: 0;
+  margin-bottom: 2rem;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.newsletter-cta-text {
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+
+
+  /* Underline pseudo-element */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.125rem;
+    width: 100%;
+    height: 0.1875rem;
+    background-color: currentColor;
+    transition: width 0.25s ease;
+  }
+
+  /* Hover animates underline removal */
+  .newsletter-cta:hover &::after {
+    width: 0;
+  }
+}
+
+/* Modal Overlay */
+.newsletter-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.newsletter-modal {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.newsletter-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+/* Modal Content */
+.newsletter-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.newsletter-modal-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.newsletter-modal-description {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+/* Modal Form */
+.newsletter-form--modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+
+  & .newsletter-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #000;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.newsletter-submit--modal {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* ========================================
+   PANEL VARIANT (Slide Panel)
+   ======================================== */
+
+.newsletter-panel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.newsletter-form--panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & .newsletter-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    border: 2px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+      color: var(--color-text);
+      opacity: 0.5;
+    }
+
+    &:focus {
+      border-color: var(--color-accent);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.newsletter-submit--panel {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* ========================================
+   SHARED STYLES
+   ======================================== */
+
+/* Spinner Animation */
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Newsletter Message */
+.newsletter-message {
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  text-align: center;
+
+  &--success {
+    background: #f0fdf4;
+    color: #166534;
+  }
+
+  &--error {
+    background: #fef2f2;
+    color: #991b1b;
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 640px) {
+  .newsletter-modal {
+    padding: 2rem 1.5rem;
+  }
+
+  .newsletter-modal-title {
+    font-size: 1.5rem;
+  }
+}

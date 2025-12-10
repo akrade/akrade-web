@@ -21,7 +21,8 @@
     "build:analyze": "astro build && npm run analyze:bundle",
     "analyze:bundle": "find dist -name '*.js' -type f -exec ls -lh {} \\; | sort -k5 -hr",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "cd node_modules/krado-ui && npm install && npx style-dictionary build --config style-dictionary.config.mjs && npx vite build"
   },
   "dependencies": {
     "@astrojs/partytown": "^2.1.4",

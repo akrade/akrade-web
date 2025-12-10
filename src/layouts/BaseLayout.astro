@@ -3,10 +3,10 @@
 import { ViewTransitions } from 'astro:transitions';
 
 // Global Page Components
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import ScheduleCallPanel from '@/components/ScheduleCallPanel.astro';
-import BusyFolkNewsletterPanel from '@/components/BusyFolkNewsletterPanel.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import ScheduleCallPanel from '@/components/features/ScheduleCallPanel.astro';
+import BusyFolkNewsletterPanel from '@/components/features/BusyFolkNewsletterPanel.astro';
 import { NewsletterSlidePanel } from '@/packages/subscribe';
 import GrainyFilm from '@/packages/grainy-film/GrainyFilm.astro';
 
@@ -26,9 +26,9 @@ import '../styles/base/themes.css';
 
 // Thrid-party Anlytics
 import Analytics from '@vercel/analytics/astro'
-import CookieConsent from '@/components/CookieConsent.astro';
-import Clarity from '@/components/Clarity.astro';
-import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
+import CookieConsent from '@/components/analytics/CookieConsent.astro';
+import Clarity from '@/components/analytics/Clarity.astro';
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics.astro';
 import SpeedInsights  from "@vercel/speed-insights/astro"
 
 

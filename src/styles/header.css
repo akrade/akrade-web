@@ -144,10 +144,12 @@
 .mega-menu-links a {
   display: block;
   font-size: 3rem;
+  font-weight: 200;
   text-decoration: none;
   color: var(--color-accent-secondary);
   padding: 1.5rem 0;
   transition: color 0.3s ease, padding-left 0.3s ease;
+  text-align: center;
 }
 
 .mega-menu-links a:hover {

@@ -3,9 +3,6 @@
  * Material Design 3 inspired floating label built on krado-ui's KradoInput
  */
 
-/* Import krado-ui base styles */
-@import 'krado-ui/dist/krado-ui.css';
-
 /* Wrapper */
 .floating-input-krado-wrapper {
   position: relative;

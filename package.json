@@ -23,7 +23,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "astro": "^5.16.0",
-    "krado-ui": "file:../krado-ui",
+    "krado-ui": "github:akrade/krado-ui#main",
     "nodemailer": "^7.0.11",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

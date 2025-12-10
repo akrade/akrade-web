@@ -2,6 +2,19 @@
   "name": "akrade",
   "type": "module",
   "version": "0.0.1",
+  "description": "Akrade - Strategic Design & Product Leadership",
+  "author": {
+    "name": "Dante Taylor",
+    "email": "dante.taylor@akrade.com",
+    "company": "Akrade"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "homepage": "https://www.akrade.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akrade/akrade-web.git"
+  },
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",

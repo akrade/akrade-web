@@ -1,7 +1,10 @@
 /**
  * Floating Label Input Component Styles
- * Material Design 3 inspired floating label with krado design tokens
+ * Material Design 3 inspired floating label built on krado-ui's KradoInput
  */
+
+/* Import krado-ui base styles */
+@import 'krado-ui/dist/krado-ui.css';
 
 /* Wrapper */
 .floating-input-krado-wrapper {
@@ -14,8 +17,24 @@
   position: relative;
 }
 
-/* Base input styles - using site and krado tokens */
-.floating-krado-input {
+/* Hide krado's default label since we're using floating label */
+.floating-input-krado-wrapper .krado-input-wrapper .krado-input-label {
+  display: none;
+}
+
+/* Hide krado's helper text */
+.floating-input-krado-wrapper .krado-input-wrapper .krado-input-helper-text {
+  display: none;
+}
+
+/* Remove default gap from krado wrapper */
+.floating-input-krado-wrapper .krado-input-wrapper {
+  gap: 0;
+  display: block;
+}
+
+/* Style the krado-input class (applied to BaseInput from @mui/base) */
+.floating-input-krado-wrapper .krado-input {
   width: 100%;
   padding: 1.5rem 1rem 0.5rem;
   font-size: 1rem;
@@ -27,6 +46,18 @@
   outline: none;
   transition: border-color var(--krado-transition-base, 0.2s ease);
   appearance: none;
+  box-shadow: none;
+}
+
+/* Override @mui/base default input styles */
+.floating-input-krado-wrapper .krado-input input {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
 }
 
 /* Floating label */
@@ -60,27 +91,28 @@
 }
 
 /* Hover state */
-.floating-krado-input:hover {
+.floating-input-krado-wrapper .krado-input:hover {
   border-color: var(--color-white);
 }
 
 /* Focus state */
-.floating-krado-input:focus {
+.floating-input-krado-wrapper .krado-input:focus,
+.floating-input-krado-wrapper .krado-input:focus-within {
   border-color: var(--color-text, #fff);
   box-shadow: none;
 }
 
 /* Placeholder styling */
-.floating-krado-input::placeholder {
+.floating-input-krado-wrapper .krado-input input::placeholder {
   color: var(--color-text, #fff);
   opacity: 0.5;
 }
 
 /* Autofill override - prevent browser yellow background */
-.floating-krado-input:-webkit-autofill,
-.floating-krado-input:-webkit-autofill:hover,
-.floating-krado-input:-webkit-autofill:focus,
-.floating-krado-input:-webkit-autofill:active {
+.floating-input-krado-wrapper .krado-input input:-webkit-autofill,
+.floating-input-krado-wrapper .krado-input input:-webkit-autofill:hover,
+.floating-input-krado-wrapper .krado-input input:-webkit-autofill:focus,
+.floating-input-krado-wrapper .krado-input input:-webkit-autofill:active {
   -webkit-background-clip: text;
   -webkit-text-fill-color: var(--color-text, #fff);
   transition: background-color 5000s ease-in-out 0s;
@@ -88,17 +120,19 @@
 }
 
 /* Disabled state */
-.floating-krado-input:disabled {
+.floating-input-krado-wrapper .krado-input:disabled,
+.floating-input-krado-wrapper .krado-input[aria-disabled='true'] {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.floating-input-krado-wrapper:has(.floating-krado-input:disabled) .floating-krado-label {
+.floating-input-krado-wrapper:has(.krado-input:disabled) .floating-krado-label,
+.floating-input-krado-wrapper:has(.krado-input[aria-disabled='true']) .floating-krado-label {
   opacity: 0.3;
 }
 
 /* Error state - can be added via wrapper class */
-.floating-input-krado-wrapper.error .floating-krado-input {
+.floating-input-krado-wrapper.error .krado-input {
   border-color: var(--krado-color-error, #ef4444);
 }
 

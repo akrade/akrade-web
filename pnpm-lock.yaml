@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@akrade/krado-ui':
-        specifier: github:akrade/krado-ui#main
-        version: https://codeload.github.com/akrade/krado-ui/tar.gz/79cd5f2379e251231d1cdc74327fe66acf48690d(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: ^0.1.1
+        version: 0.1.1(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@astrojs/partytown':
         specifier: ^2.1.4
         version: 2.1.4
@@ -66,9 +66,8 @@ importers:
 
 packages:
 
-  '@akrade/krado-ui@https://codeload.github.com/akrade/krado-ui/tar.gz/79cd5f2379e251231d1cdc74327fe66acf48690d':
-    resolution: {tarball: https://codeload.github.com/akrade/krado-ui/tar.gz/79cd5f2379e251231d1cdc74327fe66acf48690d}
-    version: 0.1.1
+  '@akrade/krado-ui@0.1.1':
+    resolution: {integrity: sha512-Z9kRdCR48k8cp5eZMK1vjS4FuxderusMEUo5AL7Po0RqlFKSaO5b+U9TdJKZ7XtIF0QPoY7jaDQxFJZAkwb/Aw==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -2334,7 +2333,7 @@ packages:
 
 snapshots:
 
-  '@akrade/krado-ui@https://codeload.github.com/akrade/krado-ui/tar.gz/79cd5f2379e251231d1cdc74327fe66acf48690d(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@akrade/krado-ui@0.1.1(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@mui/base': 5.0.0-beta.70(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       prop-types: 15.8.1

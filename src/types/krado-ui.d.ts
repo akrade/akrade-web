@@ -1,9 +1,9 @@
 /**
- * Type declarations for krado-ui
+ * Type declarations for @akrade/krado-ui
  * Generated types for the Krado UI component library
  */
 
-declare module 'krado-ui' {
+declare module '@akrade/krado-ui' {
   import * as React from 'react';
 
   export interface KradoInputProps

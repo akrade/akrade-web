@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KradoInput } from 'krado-ui';
+import { KradoInput } from '@akrade/krado-ui';
 
 interface FloatingLabelInputReactProps {
   name: string;
@@ -16,8 +16,8 @@ interface FloatingLabelInputReactProps {
 /**
  * FloatingLabelInputReact Component
  *
- * Wraps krado-ui's KradoInput with Material Design 3 floating label behavior.
- * Uses KradoInput from krado-ui (built on @mui/base) with custom floating label overlay.
+ * Wraps @akrade/krado-ui's KradoInput with Material Design 3 floating label behavior.
+ * Uses KradoInput from @akrade/krado-ui (built on @mui/base) with custom floating label overlay.
  */
 export default function FloatingLabelInputReact({
   name,

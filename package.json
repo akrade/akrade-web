@@ -17,6 +17,7 @@
   },
   "scripts": {
     "dev": "astro dev --host",
+    "prebuild": "mkdir -p public/~partytown && cp -r node_modules/@qwik.dev/partytown/lib/* public/~partytown/",
     "build": "astro build",
     "build:analyze": "astro build && npm run analyze:bundle",
     "analyze:bundle": "find dist -name '*.js' -type f -exec ls -lh {} \\; | sort -k5 -hr",

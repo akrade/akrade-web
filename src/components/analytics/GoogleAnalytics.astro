@@ -7,8 +7,8 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
 <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
-<!-- Google Tag Manager - Running in Web Worker via Partytown -->
-<script type="text/partytown" define:vars={{ gtmId }} is:inline>
+<!-- Google Tag Manager -->
+<script define:vars={{ gtmId }} is:inline>
   if (gtmId) {
     // Initialize dataLayer
     window.dataLayer = window.dataLayer || [];

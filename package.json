@@ -17,6 +17,7 @@
   },
   "scripts": {
     "dev": "astro dev --host",
+    "prebuild": "node scripts/copy-partytown.js",
     "build": "astro build",
     "build:analyze": "astro build && npm run analyze:bundle",
     "analyze:bundle": "find dist -name '*.js' -type f -exec ls -lh {} \\; | sort -k5 -hr",

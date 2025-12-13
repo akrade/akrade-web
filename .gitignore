@@ -6,6 +6,9 @@ package-lock.json
 dist/
 .astro/
 
+# Generated Partytown files (auto-copied during build)
+public/~partytown/
+
 # Environment files
 .env
 .env.local

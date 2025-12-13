@@ -1,0 +1,111 @@
+/**
+ * Krado UI Token Mapping
+ * Maps site design tokens to @akrade/krado-ui token names for seamless integration
+ */
+
+:root {
+  /* Color Tokens */
+  --krado-color-text-primary: var(--color-text);
+  --krado-color-text-secondary: var(--color-muted);
+  --krado-color-text-disabled: var(--color-muted);
+
+  --krado-color-background-default: var(--color-bg-elevated);
+  --krado-color-background-elevated: var(--color-bg-elevated);
+  --krado-color-border: var(--color-border);
+
+  --krado-color-primary: var(--color-accent);
+  --krado-color-primary-300: var(--color-accent-secondary);
+
+  --krado-color-error: #ef4444;
+  --krado-color-success: #10b981;
+
+  /* Grayscale tokens */
+  --krado-color-gray-50: rgba(255, 255, 255, 0.02);
+  --krado-color-gray-100: rgba(255, 255, 255, 0.05);
+  --krado-color-gray-200: rgba(255, 255, 255, 0.1);
+  --krado-color-gray-300: rgba(255, 255, 255, 0.2);
+  --krado-color-gray-400: rgba(255, 255, 255, 0.3);
+  --krado-color-gray-500: rgba(255, 255, 255, 0.5);
+  --krado-color-gray-600: rgba(255, 255, 255, 0.6);
+  --krado-color-gray-700: rgba(255, 255, 255, 0.7);
+  --krado-color-gray-800: rgba(255, 255, 255, 0.8);
+  --krado-color-gray-900: rgba(255, 255, 255, 0.9);
+
+  /* Spacing Tokens */
+  --krado-spacing-1: 0.25rem;
+  --krado-spacing-2: 0.5rem;
+  --krado-spacing-3: 0.75rem;
+  --krado-spacing-4: 1rem;
+  --krado-spacing-6: 1.5rem;
+  --krado-spacing-8: 2rem;
+
+  --krado-spacing-input-padding-x: 1rem;
+  --krado-spacing-input-padding-y: 0.5rem;
+
+  /* Typography Tokens */
+  --krado-font-family-base: var(--font-sans);
+  --krado-font-size-xs: 0.75rem;
+  --krado-font-size-sm: 0.875rem;
+  --krado-font-size-base: 1rem;
+  --krado-font-size-lg: 1.125rem;
+  --krado-font-size-xl: 1.25rem;
+  --krado-font-weight-normal: 400;
+  --krado-font-weight-medium: 500;
+  --krado-font-weight-semibold: 600;
+  --krado-font-weight-bold: 700;
+  --krado-line-height-tight: 1.25;
+  --krado-line-height-normal: 1.5;
+  --krado-line-height-relaxed: 1.75;
+
+  /* Border Tokens */
+  --krado-border-width-thin: 1px;
+  --krado-border-width-default: 2px;
+  --krado-border-width-thick: 3px;
+  --krado-border-radius-sm: 0.25rem;
+  --krado-border-radius-md: 0.5rem;
+  --krado-border-radius-lg: 0.75rem;
+  --krado-border-radius-full: 9999px;
+
+  /* Shadow Tokens */
+  --krado-shadow-xs: none;
+  --krado-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --krado-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --krado-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --krado-shadow-focus-primary: 0 0 0 3px rgba(76, 204, 230, 0.1);
+  --krado-shadow-focus-error: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  --krado-shadow-focus-success: 0 0 0 3px rgba(16, 185, 129, 0.1);
+
+  /* Transition Tokens */
+  --krado-transition-fast: 0.15s ease;
+  --krado-transition-base: 0.2s ease;
+  --krado-transition-slow: 0.3s ease;
+}
+
+/* Theme-specific mappings */
+[data-theme="light"] {
+  --krado-color-text-primary: var(--color-text);
+  --krado-color-text-secondary: var(--color-muted);
+  --krado-color-background-default: var(--color-bg-elevated);
+  --krado-color-background-elevated: var(--color-bg-elevated);
+  --krado-color-border: var(--color-border);
+
+  /* Inverted grayscale for light theme */
+  --krado-color-gray-50: rgba(0, 0, 0, 0.02);
+  --krado-color-gray-100: rgba(0, 0, 0, 0.05);
+  --krado-color-gray-200: rgba(0, 0, 0, 0.1);
+  --krado-color-gray-300: rgba(0, 0, 0, 0.2);
+  --krado-color-gray-400: rgba(0, 0, 0, 0.3);
+  --krado-color-gray-500: rgba(0, 0, 0, 0.5);
+  --krado-color-gray-600: rgba(0, 0, 0, 0.6);
+  --krado-color-gray-700: rgba(0, 0, 0, 0.7);
+  --krado-color-gray-800: rgba(0, 0, 0, 0.8);
+  --krado-color-gray-900: rgba(0, 0, 0, 0.9);
+}
+
+[data-theme="neutral"] {
+  --krado-color-text-primary: var(--color-text);
+  --krado-color-text-secondary: var(--color-muted);
+  --krado-color-background-default: var(--color-bg-elevated);
+  --krado-color-background-elevated: var(--color-bg-elevated);
+  --krado-color-border: var(--color-border);
+}

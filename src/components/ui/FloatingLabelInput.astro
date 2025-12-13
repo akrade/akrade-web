@@ -1,0 +1,43 @@
+---
+/**
+ * Floating Label Input Component
+ * Material Design 3 inspired input with floating label animation
+ * Built on @akrade/krado-ui's KradoInput
+ */
+
+import FloatingLabelInputReact from './FloatingLabelInputReact';
+
+export interface Props {
+  name: string;
+  type?: 'text' | 'email' | 'tel' | 'url' | 'password' | 'number';
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  value?: string;
+  autocomplete?: string;
+  class?: string;
+}
+
+const {
+  name,
+  type = 'text',
+  label,
+  placeholder = '',
+  required = false,
+  value = '',
+  autocomplete,
+  class: className = '',
+} = Astro.props;
+---
+
+<FloatingLabelInputReact
+  client:only="react"
+  name={name}
+  type={type}
+  label={label}
+  placeholder={placeholder}
+  required={required}
+  value={value}
+  autocomplete={autocomplete}
+  className={className}
+/>

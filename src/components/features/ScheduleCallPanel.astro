@@ -1,5 +1,5 @@
 ---
-import { SlidePanel } from '../packages/slide-panel';
+import { SlidePanel } from '../../packages/slide-panel';
 ---
 
 <SlidePanel id="schedule-call" title="Schedule a Meeting">
@@ -44,7 +44,7 @@ import { SlidePanel } from '../packages/slide-panel';
 </style>
 
 <script>
-  import { initSlidePanel } from '../packages/slide-panel';
+  import { initSlidePanel } from '../../packages/slide-panel';
 
   // Track cleanup functions and observers
   let panelInstance: ReturnType<typeof initSlidePanel> | null = null;
